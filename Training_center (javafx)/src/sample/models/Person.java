@@ -8,15 +8,15 @@ public abstract class Person {
     private LongProperty id;
     private StringProperty firstName;
     private StringProperty lastName;
-    private StringProperty login;
+    private StringProperty email;
     private StringProperty password;
     private ObjectProperty<LocalDate> birthday;
 
-    public Person(Long id, String firstName, String lastName, String password, String login, LocalDate birthday){
+    public Person(Long id, String firstName, String lastName, String password, String email, LocalDate birthday){
         this.id = new SimpleLongProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
-        this.login = new SimpleStringProperty(login);
+        this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
         this.birthday = new SimpleObjectProperty<LocalDate>(birthday);
 
@@ -42,12 +42,12 @@ public abstract class Person {
         return lastName;
     }
 
-    public String getLogin() {
-        return login.get();
+    public String getEmail() {
+        return email.get();
     }
 
-    public StringProperty getLoginProperty() {
-        return login;
+    public StringProperty getEmailProperty() {
+        return email;
     }
 
     public String getPassword() {
@@ -78,8 +78,8 @@ public abstract class Person {
         this.lastName = new SimpleStringProperty(lastName);
     }
 
-    public void setLogin(String login) {
-        this.login = new SimpleStringProperty(login);
+    public void setEmail(String email) {
+        this.email = new SimpleStringProperty(email);
     }
 
     public void setPassword(String password) {
