@@ -48,7 +48,7 @@ public class FacultyController {
         return facultyService.find(id).map(faculty -> {
             faculty.setFirstName(facultyUpdate.getFirstName());
             faculty.setLastName(facultyUpdate.getLastName());
-            faculty.setLogin(facultyUpdate.getLogin());
+            faculty.setEmail(facultyUpdate.getEmail());
             faculty.setPassword(facultyUpdate.getPassword());
             faculty.setBirthday(facultyUpdate.getBirthday());
             faculty.setCourses(facultyUpdate.getCourses());

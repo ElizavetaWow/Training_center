@@ -48,7 +48,7 @@ public class EmployeeController {
         return employeeService.find(id).map(employee -> {
             employee.setFirstName(employeeUpdate.getFirstName());
             employee.setLastName(employeeUpdate.getLastName());
-            employee.setLogin(employeeUpdate.getLogin());
+            employee.setEmail(employeeUpdate.getEmail());
             employee.setPassword(employeeUpdate.getPassword());
             employee.setBirthday(employeeUpdate.getBirthday());
             employee.setCompany(employeeUpdate.getCompany());
