@@ -1,9 +1,6 @@
 package sample.models;
 
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.LongProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.StringProperty;
+import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
@@ -13,6 +10,18 @@ public class Place {
     private StringProperty street;
     private StringProperty building;
     private IntegerProperty room;
+
+    public Place(Long id, String city, String street, String building, Integer room) {
+        this.id = new SimpleLongProperty(id);
+        this.city = new SimpleStringProperty(city);
+        this.street = new SimpleStringProperty(street);
+        this.building = new SimpleStringProperty(building);
+        this.room = new SimpleIntegerProperty(room);
+    }
+
+    public Place(){
+        this(null, null, null, null, null);
+    }
 
     public long getId() {
         return id.get();
