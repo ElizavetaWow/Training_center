@@ -1,13 +1,15 @@
 package sample.controllers;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import sample.Main;
+import sample.models.Company;
 import sample.models.Employee;
 import sample.utils.DateUtil;
+
+import java.util.List;
 
 public class EmployeeOverviewController {
     @FXML
@@ -28,6 +30,9 @@ public class EmployeeOverviewController {
     @FXML
     private Label companyLabel;
 
+    @FXML
+    private ComboBox companyBox;
+
     private Main main;
 
     public EmployeeOverviewController(){
@@ -37,8 +42,13 @@ public class EmployeeOverviewController {
     private void initialize(){
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
-
-
+        ObservableList<String> locData = FXCollections.observableArrayList();
+        locData.add("All Companies");
+        for (Company comp: Main.GenerateCompanies()){
+            locData.add(comp.getName());
+        }
+        companyBox.setItems(locData);
+        employeeTableView.setItems(Main.GeneratePersons());
         showEmployeeDetails(null);
         employeeTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue )-> showEmployeeDetails(newValue)
@@ -47,6 +57,13 @@ public class EmployeeOverviewController {
 
     public void setMainApp(Main main){
         this.main = main;
+    }
+
+    public void setCompany(Company company){
+        if (company != null){
+            companyBox.getSelectionModel().select(company.getName());
+        }
+
     }
 
     private void showEmployeeDetails(Employee employee){
@@ -87,6 +104,12 @@ public class EmployeeOverviewController {
 
     @FXML
     private void handleNewEmployee(){
+    }
+    @FXML
+    private void chooseCompany(){
+        int selectionIndex = companyBox.getSelectionModel().getSelectedIndex();
+
+
     }
 }
 

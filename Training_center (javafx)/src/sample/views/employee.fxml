@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.EmployeeOverviewController">
-    <SplitPane dividerPositions="0.3" layoutY="51.0" maxWidth="-Infinity" prefHeight="349.0" prefWidth="600.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="51.0">
+    <SplitPane dividerPositions="0.3" layoutX="12.0" layoutY="49.0" maxWidth="-Infinity" prefHeight="340.0" prefWidth="576.0" AnchorPane.bottomAnchor="11.0" AnchorPane.leftAnchor="12.0" AnchorPane.rightAnchor="12.0" AnchorPane.topAnchor="49.0">
         <AnchorPane minHeight="0.0" minWidth="0.0" prefWidth="100.0">
             <TableView fx:id="employeeTableView" prefHeight="400.0" prefWidth="176.0" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                 <columns>
@@ -48,5 +48,5 @@
             </HBox>
         </AnchorPane>
     </SplitPane>
-   <ComboBox layoutX="14.0" layoutY="14.0" prefWidth="150.0" promptText="Company" />
+   <ComboBox fx:id="companyBox" layoutX="14.0" layoutY="14.0" onAction="#chooseCompany" prefWidth="150.0" promptText="Company" />
 </AnchorPane>
