@@ -19,13 +19,13 @@ public class CompanyController {
         this.companyService = companyService;
     }
 
-    @PostMapping("/api/companies")
+    @PostMapping("/companies")
     public ResponseEntity<?> create(@RequestBody Company company){
         companyService.create(company);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/companies")
+    @GetMapping("/companies")
     public ResponseEntity<List<Company>> findAll(){
         final List<Company> companyList = companyService.findAll();
         return companyList != null && !companyList.isEmpty()
@@ -33,7 +33,7 @@ public class CompanyController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/companies/{id}")
+    @GetMapping("/companies/{id}")
     public ResponseEntity<Optional<Company>> find(@PathVariable(name = "id") Long id){
         final Optional<Company> company = companyService.find(id);
         return company != null
@@ -42,7 +42,7 @@ public class CompanyController {
     }
 
 
-    @PutMapping("/api/companies/{id}")
+    @PutMapping("/companies/{id}")
     public ResponseEntity<?> updateCompany(@PathVariable(name = "id") Long id, @RequestBody Company companyUpdate) {
         return companyService.find(id).map(company -> {
             company.setName(companyUpdate.getName());
@@ -54,7 +54,7 @@ public class CompanyController {
 
     }
 
-    @DeleteMapping("/api/companies/{id}")
+    @DeleteMapping("/companies/{id}")
     public ResponseEntity<?> deleteCompany(@PathVariable(name = "id") Long id) {
         return companyService.find(id).map(company -> {
             companyService.delete(company);

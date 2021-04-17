@@ -1,11 +1,15 @@
 package sample.controllers;
 
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
 import sample.Main;
 import sample.models.Company;
+import sample.utils.ApiSession;
+
 
 
 public class CompanyOverviewController {
@@ -23,6 +27,9 @@ public class CompanyOverviewController {
     private BarChart chart;
 
     private Main main;
+    private ApiSession apiSession;
+    private ObservableList<Company> companies = FXCollections.observableArrayList();
+
 
     public CompanyOverviewController(){
     }
@@ -30,7 +37,6 @@ public class CompanyOverviewController {
     @FXML
     private void initialize(){
         companyColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
-        companyTableView.setItems(Main.GenerateCompanies());
         showCompanyDetails(null);
         companyTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue )-> showCompanyDetails(newValue)
@@ -39,6 +45,8 @@ public class CompanyOverviewController {
 
     public void setMainApp(Main main){
         this.main = main;
+        updateCompanies();
+        companyTableView.setItems(companies);
     }
 
     private void showChart(Company company){
@@ -62,25 +70,31 @@ public class CompanyOverviewController {
     @FXML
     private void handleDeleteCompany(){
         int selectionIndex = companyTableView.getSelectionModel().getSelectedIndex();
-        if (selectionIndex >= 0)
-            companyTableView.getItems().remove(selectionIndex);
+        if (selectionIndex >= 0) {
+            Company currentCompany = companyTableView.getItems().get(selectionIndex);
+            if (apiSession.deleteCompany(currentCompany)) {
+                companyTableView.getItems().remove(selectionIndex);
+            }
+        }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
-            alert.setHeaderText("No Employee Selected");
-            alert.setContentText("Please select a employee in the table");
+            alert.setHeaderText("No Company Selected");
+            alert.setContentText("Please select a company in the table");
             alert.showAndWait();
         }
     }
 
     @FXML
     private void handleEditCompany(){
-        Company selectedCompany = companyTableView.getSelectionModel().getSelectedItem();
-        if (selectedCompany != null) {
-            boolean okClicked = main.showCompanyEditDialog(selectedCompany);
+        int selectionIndex = companyTableView.getSelectionModel().getSelectedIndex();
+        if (selectionIndex >= 0) {
+            Company currentCompany = companyTableView.getItems().get(selectionIndex);
+            boolean okClicked = main.showCompanyEditDialog(currentCompany);
+            updateCompanies();
             if (okClicked) {
-                showCompanyDetails(selectedCompany);
+                showCompanyDetails(currentCompany);
             }
 
         } else {
@@ -98,7 +112,10 @@ public class CompanyOverviewController {
     private void handleAddCompany(){
         Company tempCompany = new Company();
         boolean okClicked = main.showCompanyEditDialog(tempCompany);
-
+        updateCompanies();
+        if (okClicked) {
+            showCompanyDetails(tempCompany);
+        }
     }
 
     @FXML
@@ -115,6 +132,15 @@ public class CompanyOverviewController {
             alert.showAndWait();
         }
 
+    }
+
+    public void setRestApi(ApiSession apiSession) {
+        this.apiSession = apiSession;
+    }
+
+    public void updateCompanies(){
+        companies.clear();
+        companies.addAll(apiSession.getCompany());
     }
 
 }

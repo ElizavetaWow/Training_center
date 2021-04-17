@@ -20,13 +20,13 @@ public class EmployeeController {
         this.employeeService = employeeService;
     }
 
-    @PostMapping("/api/employees")
+    @PostMapping("/employees")
     public ResponseEntity<?> create(@RequestBody Employee employee){
         employeeService.create(employee);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/employees")
+    @GetMapping("/employees")
     public ResponseEntity<List<Employee>> findAll(){
         final List<Employee> employeeList = employeeService.findAll();
         return employeeList != null && !employeeList.isEmpty()
@@ -34,7 +34,7 @@ public class EmployeeController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/employees/{id}")
+    @GetMapping("/employees/{id}")
     public ResponseEntity<Optional<Employee>> find(@PathVariable(name = "id") Long id){
         final Optional<Employee> employee = employeeService.find(id);
         return employee != null
@@ -43,7 +43,7 @@ public class EmployeeController {
     }
 
 
-    @PutMapping("/api/employees/{id}")
+    @PutMapping("/employees/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employeeUpdate) {
         return employeeService.find(id).map(employee -> {
             employee.setFirstName(employeeUpdate.getFirstName());
@@ -59,7 +59,7 @@ public class EmployeeController {
 
     }
 
-    @DeleteMapping("/api/employees/{id}")
+    @DeleteMapping("/employees/{id}")
     public ResponseEntity<?> deleteEmployee(@PathVariable(name = "id") Long id) {
         return employeeService.find(id).map(employee -> {
             employeeService.delete(employee);

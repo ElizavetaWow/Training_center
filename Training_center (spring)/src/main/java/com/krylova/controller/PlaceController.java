@@ -20,13 +20,13 @@ public class PlaceController {
         this.placeService = placeService;
     }
 
-    @PostMapping("/api/places")
+    @PostMapping("/places")
     public ResponseEntity<?> create(@RequestBody Place place){
         placeService.create(place);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/places")
+    @GetMapping("/places")
     public ResponseEntity<List<Place>> findAll(){
         final List<Place> placeList = placeService.findAll();
         return placeList != null && !placeList.isEmpty()
@@ -34,7 +34,7 @@ public class PlaceController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/places/{id}")
+    @GetMapping("/places/{id}")
     public ResponseEntity<Optional<Place>> find(@PathVariable(name = "id") Long id){
         final Optional<Place> place = placeService.find(id);
         return place != null
@@ -43,7 +43,7 @@ public class PlaceController {
     }
 
 
-    @PutMapping("/api/places/{id}")
+    @PutMapping("/places/{id}")
     public ResponseEntity<?> updatePlace(@PathVariable(name = "id") Long id, @RequestBody Place placeUpdate) {
         return placeService.find(id).map(place -> {
             place.setCity(placeUpdate.getCity());
@@ -57,7 +57,7 @@ public class PlaceController {
 
     }
 
-    @DeleteMapping("/api/places/{id}")
+    @DeleteMapping("/places/{id}")
     public ResponseEntity<?> deletePlace(@PathVariable(name = "id") Long id) {
         return placeService.find(id).map(place -> {
             placeService.delete(place);

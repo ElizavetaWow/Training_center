@@ -5,7 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.models.Company;
+import sample.utils.ApiSession;
 
 public class CompanyEditDialogController {
 
@@ -17,6 +19,9 @@ public class CompanyEditDialogController {
     private Company company;
     private Stage dialogStage;
     private boolean okClicked = false;
+    private boolean update = false;
+
+    private ApiSession apiSession;
 
     public CompanyEditDialogController(){}
 
@@ -24,11 +29,15 @@ public class CompanyEditDialogController {
     private void initialize(){
     }
 
-    public void setDialogStage(Stage dialogStage) {
+    public void setDialogStage(Stage dialogStage, ApiSession apiSession) {
         this.dialogStage = dialogStage;
+        this.apiSession = apiSession;
     }
 
     public void setCompany(Company company){
+        if (company.getName() != null){
+            this.update = true;
+        }
         this.company = company;
         nameField.setText(company.getName());
         accountField.setText(company.getAccount());
@@ -48,6 +57,12 @@ public class CompanyEditDialogController {
         if(isInputValid()){
             company.setName(nameField.getText());
             company.setAccount(accountField.getText());
+            if (update) {
+                apiSession.updateCompany(company);
+            }
+            else {
+                apiSession.createCompany(company);
+            }
             okClicked = true;
             dialogStage.close();
         }

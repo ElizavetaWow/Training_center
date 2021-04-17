@@ -20,13 +20,13 @@ public class CourseInfoController {
         this.courseInfoService = courseInfoService;
     }
 
-    @PostMapping("/api/courseInfos")
+    @PostMapping("/courseInfos")
     public ResponseEntity<?> create(@RequestBody CourseInfo courseInfo){
         courseInfoService.create(courseInfo);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/courseInfos")
+    @GetMapping("/courseInfos")
     public ResponseEntity<List<CourseInfo>> findAll(){
         final List<CourseInfo> courseInfoList = courseInfoService.findAll();
         return courseInfoList != null && !courseInfoList.isEmpty()
@@ -34,7 +34,7 @@ public class CourseInfoController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/courseInfos/{id}")
+    @GetMapping("/courseInfos/{id}")
     public ResponseEntity<Optional<CourseInfo>> find(@PathVariable(name = "id") Long id){
         final Optional<CourseInfo> courseInfo = courseInfoService.find(id);
         return courseInfo != null
@@ -43,7 +43,7 @@ public class CourseInfoController {
     }
 
 
-    @PutMapping("/api/courseInfos/{id}")
+    @PutMapping("/courseInfos/{id}")
     public ResponseEntity<?> updateCourseInfo(@PathVariable(name = "id") Long id, @RequestBody CourseInfo courseInfoUpdate) {
         return courseInfoService.find(id).map(courseInfo -> {
             courseInfo.setName(courseInfoUpdate.getName());
@@ -54,7 +54,7 @@ public class CourseInfoController {
 
     }
 
-    @DeleteMapping("/api/courseInfos/{id}")
+    @DeleteMapping("/courseInfos/{id}")
     public ResponseEntity<?> deleteCourseInfo(@PathVariable(name = "id") Long id) {
         return courseInfoService.find(id).map(courseInfo -> {
             courseInfoService.delete(courseInfo);

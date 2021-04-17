@@ -14,6 +14,7 @@ import sample.controllers.CompanyOverviewController;
 import sample.controllers.EmployeeOverviewController;
 import sample.models.Company;
 import sample.models.Employee;
+import sample.utils.ApiSession;
 import sample.utils.DateUtil;
 
 import java.io.IOException;
@@ -21,8 +22,10 @@ import java.io.IOException;
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private ApiSession apiSession;
 
     public Main(){
+        this.apiSession = new ApiSession();
     }
 
     @Override
@@ -67,6 +70,7 @@ public class Main extends Application {
             AnchorPane companyOverview = loader.load();
             rootLayout.setCenter(companyOverview);
             CompanyOverviewController controller = loader.getController();
+            controller.setRestApi(apiSession);
             controller.setMainApp(this);
         } catch (IOException e){
             e.printStackTrace();
@@ -112,7 +116,7 @@ public class Main extends Application {
             dialogStage.setScene(scene);
 
             CompanyEditDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
+            controller.setDialogStage(dialogStage, apiSession);
             controller.setCompany(company);
             dialogStage.showAndWait();
 

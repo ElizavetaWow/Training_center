@@ -20,13 +20,13 @@ public class FacultyController {
         this.facultyService = facultyService;
     }
 
-    @PostMapping("/api/faculties")
+    @PostMapping("/faculties")
     public ResponseEntity<?> create(@RequestBody Faculty faculty){
         facultyService.create(faculty);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/faculties")
+    @GetMapping("/faculties")
     public ResponseEntity<List<Faculty>> findAll(){
         final List<Faculty> facultyList = facultyService.findAll();
         return facultyList != null && !facultyList.isEmpty()
@@ -34,7 +34,7 @@ public class FacultyController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/faculties/{id}")
+    @GetMapping("/faculties/{id}")
     public ResponseEntity<Optional<Faculty>> find(@PathVariable(name = "id") Long id){
         final Optional<Faculty> faculty = facultyService.find(id);
         return faculty != null
@@ -43,7 +43,7 @@ public class FacultyController {
     }
 
 
-    @PutMapping("/api/faculties/{id}")
+    @PutMapping("/faculties/{id}")
     public ResponseEntity<?> updateFaculty(@PathVariable(name = "id") Long id, @RequestBody Faculty facultyUpdate) {
         return facultyService.find(id).map(faculty -> {
             faculty.setFirstName(facultyUpdate.getFirstName());
@@ -58,7 +58,7 @@ public class FacultyController {
 
     }
 
-    @DeleteMapping("/api/faculties/{id}")
+    @DeleteMapping("/faculties/{id}")
     public ResponseEntity<?> deleteFaculty(@PathVariable(name = "id") Long id) {
         return facultyService.find(id).map(faculty -> {
             facultyService.delete(faculty);

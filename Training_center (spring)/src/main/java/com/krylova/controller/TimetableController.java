@@ -20,13 +20,13 @@ public class TimetableController {
         this.timetableService = timetableService;
     }
 
-    @PostMapping("/api/timetables")
+    @PostMapping("/timetables")
     public ResponseEntity<?> create(@RequestBody Timetable timetable){
         timetableService.create(timetable);
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/api/timetables")
+    @GetMapping("/timetables")
     public ResponseEntity<List<Timetable>> findAll(){
         final List<Timetable> timetableList = timetableService.findAll();
         return timetableList != null && !timetableList.isEmpty()
@@ -34,7 +34,7 @@ public class TimetableController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/api/timetables/{id}")
+    @GetMapping("/timetables/{id}")
     public ResponseEntity<Optional<Timetable>> find(@PathVariable(name = "id") Long id){
         final Optional<Timetable> timetable = timetableService.find(id);
         return timetable != null
@@ -43,7 +43,7 @@ public class TimetableController {
     }
 
 
-    @PutMapping("/api/timetables/{id}")
+    @PutMapping("/timetables/{id}")
     public ResponseEntity<?> updateTimetable(@PathVariable(name = "id") Long id, @RequestBody Timetable timetableUpdate) {
         return timetableService.find(id).map(timetable -> {
             timetable.setDate(timetableUpdate.getDate());
@@ -56,7 +56,7 @@ public class TimetableController {
 
     }
 
-    @DeleteMapping("/api/timetables/{id}")
+    @DeleteMapping("/timetables/{id}")
     public ResponseEntity<?> deleteTimetable(@PathVariable(name = "id") Long id) {
         return timetableService.find(id).map(timetable -> {
             timetableService.delete(timetable);
