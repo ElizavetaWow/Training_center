@@ -7,8 +7,10 @@ import javafx.scene.control.*;
 import sample.Main;
 import sample.models.Company;
 import sample.models.Employee;
+import sample.utils.ApiSession;
 import sample.utils.DateUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeOverviewController {
@@ -34,6 +36,10 @@ public class EmployeeOverviewController {
     private ComboBox companyBox;
 
     private Main main;
+    private ApiSession apiSession;
+    private ObservableList<Employee> employees = FXCollections.observableArrayList();
+    private ObservableList<String> companyList = FXCollections.observableArrayList();
+    private List<Company> companies = new ArrayList<>();
 
     public EmployeeOverviewController(){
     }
@@ -42,21 +48,27 @@ public class EmployeeOverviewController {
     private void initialize(){
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
-        ObservableList<String> locData = FXCollections.observableArrayList();
-        locData.add("All Companies");
-        for (Company comp: Main.GenerateCompanies()){
-            locData.add(comp.getName());
-        }
-        companyBox.setItems(locData);
-        employeeTableView.setItems(Main.GeneratePersons());
+        setCompanyBoxItems();
         showEmployeeDetails(null);
         employeeTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue )-> showEmployeeDetails(newValue)
         );
     }
 
+    public void setCompanyBoxItems(){
+        companyList.clear();
+        List<Company> companies = apiSession.getCompanies();
+        companyList.add("All Companies");
+        for (Company company: companies){
+            companyList.add(company.getName());
+        }
+        companyBox.setItems(companyList);
+    }
+
     public void setMainApp(Main main){
         this.main = main;
+        updateEmployees();
+        employeeTableView.setItems(employees);
     }
 
     public void setCompany(Company company){
@@ -72,7 +84,7 @@ public class EmployeeOverviewController {
             lastNameLabel.setText(employee.getLastName());
             birthdayLabel.setText(DateUtil.format(employee.getBirthday()));
             emailLabel.setText(employee.getEmail());
-            companyLabel.setText(employee.getCompanyName());
+            companyLabel.setText(apiSession.getCompanies(employee.getCompanyId()).getName());
         }
         else {
             firstNameLabel.setText("");
@@ -86,8 +98,13 @@ public class EmployeeOverviewController {
     @FXML
     private void handleDeleteEmployee(){
         int selectionIndex = employeeTableView.getSelectionModel().getSelectedIndex();
-        if (selectionIndex >= 0)
+        if (selectionIndex >= 0) {
             employeeTableView.getItems().remove(selectionIndex);
+            Employee currentEmployee = employeeTableView.getItems().get(selectionIndex);
+            if (apiSession.deleteEmployee(currentEmployee)) {
+                employeeTableView.getItems().remove(selectionIndex);
+            }
+        }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
@@ -100,16 +117,49 @@ public class EmployeeOverviewController {
 
     @FXML
     private void handleEditEmployee(){
+        int selectionIndex = employeeTableView.getSelectionModel().getSelectedIndex();
+        if (selectionIndex >= 0) {
+            Employee currentEmployee = employeeTableView.getItems().get(selectionIndex);
+            boolean okClicked = main.showEmployeeEditDialog(currentEmployee);
+            updateEmployees();
+            if (okClicked) {
+                showEmployeeDetails(currentEmployee);
+            }
+
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Employee Selected");
+            alert.setContentText("Please select a employee in the table.");
+
+            alert.showAndWait();
+        }
     }
 
     @FXML
     private void handleNewEmployee(){
+        Employee tempEmplolyee = new Employee();
+        boolean okClicked = main.showEmployeeEditDialog(tempEmplolyee);
+        updateEmployees();
+        if (okClicked) {
+            showEmployeeDetails(tempEmplolyee);
+        }
     }
     @FXML
     private void chooseCompany(){
         int selectionIndex = companyBox.getSelectionModel().getSelectedIndex();
 
 
+    }
+
+    public void setRestApi(ApiSession apiSession) {
+        this.apiSession = apiSession;
+    }
+
+    public void updateEmployees(){
+        employees.clear();
+        employees.addAll(apiSession.getEmployees());
     }
 }
 

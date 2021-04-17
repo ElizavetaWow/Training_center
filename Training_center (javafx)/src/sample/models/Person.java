@@ -4,7 +4,7 @@ import javafx.beans.property.*;
 
 import java.time.LocalDate;
 
-public abstract class Person {
+public abstract class Person implements ApiModel{
     private LongProperty id;
     private StringProperty firstName;
     private StringProperty lastName;
@@ -22,8 +22,18 @@ public abstract class Person {
 
     }
 
+    public Person(String firstName, String lastName, String password, String email, LocalDate birthday){
+        this.id = null;
+        this.firstName = new SimpleStringProperty(firstName);
+        this.lastName = new SimpleStringProperty(lastName);
+        this.email = new SimpleStringProperty(email);
+        this.password = new SimpleStringProperty(password);
+        this.birthday = new SimpleObjectProperty<LocalDate>(birthday);
+
+    }
+
     public Person(){
-        this(null, null, null, null, null, null);
+        this(null, null, null, null, null);
     }
 
     public String getFirstName() {

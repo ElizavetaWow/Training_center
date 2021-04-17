@@ -140,7 +140,7 @@ public class CompanyOverviewController {
 
     public void updateCompanies(){
         companies.clear();
-        companies.addAll(apiSession.getCompany());
+        companies.addAll(apiSession.getCompanies());
     }
 
 }
