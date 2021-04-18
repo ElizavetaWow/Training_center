@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,6 @@ public class Company {
     private String account;
 
     @OneToMany(targetEntity=Employee.class )
+    @JsonIgnore
     private List employees;
 }

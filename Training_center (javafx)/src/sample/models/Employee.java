@@ -10,54 +10,53 @@ import java.util.Map;
 
 public class Employee extends Person{
 
-    private LongProperty companyId;
+    private ObjectProperty<Company> company;
 
     public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(id, firstName, lastName, password, email, birthday);
-        this.companyId = new SimpleLongProperty(company.getId());
-    }
-
-    public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Long companyId){
-        super(id, firstName, lastName, password, email, birthday);
-        this.companyId = new SimpleLongProperty();
+        this.company = new SimpleObjectProperty<Company>(company);
     }
 
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(firstName, lastName, password, email, birthday);
-        this.companyId = new SimpleLongProperty(company.getId());
+        this.company = new SimpleObjectProperty<Company>(company);
     }
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday){
         super(firstName, lastName, password, email, birthday);
-        this.companyId = null;
+        this.company = null;
     }
 
     public Employee(){
         this(null, null, null, null, null);
     }
 
-    public long getCompanyId() {
-        return companyId.get();
+    public Company getCompany() {
+        return company.get();
     }
 
-    public LongProperty companyIdProperty() {
-        return companyId;
+    public ObjectProperty<Company> companyProperty() {
+        return company;
     }
 
-    public void setCompanyId(long companyId) {
-        this.companyId.set(companyId);
+    public void setCompany(Company company) {
+        this.company = new SimpleObjectProperty<Company>(company);
     }
 
     @Override
     public String toJSON() {
+        Gson gson = new Gson();
         Map<String, String> map = new HashMap<>();
         map.put("firstName", getFirstName());
         map.put("lastName", getLastName());
         map.put("password", getPassword());
         map.put("email", getEmail());
         map.put("birthday", DateUtil.format(getBirthday()));
-        map.put("companyId", String.valueOf(getCompanyId()));
-
-        Gson gson = new Gson();
-        return gson.toJson(map);
+        map.put("company", "");
+        StringBuilder sb = new StringBuilder(getCompany().toJSON()) ;
+        sb.insert(1, "\"id\":"+getCompany().getId()+",");
+        StringBuilder jsb = new StringBuilder(gson.toJson(map)) ;
+        int ind = jsb.indexOf("company\":")+9;
+        jsb.replace(ind, ind+2, sb.toString());
+        return jsb.toString();
     }
 }

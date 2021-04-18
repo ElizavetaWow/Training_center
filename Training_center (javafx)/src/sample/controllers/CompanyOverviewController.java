@@ -11,7 +11,6 @@ import sample.models.Company;
 import sample.utils.ApiSession;
 
 
-
 public class CompanyOverviewController {
     @FXML
     private TableView<Company> companyTableView;
@@ -109,7 +108,7 @@ public class CompanyOverviewController {
     }
 
     @FXML
-    private void handleAddCompany(){
+    private void handleNewCompany(){
         Company tempCompany = new Company();
         boolean okClicked = main.showCompanyEditDialog(tempCompany);
         updateCompanies();
@@ -134,7 +133,7 @@ public class CompanyOverviewController {
 
     }
 
-    public void setRestApi(ApiSession apiSession) {
+    public void setApiSession(ApiSession apiSession) {
         this.apiSession = apiSession;
     }
 

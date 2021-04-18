@@ -21,14 +21,9 @@ public class ApiSession {
 
     public Company getCompanies(Long id) {
         String answer = HttpClass.GetRequest(url + "/companies/"+id);
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-        if (jsonAnswer.size() > 0){
-            JsonObject currentCompany = jsonAnswer.get(0).getAsJsonObject();
-            String name = currentCompany.get("name").getAsString();
-            String account = currentCompany.get("account").getAsString();
-            Long id = currentCompany.get("id").getAsLong();
-            Company result = new Company(id, name, account);
-            return result;
+        JsonObject currentCompany = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentCompany != null){
+            return companyFromJson(currentCompany);
         }
         return null;
     }
@@ -40,19 +35,34 @@ public class ApiSession {
 
         for (int i = 0; i < jsonAnswer.size(); i++) {
             JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
+            result.add(companyFromJson(currentCompany));
+        }
+        return result;
+    }
 
-            String name = currentCompany.get("name").getAsString();
-            String account = currentCompany.get("account").getAsString();
-            Long id = currentCompany.get("id").getAsLong();
+    public Company companyFromJson(JsonObject currentCompany){
+        String name = currentCompany.get("name").getAsString();
+        String account = currentCompany.get("account").getAsString();
+        Long id = currentCompany.get("id").getAsLong();
+        return new Company(id, name, account);
+    }
 
-            Company newCompany = new Company(id, name, account);
-            result.add(newCompany);
+    public List<Company> getCompanies(String field, String value) {
+        List<Company> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/companies");
+        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+        for (int i = 0; i < jsonAnswer.size(); i++) {
+            JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
+            if (currentCompany.get(field).getAsString().equals(value)){
+                result.add(companyFromJson(currentCompany));
+            }
         }
         return result;
     }
 
     public void updateCompany(Company company) {
-        Long id = company.getId();
+        long id = company.getId();
         String jsonString = company.toJSON();
         HttpClass.PutRequest(url + "/companies/" + id, jsonString);
     }
@@ -74,42 +84,52 @@ public class ApiSession {
         List<Employee> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/employees");
         JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
         for (int i = 0; i < jsonAnswer.size(); i++) {
             JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
-
-            String firstName = currentEmployee.get("firstName").getAsString();
-            String lastName = currentEmployee.get("lastName").getAsString();
-            String password = currentEmployee.get("password").getAsString();
-            String email = currentEmployee.get("email").getAsString();
-            LocalDate birthday = DateUtil.parse(currentEmployee.get("birthday").getAsString());
-            Long companyId = currentEmployee.get("companyId").getAsLong();
-            Long id = currentEmployee.get("id").getAsLong();
-
-            Employee newEmployee = new Employee(id, firstName, lastName, password, email, birthday, companyId);
-            result.add(newEmployee);
+            result.add(employeeFromJson(currentEmployee));
         }
         return result;
     }
 
     public Employee getEmployees(Long id) {
         String answer = HttpClass.GetRequest(url + "/employees/"+id);
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-        if (jsonAnswer.size() > 0){
-            JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
-
-            String firstName = currentEmployee.get("firstName").getAsString();
-            String lastName = currentEmployee.get("lastName").getAsString();
-            String password = currentEmployee.get("password").getAsString();
-            String email = currentEmployee.get("email").getAsString();
-            LocalDate birthday = DateUtil.parse(currentEmployee.get("birthday").getAsString());
-            Long companyId = currentEmployee.get("companyId").getAsLong();
-            Long id = currentEmployee.get("id").getAsLong();
-
-            Employee result = new Employee(id, firstName, lastName, password, email, birthday, companyId);
-            return result;
+        JsonObject currentEmployee = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentEmployee != null){
+            return employeeFromJson(currentEmployee);
         }
         return null;
+    }
+
+    public List<Employee> getEmployees(String field, String value) {
+        List<Employee> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/employees");
+        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+        for (int i = 0; i < jsonAnswer.size(); i++) {
+            JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
+            if (field.equals("company")){
+                if (currentEmployee.get("company").getAsJsonObject().get("id").getAsString().equals(value)){
+                    result.add(employeeFromJson(currentEmployee));
+                }
+            }
+            else{
+                if (currentEmployee.get(field).getAsString().equals(value)){
+                    result.add(employeeFromJson(currentEmployee));
+                }
+            }
+        }
+        return result;
+    }
+
+    public Employee employeeFromJson(JsonObject currentEmployee){
+        String firstName = currentEmployee.get("firstName").getAsString();
+        String lastName = currentEmployee.get("lastName").getAsString();
+        String password = currentEmployee.get("password").getAsString();
+        String email = currentEmployee.get("email").getAsString();
+        LocalDate birthday = DateUtil.parse(currentEmployee.get("birthday").getAsString());
+        Company company = companyFromJson(currentEmployee.get("company").getAsJsonObject());
+        Long id = currentEmployee.get("id").getAsLong();
+        return new Employee(id, firstName, lastName, password, email, birthday, company);
     }
 
     public void updateEmployee(Employee employee) {

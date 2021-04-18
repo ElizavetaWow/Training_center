@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,7 @@ public class Employee {
     @ManyToOne
     private Company company;
     @ManyToMany(targetEntity=Course.class)
+    @JsonIgnore
     private Set courses;
 
 }

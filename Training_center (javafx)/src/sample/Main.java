@@ -11,6 +11,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.controllers.CompanyEditDialogController;
 import sample.controllers.CompanyOverviewController;
+import sample.controllers.EmployeeEditDialogController;
 import sample.controllers.EmployeeOverviewController;
 import sample.models.Company;
 import sample.models.Employee;
@@ -56,8 +57,9 @@ public class Main extends Application {
             AnchorPane employeeOverview = loader.load();
             rootLayout.setCenter(employeeOverview);
             EmployeeOverviewController controller = loader.getController();
-            controller.setCompany(company);
+            controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setCompany(company);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -70,7 +72,7 @@ public class Main extends Application {
             AnchorPane companyOverview = loader.load();
             rootLayout.setCenter(companyOverview);
             CompanyOverviewController controller = loader.getController();
-            controller.setRestApi(apiSession);
+            controller.setApiSession(apiSession);
             controller.setMainApp(this);
         } catch (IOException e){
             e.printStackTrace();
@@ -118,6 +120,30 @@ public class Main extends Application {
             CompanyEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
             controller.setCompany(company);
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showEmployeeEditDialog(Employee employee){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/employeeEditDialog.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit");
+            dialogStage.initOwner(primaryStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            EmployeeEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage, apiSession);
+            controller.setEmployee(employee);
             dialogStage.showAndWait();
 
             return controller.isOkClicked();

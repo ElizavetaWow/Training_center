@@ -19,7 +19,7 @@
         </AnchorPane>
         <AnchorPane minHeight="0.0" minWidth="0.0" styleClass="background">
             <HBox layoutX="268.0" layoutY="259.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
-                <Button mnemonicParsing="false" onAction="#handleAddCompany" prefHeight="25.0" prefWidth="70.0" text="Add " />
+                <Button mnemonicParsing="false" onAction="#handleNewCompany" prefHeight="25.0" prefWidth="70.0" text="New" />
                 <Button mnemonicParsing="false" onAction="#handleEditCompany" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                 <Button mnemonicParsing="false" onAction="#handleDeleteCompany" prefHeight="25.0" prefWidth="70.0" text="Delete" />
             </HBox>

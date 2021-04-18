@@ -15,6 +15,7 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
         <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
@@ -24,9 +25,11 @@
         <Label text="Last name" GridPane.rowIndex="1" />
         <Label text="Birthday" GridPane.rowIndex="2" />
         <Label text="Email" GridPane.rowIndex="3" />
-        <Label text="Company" GridPane.rowIndex="4" />
-      <ComboBox fx:id="companyField" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-      <DatePicker fx:id="birthdayField" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+        <Label text="Company" GridPane.rowIndex="5" />
+      <ComboBox fx:id="companyBox" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+      <DatePicker fx:id="birthdayPicker" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <Label text="Password" GridPane.rowIndex="4" />
+      <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     </GridPane>
     <HBox layoutX="108.0" layoutY="355.0" spacing="10.0" AnchorPane.bottomAnchor="31.666666666666686" AnchorPane.rightAnchor="78.0">
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="90.0" text="Ok" />

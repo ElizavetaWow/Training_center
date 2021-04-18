@@ -2,9 +2,7 @@ package sample.models;
 
 import com.google.gson.Gson;
 import javafx.beans.property.*;
-import sample.utils.DateUtil;
 
-import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +63,6 @@ public class Company implements ApiModel{
         Map<String, String> map = new HashMap<>();
         map.put("name", getName());
         map.put("account", getAccount());
-
         Gson gson = new Gson();
         return gson.toJson(map);
     }
