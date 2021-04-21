@@ -19,6 +19,6 @@ public class Place {
     private String building;
     private Integer room;
 
-    @OneToMany(targetEntity=Timetable.class )
+    @OneToMany(targetEntity=Timetable.class, fetch = FetchType.LAZY)
     private List timetables;
 }

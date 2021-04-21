@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import sample.models.Company;
 import sample.models.Employee;
+import sample.models.Place;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -76,11 +77,10 @@ public class ApiSession {
         return HttpClass.DeleteRequest(url + "/companies/" + id);
     }
 
+
     public void createEmployee(Employee employee) {
         HttpClass.PostRequest(url + "/employees", employee.toJSON());
     }
-
-
 
     public List<Employee> getEmployees() {
         List<Employee> result = new ArrayList<>();
@@ -140,5 +140,69 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/employees/" + id);
+    }
+
+
+    public void createPlace(Place place) {
+        HttpClass.PostRequest(url + "/places", place.toJSON());
+    }
+
+    public Place getPlacesById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/places/"+id);
+        JsonObject currentPlace = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentPlace != null){
+            return placeFromJson(currentPlace);
+        }
+        return null;
+    }
+    public List<Place> getPlacesByCity(String city) {
+        List<Place> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/places/city_"+city);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentPlace = jsonAnswer.get(i).getAsJsonObject();
+                result.add(placeFromJson(currentPlace));
+            }
+        }
+        return result;
+    }
+
+    public List<Place> getPlaces() {
+        List<Place> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/places");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentPlace = jsonAnswer.get(i).getAsJsonObject();
+                result.add(placeFromJson(currentPlace));
+            }
+        }
+        return result;
+
+    }
+
+    public Place placeFromJson(JsonObject currentPlace){
+        String city = currentPlace.get("city").getAsString();
+        String street = currentPlace.get("street").getAsString();
+        String building = currentPlace.get("building").getAsString();
+        int room = currentPlace.get("room").getAsInt();
+        Long id = currentPlace.get("id").getAsLong();
+        return new Place(id, city, street, building, room);
+    }
+
+
+    public void updatePlace(Place place) {
+        long id = place.getId();
+        String jsonString = place.toJSON();
+        HttpClass.PutRequest(url + "/places/" + id, jsonString);
+    }
+
+    public boolean deletePlace(Place place) {
+        Long id = place.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/places/" + id);
     }
 }

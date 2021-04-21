@@ -1,10 +1,12 @@
 package sample.models;
 
+import com.google.gson.Gson;
 import javafx.beans.property.*;
 
-import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
-public class Place {
+public class Place implements ApiModel{
     private LongProperty id;
     private StringProperty city;
     private StringProperty street;
@@ -19,8 +21,16 @@ public class Place {
         this.room = new SimpleIntegerProperty(room);
     }
 
+    public Place(String city, String street, String building) {
+        this.id = null;
+        this.city = new SimpleStringProperty(city);
+        this.street = new SimpleStringProperty(street);
+        this.building = new SimpleStringProperty(building);
+        this.room = new SimpleIntegerProperty(0);
+    }
+
     public Place(){
-        this(null, null, null, null, null);
+        this(null, null, null);
     }
 
     public long getId() {
@@ -31,7 +41,7 @@ public class Place {
         return city.get();
     }
 
-    public StringProperty cityProperty() {
+    public StringProperty getCityProperty() {
         return city;
     }
 
@@ -43,7 +53,7 @@ public class Place {
         return street.get();
     }
 
-    public StringProperty streetProperty() {
+    public StringProperty getStreetProperty() {
         return street;
     }
 
@@ -55,7 +65,7 @@ public class Place {
         return building.get();
     }
 
-    public StringProperty buildingProperty() {
+    public StringProperty getBuildingProperty() {
         return building;
     }
 
@@ -67,11 +77,25 @@ public class Place {
         return room.get();
     }
 
-    public IntegerProperty roomProperty() {
+    public IntegerProperty getRoomProperty() {
         return room;
     }
 
     public void setRoom(int room) {
         this.room.set(room);
+    }
+
+    @Override
+    public String toJSON() {
+        Map<String, String> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
+        map.put("city", getCity());
+        map.put("street", getStreet());
+        map.put("building", getBuilding());
+        map.put("room", String.valueOf(getRoom()));
+        Gson gson = new Gson();
+        return gson.toJson(map);
     }
 }

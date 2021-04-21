@@ -27,7 +27,7 @@ public class CompanyOverviewController {
 
     private Main main;
     private ApiSession apiSession;
-    private ObservableList<Company> companies = FXCollections.observableArrayList();
+    private ObservableList<Company> companyList = FXCollections.observableArrayList();
 
 
     public CompanyOverviewController(){
@@ -44,8 +44,7 @@ public class CompanyOverviewController {
 
     public void setMainApp(Main main){
         this.main = main;
-        updateCompanies();
-        companyTableView.setItems(companies);
+        updateCompanyList();
     }
 
     private void showChart(Company company){
@@ -68,11 +67,10 @@ public class CompanyOverviewController {
 
     @FXML
     private void handleDeleteCompany(){
-        int selectionIndex = companyTableView.getSelectionModel().getSelectedIndex();
-        if (selectionIndex >= 0) {
-            Company currentCompany = companyTableView.getItems().get(selectionIndex);
+        Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
+        if (currentCompany != null) {
             if (apiSession.deleteCompany(currentCompany)) {
-                companyTableView.getItems().remove(selectionIndex);
+                updateCompanyList();
             }
         }
         else {
@@ -90,7 +88,7 @@ public class CompanyOverviewController {
         Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
         if (currentCompany != null) {
             boolean okClicked = main.showCompanyEditDialog(currentCompany);
-            updateCompanies();
+            updateCompanyList();
             if (okClicked) {
                 showCompanyDetails(currentCompany);
             }
@@ -110,7 +108,7 @@ public class CompanyOverviewController {
     private void handleNewCompany(){
         Company tempCompany = new Company();
         boolean okClicked = main.showCompanyEditDialog(tempCompany);
-        updateCompanies();
+        updateCompanyList();
         if (okClicked) {
             showCompanyDetails(tempCompany);
         }
@@ -136,9 +134,10 @@ public class CompanyOverviewController {
         this.apiSession = apiSession;
     }
 
-    public void updateCompanies(){
-        companies.clear();
-        companies.addAll(apiSession.getCompanies());
+    public void updateCompanyList(){
+        companyList.clear();
+        companyList.addAll(apiSession.getCompanies());
+        companyTableView.setItems(companyList);
     }
 
 }

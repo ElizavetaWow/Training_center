@@ -17,6 +17,6 @@ public class CourseInfo {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(targetEntity=Course.class )
+    @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
     private List courses;
 }

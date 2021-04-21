@@ -22,6 +22,6 @@ public class Course {
     private Faculty faculty;
     @ManyToOne
     private CourseInfo courseInfo;
-    @ManyToMany(targetEntity=Employee.class)
+    @ManyToMany(targetEntity=Employee.class, fetch = FetchType.LAZY)
     private Set employees;
 }

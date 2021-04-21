@@ -1,6 +1,7 @@
 package sample.models;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import javafx.beans.property.*;
 import sample.utils.DateUtil;
 
@@ -45,18 +46,13 @@ public class Employee extends Person{
     @Override
     public String toJSON() {
         Gson gson = new Gson();
-        Map<String, String> map = new HashMap<>();
+        Map<String, Object> map = new HashMap<>();
         map.put("firstName", getFirstName());
         map.put("lastName", getLastName());
         map.put("password", getPassword());
         map.put("email", getEmail());
         map.put("birthday", DateUtil.format(getBirthday()));
-        map.put("company", "");
-        StringBuilder sb = new StringBuilder(getCompany().toJSON()) ;
-        sb.insert(1, "\"id\":"+getCompany().getId()+",");
-        StringBuilder jsb = new StringBuilder(gson.toJson(map)) ;
-        int ind = jsb.indexOf("company\":")+9;
-        jsb.replace(ind, ind+2, sb.toString());
-        return jsb.toString();
+        map.put("company", new Gson().fromJson(getCompany().toJSON(), JsonObject.class));
+        return gson.toJson(map);
     }
 }

@@ -37,8 +37,8 @@ public class EmployeeOverviewController {
 
     private Main main;
     private ApiSession apiSession;
-    private final ObservableList<Employee> employeeList = FXCollections.observableArrayList();
-    private final ObservableList<String> companyNameList = FXCollections.observableArrayList();
+    private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
+    private ObservableList<String> companyNameList = FXCollections.observableArrayList();
     private List<Company> companyList = new ArrayList<>();
 
     public EmployeeOverviewController(){

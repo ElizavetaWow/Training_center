@@ -30,8 +30,12 @@ public class PlaceService{
         return placeRepository.findAll();
     }
 
-    public Optional<Place> find(Long id){
+    public Optional<Place> findById(Long id){
         return placeRepository.findById(id);
+    }
+
+    public List<Place> findByCity(String city){
+        return placeRepository.findByCity(city);
     }
     
 }

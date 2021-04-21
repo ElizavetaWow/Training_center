@@ -3,6 +3,8 @@ package com.krylova.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
@@ -25,8 +27,9 @@ public class Employee {
     private Date birthday;
 
     @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
-    @ManyToMany(targetEntity=Course.class)
+    @ManyToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
     @JsonIgnore
     private Set courses;
 

@@ -22,6 +22,6 @@ public class Faculty {
     private String password;
     private Date birthday;
 
-    @OneToMany(targetEntity=Course.class )
+    @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
     private List courses;
 }

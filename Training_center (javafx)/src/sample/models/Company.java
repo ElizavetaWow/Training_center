@@ -61,6 +61,9 @@ public class Company implements ApiModel{
     @Override
     public String toJSON() {
         Map<String, String> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
         map.put("name", getName());
         map.put("account", getAccount());
         Gson gson = new Gson();

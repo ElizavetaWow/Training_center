@@ -13,8 +13,11 @@ import sample.controllers.CompanyEditDialogController;
 import sample.controllers.CompanyOverviewController;
 import sample.controllers.EmployeeEditDialogController;
 import sample.controllers.EmployeeOverviewController;
+import sample.controllers.PlaceEditDialogController;
+import sample.controllers.PlaceOverviewController;
 import sample.models.Company;
 import sample.models.Employee;
+import sample.models.Place;
 import sample.utils.ApiSession;
 import sample.utils.DateUtil;
 
@@ -34,7 +37,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("");
         initRootLayout();
-        showCompanyOverview();
+        showPlaceOverview();
     }
 
     public void initRootLayout(){
@@ -60,6 +63,20 @@ public class Main extends Application {
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
             controller.setCompany(company);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showPlaceOverview(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/place.fxml"));
+            AnchorPane placeOverview = loader.load();
+            rootLayout.setCenter(placeOverview);
+            PlaceOverviewController controller = loader.getController();
+            controller.setApiSession(apiSession);
+            controller.setMainApp(this);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -144,6 +161,30 @@ public class Main extends Application {
             EmployeeEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
             controller.setEmployee(employee);
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showPlaceEditDialog(Place place){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/placeEditDialog.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit");
+            dialogStage.initOwner(primaryStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            PlaceEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage, apiSession);
+            controller.setPlace(place);
             dialogStage.showAndWait();
 
             return controller.isOkClicked();

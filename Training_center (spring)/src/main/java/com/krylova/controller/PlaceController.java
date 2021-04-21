@@ -35,17 +35,24 @@ public class PlaceController {
     }
 
     @GetMapping("/places/{id}")
-    public ResponseEntity<Optional<Place>> find(@PathVariable(name = "id") Long id){
-        final Optional<Place> place = placeService.find(id);
+    public ResponseEntity<Optional<Place>> findById(@PathVariable(name = "id") Long id){
+        final Optional<Place> place = placeService.findById(id);
         return place != null
                 ? new ResponseEntity<>(place, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/places/city_{city}")
+    public ResponseEntity<List<Place>> findByCity(@PathVariable(name = "city") String city){
+        final List<Place> placeList = placeService.findByCity(city);
+        return placeList != null && !placeList.isEmpty()
+                ? new ResponseEntity<>(placeList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @PutMapping("/places/{id}")
     public ResponseEntity<?> updatePlace(@PathVariable(name = "id") Long id, @RequestBody Place placeUpdate) {
-        return placeService.find(id).map(place -> {
+        return placeService.findById(id).map(place -> {
             place.setCity(placeUpdate.getCity());
             place.setStreet(placeUpdate.getStreet());
             place.setBuilding(placeUpdate.getBuilding());
@@ -59,7 +66,7 @@ public class PlaceController {
 
     @DeleteMapping("/places/{id}")
     public ResponseEntity<?> deletePlace(@PathVariable(name = "id") Long id) {
-        return placeService.find(id).map(place -> {
+        return placeService.findById(id).map(place -> {
             placeService.delete(place);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new IllegalArgumentException());
