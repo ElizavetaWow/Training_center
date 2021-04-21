@@ -19,7 +19,7 @@ public class ApiSession {
         HttpClass.PostRequest(url + "/companies", company.toJSON());
     }
 
-    public Company getCompanies(Long id) {
+    public Company getCompaniesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/companies/"+id);
         JsonObject currentCompany = JsonParser.parseString(answer).getAsJsonObject();
         if (currentCompany != null){
@@ -27,17 +27,30 @@ public class ApiSession {
         }
         return null;
     }
-
-    public List<Company> getCompanies() {
+    public List<Company> getCompaniesByName(String name) {
         List<Company> result = new ArrayList<>();
-        String answer = HttpClass.GetRequest(url + "/companies");
+        String answer = HttpClass.GetRequest(url + "/companies/n_"+name);
         JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
         for (int i = 0; i < jsonAnswer.size(); i++) {
             JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
             result.add(companyFromJson(currentCompany));
         }
         return result;
+    }
+
+    public List<Company> getCompanies() {
+        List<Company> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/companies");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
+                result.add(companyFromJson(currentCompany));
+            }
+        }
+        return result;
+
     }
 
     public Company companyFromJson(JsonObject currentCompany){
@@ -47,19 +60,6 @@ public class ApiSession {
         return new Company(id, name, account);
     }
 
-    public List<Company> getCompanies(String field, String value) {
-        List<Company> result = new ArrayList<>();
-        String answer = HttpClass.GetRequest(url + "/companies");
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
-        for (int i = 0; i < jsonAnswer.size(); i++) {
-            JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
-            if (currentCompany.get(field).getAsString().equals(value)){
-                result.add(companyFromJson(currentCompany));
-            }
-        }
-        return result;
-    }
 
     public void updateCompany(Company company) {
         long id = company.getId();
@@ -83,15 +83,17 @@ public class ApiSession {
     public List<Employee> getEmployees() {
         List<Employee> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/employees");
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-        for (int i = 0; i < jsonAnswer.size(); i++) {
-            JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
-            result.add(employeeFromJson(currentEmployee));
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
+                result.add(employeeFromJson(currentEmployee));
+            }
         }
         return result;
     }
 
-    public Employee getEmployees(Long id) {
+    public Employee getEmployeesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/employees/"+id);
         JsonObject currentEmployee = JsonParser.parseString(answer).getAsJsonObject();
         if (currentEmployee != null){

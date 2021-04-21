@@ -8,6 +8,8 @@ import javafx.stage.Stage;
 import sample.models.Company;
 import sample.utils.ApiSession;
 
+import java.util.Objects;
+
 public class CompanyEditDialogController {
 
     @FXML
@@ -73,6 +75,10 @@ public class CompanyEditDialogController {
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No name input!\n";
         }
+        if (!apiSession.getCompaniesByName(nameField.getText()).isEmpty() && !Objects.equals(company.getName(), nameField.getText())){
+            errorMessage += "Such company name is already exists!\n";
+        }
+
         if (accountField.getText() == null || accountField.getText().length() == 0) {
             errorMessage += "No account input!\n";
         }

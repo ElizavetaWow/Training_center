@@ -82,7 +82,7 @@ public class EmployeeEditDialogController {
             employee.setEmail(emailField.getText());
             employee.setBirthday(birthdayPicker.getValue());
             employee.setPassword(passwordField.getText());
-            employee.setCompany(apiSession.getCompanies("name",
+            employee.setCompany(apiSession.getCompaniesByName(
                     companyBox.getSelectionModel().getSelectedItem()).get(0));
             if (update) {
                 apiSession.updateEmployee(employee);
