@@ -30,10 +30,12 @@ public class ApiSession {
     public List<Company> getCompaniesByName(String name) {
         List<Company> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/companies/n_"+name);
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-        for (int i = 0; i < jsonAnswer.size(); i++) {
-            JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
-            result.add(companyFromJson(currentCompany));
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
+                result.add(companyFromJson(currentCompany));
+            }
         }
         return result;
     }
@@ -102,26 +104,19 @@ public class ApiSession {
         return null;
     }
 
-    public List<Employee> getEmployees(String field, String value) {
+    public List<Employee> getEmployeesByCompanyName(String companyName) {
         List<Employee> result = new ArrayList<>();
-        String answer = HttpClass.GetRequest(url + "/employees");
-        JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
-        for (int i = 0; i < jsonAnswer.size(); i++) {
-            JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
-            if (field.equals("company")){
-                if (currentEmployee.get("company").getAsJsonObject().get("id").getAsString().equals(value)){
-                    result.add(employeeFromJson(currentEmployee));
-                }
-            }
-            else{
-                if (currentEmployee.get(field).getAsString().equals(value)){
-                    result.add(employeeFromJson(currentEmployee));
-                }
+        String answer = HttpClass.GetRequest(url + "/employees/comp_"+companyName);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
+                result.add(employeeFromJson(currentEmployee));
             }
         }
         return result;
     }
+
 
     public Employee employeeFromJson(JsonObject currentEmployee){
         String firstName = currentEmployee.get("firstName").getAsString();

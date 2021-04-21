@@ -87,9 +87,8 @@ public class CompanyOverviewController {
 
     @FXML
     private void handleEditCompany(){
-        int selectionIndex = companyTableView.getSelectionModel().getSelectedIndex();
-        if (selectionIndex >= 0) {
-            Company currentCompany = companyTableView.getItems().get(selectionIndex);
+        Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
+        if (currentCompany != null) {
             boolean okClicked = main.showCompanyEditDialog(currentCompany);
             updateCompanies();
             if (okClicked) {

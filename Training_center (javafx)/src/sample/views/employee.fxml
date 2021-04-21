@@ -43,7 +43,7 @@
             </GridPane>
         </AnchorPane>
     </SplitPane>
-   <ComboBox fx:id="companyBox" layoutX="14.0" layoutY="14.0" onAction="#chooseCompany" prefWidth="150.0" promptText="Company" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
+   <ComboBox fx:id="companyBox" layoutX="14.0" layoutY="14.0" onAction="#updateEmployeesTable" prefWidth="150.0" promptText="Company" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="14.0" />
       <HBox layoutX="329.0" layoutY="14.0" prefHeight="25.0" prefWidth="230.0" spacing="10.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="14.0">
           <Button mnemonicParsing="false" onAction="#handleNewEmployee" prefHeight="25.0" prefWidth="70.0" text="New" />
           <Button mnemonicParsing="false" onAction="#handleEditEmployee" prefHeight="25.0" prefWidth="70.0" text="Edit" />
