@@ -1,8 +1,12 @@
 package sample.models;
 
+import com.google.gson.Gson;
 import javafx.beans.property.*;
+import sample.utils.DateUtil;
 
 import java.time.LocalDate;
+import java.util.HashMap;
+import java.util.Map;
 
 public abstract class Person implements ApiModel{
     private LongProperty id;
@@ -98,5 +102,17 @@ public abstract class Person implements ApiModel{
 
     public void setBirthday(LocalDate birthday) {
         this.birthday = new SimpleObjectProperty<>(birthday);
+    }
+
+    @Override
+    public String toJSON() {
+        Gson gson = new Gson();
+        Map<String, Object> map = new HashMap<>();
+        map.put("firstName", getFirstName());
+        map.put("lastName", getLastName());
+        map.put("password", getPassword());
+        map.put("email", getEmail());
+        map.put("birthday", DateUtil.format(getBirthday()));
+        return gson.toJson(map);
     }
 }
