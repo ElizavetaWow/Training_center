@@ -218,6 +218,16 @@ public class ApiSession {
         return null;
     }
 
+    public Faculty getFacultiesByEmail(String email) {
+        String answer = HttpClass.GetRequest(url + "/faculties/email_"+email);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            JsonObject currentFaculty = jsonAnswer.get(0).getAsJsonObject();
+            return facultyFromJson(currentFaculty);
+        }
+        return null;
+    }
+
 
     public List<Faculty> getFaculties() {
         List<Faculty> result = new ArrayList<>();
@@ -313,5 +323,71 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/courseInfos/" + id);
+    }
+
+    public void createCourse(Course course) {
+        HttpClass.PostRequest(url + "/courses", course.toJSON());
+    }
+
+    public Course getCoursesById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/courses/"+id);
+        JsonObject currentCourse = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentCourse != null){
+            return courseFromJson(currentCourse);
+        }
+        return null;
+    }
+
+
+    public List<Course> getCoursesByName(String courseInfo) {
+        List<Course> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/courses/ci_"+courseInfo);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentCourse = jsonAnswer.get(i).getAsJsonObject();
+                result.add(courseFromJson(currentCourse));
+            }
+        }
+        return result;
+
+    }
+
+    public List<Course> getCourses() {
+        List<Course> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/courses");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentCourse = jsonAnswer.get(i).getAsJsonObject();
+                result.add(courseFromJson(currentCourse));
+            }
+        }
+        return result;
+
+    }
+
+    public Course courseFromJson(JsonObject currentCourse){
+        LocalDate startDate = DateUtil.parse(currentCourse.get("startDate").getAsString());
+        LocalDate finishDate = DateUtil.parse(currentCourse.get("finishDate").getAsString());
+        CourseInfo courseInfo = courseInfoFromJson(currentCourse.get("courseInfo").getAsJsonObject());
+        Faculty faculty = facultyFromJson(currentCourse.get("faculty").getAsJsonObject());
+        Long id = currentCourse.get("id").getAsLong();
+        return new Course(id, startDate, finishDate, courseInfo, faculty);
+    }
+
+
+    public void updateCourse(Course course) {
+        long id = course.getId();
+        String jsonString = course.toJSON();
+        HttpClass.PutRequest(url + "/courses/" + id, jsonString);
+    }
+
+    public boolean deleteCourse(Course course) {
+        Long id = course.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/courses/" + id);
     }
 }

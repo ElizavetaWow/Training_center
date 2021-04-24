@@ -35,17 +35,24 @@ public class FacultyController {
     }
 
     @GetMapping("/faculties/{id}")
-    public ResponseEntity<Optional<Faculty>> find(@PathVariable(name = "id") Long id){
-        final Optional<Faculty> faculty = facultyService.find(id);
+    public ResponseEntity<Optional<Faculty>> findById(@PathVariable(name = "id") Long id){
+        final Optional<Faculty> faculty = facultyService.findById(id);
         return faculty != null
                 ? new ResponseEntity<>(faculty, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/faculties/email_{email}")
+    public ResponseEntity<List<Faculty>> findAll(@PathVariable(name = "email") String email){
+        final List<Faculty> facultyList = facultyService.findByEmail(email);
+        return facultyList != null && !facultyList.isEmpty()
+                ? new ResponseEntity<>(facultyList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @PutMapping("/faculties/{id}")
     public ResponseEntity<?> updateFaculty(@PathVariable(name = "id") Long id, @RequestBody Faculty facultyUpdate) {
-        return facultyService.find(id).map(faculty -> {
+        return facultyService.findById(id).map(faculty -> {
             faculty.setFirstName(facultyUpdate.getFirstName());
             faculty.setLastName(facultyUpdate.getLastName());
             faculty.setEmail(facultyUpdate.getEmail());
@@ -60,7 +67,7 @@ public class FacultyController {
 
     @DeleteMapping("/faculties/{id}")
     public ResponseEntity<?> deleteFaculty(@PathVariable(name = "id") Long id) {
-        return facultyService.find(id).map(faculty -> {
+        return facultyService.findById(id).map(faculty -> {
             facultyService.delete(faculty);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new IllegalArgumentException());

@@ -76,7 +76,7 @@ public class EmployeeOverviewController {
     }
 
     public void setCompany(Company company){
-        if (company.getName() != null){
+        if (company != null && company.getName() != null){
             companyBox.getSelectionModel().select(company.getName());
             updateEmployeesTable();
         }
@@ -125,9 +125,11 @@ public class EmployeeOverviewController {
     @FXML
     private void handleDeleteEmployee(){
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        int i = employeeTableView.getSelectionModel().getSelectedIndex();
         if (currentEmployee != null) {
             if (apiSession.deleteEmployee(currentEmployee)) {
                 updateEmployeesTable();
+                employeeTableView.getSelectionModel().select(i - 1);
             }
         }
         else {
@@ -148,9 +150,8 @@ public class EmployeeOverviewController {
             updateEmployeesTable();
             if (okClicked) {
                 showEmployeeDetails(currentEmployee);
+                employeeTableView.getSelectionModel().selectLast();
             }
-
-
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
@@ -169,6 +170,7 @@ public class EmployeeOverviewController {
         updateEmployeesTable();
         if (okClicked) {
             showEmployeeDetails(tempEmployee);
+            employeeTableView.getSelectionModel().selectLast();
         }
     }
 

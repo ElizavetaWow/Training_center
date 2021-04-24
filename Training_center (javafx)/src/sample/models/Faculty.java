@@ -1,5 +1,8 @@
 package sample.models;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
+
 import java.time.LocalDate;
 
 public class Faculty extends Person{
@@ -15,4 +18,13 @@ public class Faculty extends Person{
     public Faculty(){
         this(null, null, null, null, null);
     }
+
+    public StringProperty getNamesAndEmailProperty(){
+        return new SimpleStringProperty(getLastName()+" "+getFirstName()+" ["+getEmail()+"]");
+    }
+
+    public String getNamesAndEmail(){
+        return getLastName()+" "+getFirstName()+" ["+getEmail()+"]";
+    }
+
 }

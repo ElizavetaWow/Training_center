@@ -30,7 +30,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("");
         initRootLayout();
-        showCourseInfoOverview();
+        showCourseOverview();
     }
 
     public void initRootLayout(){
@@ -56,6 +56,20 @@ public class Main extends Application {
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
             controller.setCompany(company);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showCourseOverview(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/course.fxml"));
+            AnchorPane courseOverview = loader.load();
+            rootLayout.setCenter(courseOverview);
+            CourseOverviewController controller = loader.getController();
+            controller.setApiSession(apiSession);
+            controller.setMainApp(this);
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -231,6 +245,31 @@ public class Main extends Application {
             FacultyEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
             controller.setFaculty(faculty);
+            dialogStage.showAndWait();
+
+            return controller.isOkClicked();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean showCourseEditDialog(Course course, String name){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/courseEditDialog.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Edit");
+            dialogStage.initOwner(primaryStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            CourseEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage, apiSession);
+            controller.setName(name);
+            controller.setCourse(course);
             dialogStage.showAndWait();
 
             return controller.isOkClicked();

@@ -108,6 +108,9 @@ public abstract class Person implements ApiModel{
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
         map.put("firstName", getFirstName());
         map.put("lastName", getLastName());
         map.put("password", getPassword());

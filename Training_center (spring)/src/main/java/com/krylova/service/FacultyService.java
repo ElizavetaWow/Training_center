@@ -30,8 +30,12 @@ public class FacultyService {
         return facultyRepository.findAll();
     }
 
-    public Optional<Faculty> find(Long id){
+    public Optional<Faculty> findById(Long id){
         return facultyRepository.findById(id);
+    }
+
+    public List<Faculty> findByEmail(String email){
+        return facultyRepository.findByEmail(email);
     }
 
 }
