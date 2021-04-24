@@ -3,10 +3,7 @@ package sample.utils;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import sample.models.Company;
-import sample.models.Employee;
-import sample.models.Faculty;
-import sample.models.Place;
+import sample.models.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -259,5 +256,62 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/faculties/" + id);
+    }
+
+    public void createCourseInfo(CourseInfo courseInfo) {
+        HttpClass.PostRequest(url + "/courseInfos", courseInfo.toJSON());
+    }
+
+    public CourseInfo getCourseInfosById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/courseInfos/"+id);
+        JsonObject currentCourseInfo = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentCourseInfo != null){
+            return courseInfoFromJson(currentCourseInfo);
+        }
+        return null;
+    }
+    public CourseInfo getCourseInfosByName(String name) {
+        String answer = HttpClass.GetRequest(url + "/courseInfos/n_"+name.replace(" ", "-"));
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            JsonObject currentCourseInfo = jsonAnswer.get(0).getAsJsonObject();
+            return courseInfoFromJson(currentCourseInfo);
+        }
+        return null;
+    }
+
+    public List<CourseInfo> getCourseInfos() {
+        List<CourseInfo> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/courseInfos");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentCourseInfo = jsonAnswer.get(i).getAsJsonObject();
+                result.add(courseInfoFromJson(currentCourseInfo));
+            }
+        }
+        return result;
+
+    }
+
+    public CourseInfo courseInfoFromJson(JsonObject currentCourseInfo){
+        String name = currentCourseInfo.get("name").getAsString();
+        Long id = currentCourseInfo.get("id").getAsLong();
+        return new CourseInfo(id, name);
+    }
+
+
+    public void updateCourseInfo(CourseInfo courseInfo) {
+        long id = courseInfo.getId();
+        String jsonString = courseInfo.toJSON();
+        HttpClass.PutRequest(url + "/courseInfos/" + id, jsonString);
+    }
+
+    public boolean deleteCourseInfo(CourseInfo courseInfo) {
+        Long id = courseInfo.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/courseInfos/" + id);
     }
 }

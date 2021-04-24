@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,6 @@ public class Faculty {
     private Date birthday;
 
     @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List courses;
 }

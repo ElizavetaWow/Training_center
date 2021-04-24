@@ -1,5 +1,6 @@
 package com.krylova.service;
 
+import com.krylova.entity.Company;
 import com.krylova.entity.CourseInfo;
 import com.krylova.repository.CourseInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,11 @@ public class CourseInfoService {
         return courseInfoRepository.findAll();
     }
 
-    public Optional<CourseInfo> find(Long id){
+    public Optional<CourseInfo> findById(Long id){
         return courseInfoRepository.findById(id);
+    }
+
+    public List<CourseInfo> findByName(String name){
+        return courseInfoRepository.findByName(name);
     }
 }

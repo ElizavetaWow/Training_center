@@ -1,5 +1,6 @@
 package com.krylova.controller;
 
+import com.krylova.entity.Company;
 import com.krylova.entity.CourseInfo;
 import com.krylova.service.CourseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,17 +36,24 @@ public class CourseInfoController {
     }
 
     @GetMapping("/courseInfos/{id}")
-    public ResponseEntity<Optional<CourseInfo>> find(@PathVariable(name = "id") Long id){
-        final Optional<CourseInfo> courseInfo = courseInfoService.find(id);
+    public ResponseEntity<Optional<CourseInfo>> findById(@PathVariable(name = "id") Long id){
+        final Optional<CourseInfo> courseInfo = courseInfoService.findById(id);
         return courseInfo != null
                 ? new ResponseEntity<>(courseInfo, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/courseInfos/n_{name}")
+    public ResponseEntity<List<CourseInfo>> findByName(@PathVariable(name = "name") String name){
+        final List<CourseInfo> courseInfoList = courseInfoService.findByName(name.replace("-", " "));
+        return courseInfoList != null && !courseInfoList.isEmpty()
+                ? new ResponseEntity<>(courseInfoList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
 
     @PutMapping("/courseInfos/{id}")
     public ResponseEntity<?> updateCourseInfo(@PathVariable(name = "id") Long id, @RequestBody CourseInfo courseInfoUpdate) {
-        return courseInfoService.find(id).map(courseInfo -> {
+        return courseInfoService.findById(id).map(courseInfo -> {
             courseInfo.setName(courseInfoUpdate.getName());
             courseInfo.setCourses(courseInfoUpdate.getCourses());
             courseInfoService.update(courseInfo);
@@ -56,7 +64,7 @@ public class CourseInfoController {
 
     @DeleteMapping("/courseInfos/{id}")
     public ResponseEntity<?> deleteCourseInfo(@PathVariable(name = "id") Long id) {
-        return courseInfoService.find(id).map(courseInfo -> {
+        return courseInfoService.findById(id).map(courseInfo -> {
             courseInfoService.delete(courseInfo);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new IllegalArgumentException());

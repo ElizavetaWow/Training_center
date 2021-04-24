@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -18,5 +19,6 @@ public class CourseInfo {
     private String name;
 
     @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List courses;
 }

@@ -10,10 +10,7 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import sample.controllers.*;
-import sample.models.Company;
-import sample.models.Employee;
-import sample.models.Faculty;
-import sample.models.Place;
+import sample.models.*;
 import sample.utils.ApiSession;
 import sample.utils.DateUtil;
 
@@ -33,7 +30,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("");
         initRootLayout();
-        showFacultyOverview();
+        showCourseInfoOverview();
     }
 
     public void initRootLayout(){
@@ -59,6 +56,20 @@ public class Main extends Application {
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
             controller.setCompany(company);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void showCourseInfoOverview(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/courseInfo.fxml"));
+            AnchorPane courseInfoOverview = loader.load();
+            rootLayout.setCenter(courseInfoOverview);
+            CourseInfoOverviewController controller = loader.getController();
+            controller.setApiSession(apiSession);
+            controller.setMainApp(this);
         } catch (IOException e){
             e.printStackTrace();
         }

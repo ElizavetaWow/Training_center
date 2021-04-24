@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,5 +21,6 @@ public class Place {
     private Integer room;
 
     @OneToMany(targetEntity=Timetable.class, fetch = FetchType.LAZY)
+    @JsonIgnore
     private List timetables;
 }

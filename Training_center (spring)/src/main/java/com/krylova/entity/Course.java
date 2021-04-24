@@ -1,5 +1,6 @@
 package com.krylova.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -23,5 +24,6 @@ public class Course {
     @ManyToOne
     private CourseInfo courseInfo;
     @ManyToMany(targetEntity=Employee.class, fetch = FetchType.LAZY)
+    @JsonIgnore
     private Set employees;
 }
