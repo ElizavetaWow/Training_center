@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import sample.models.Company;
 import sample.models.Employee;
+import sample.models.Faculty;
 import sample.models.Place;
 
 import java.time.LocalDate;
@@ -204,5 +205,59 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/places/" + id);
+    }
+
+
+    public void createFaculty(Faculty faculty) {
+        HttpClass.PostRequest(url + "/faculties", faculty.toJSON());
+    }
+
+    public Faculty getFacultiesById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/faculties/"+id);
+        JsonObject currentFaculty = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentFaculty != null){
+            return facultyFromJson(currentFaculty);
+        }
+        return null;
+    }
+
+
+    public List<Faculty> getFaculties() {
+        List<Faculty> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/faculties");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentFaculty = jsonAnswer.get(i).getAsJsonObject();
+                result.add(facultyFromJson(currentFaculty));
+            }
+        }
+        return result;
+
+    }
+
+    public Faculty facultyFromJson(JsonObject currentFaculty){
+        String firstName = currentFaculty.get("firstName").getAsString();
+        String lastName = currentFaculty.get("lastName").getAsString();
+        String password = currentFaculty.get("password").getAsString();
+        String email = currentFaculty.get("email").getAsString();
+        LocalDate birthday = DateUtil.parse(currentFaculty.get("birthday").getAsString());
+        Long id = currentFaculty.get("id").getAsLong();
+        return new Faculty(id, firstName, lastName, password, email, birthday);
+    }
+
+
+    public void updateFaculty(Faculty faculty) {
+        long id = faculty.getId();
+        String jsonString = faculty.toJSON();
+        HttpClass.PutRequest(url + "/faculties/" + id, jsonString);
+    }
+
+    public boolean deleteFaculty(Faculty faculty) {
+        Long id = faculty.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/faculties/" + id);
     }
 }
