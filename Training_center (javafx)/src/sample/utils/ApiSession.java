@@ -432,7 +432,7 @@ public class ApiSession {
 
     public List<Timetable> getTimetablesByCourseNameAndDate(String name, LocalDate date) {
         List<Timetable> result = new ArrayList<>();
-        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name+"_date_"+date);
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name+"/date_"+date);
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             for (int i = 0; i < jsonAnswer.size(); i++) {

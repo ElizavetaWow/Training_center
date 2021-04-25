@@ -42,6 +42,8 @@ public class PlaceOverviewController extends OverviewController {
         streetColumn.setCellValueFactory(cellData -> cellData.getValue().getStreetProperty());
         buildingColumn.setCellValueFactory(cellData -> cellData.getValue().getBuildingProperty());
         roomColumn.setCellValueFactory(cellData -> cellData.getValue().getRoomProperty().asObject());
+        placeTableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue )-> item = newValue);
     }
 
     public void setApiSession(ApiSession apiSession) {

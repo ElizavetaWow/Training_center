@@ -1,5 +1,6 @@
 package com.krylova.controller;
 
+import com.krylova.DateUtil;
 import com.krylova.entity.Timetable;
 import com.krylova.service.TimetableService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -52,16 +53,17 @@ public class TimetableController {
     }
 
     @GetMapping("/timetables/date_{date}")
-    public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") LocalDate date){
-        final List<Timetable> timetableList = timetableService.findByDate(date);
+    public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") String date){
+        final List<Timetable> timetableList = timetableService.findByDate(DateUtil.parse(date));
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-    @GetMapping("/timetables/cn_{name}_date_{date}")
-    public ResponseEntity<List<Timetable>> findByName(@PathVariable(name = "name") String name,
-                                                      @PathVariable(name = "date") LocalDate date){
-        final List<Timetable> timetableList = timetableService.findByNameAndDate(name, date);
+    @GetMapping("/timetables/cn_{name}/date_{date}")
+    public ResponseEntity<List<Timetable>> findByNameAndDate(@PathVariable(name = "name") String name,
+                                                      @PathVariable(name = "date") String date){
+
+        final List<Timetable> timetableList = timetableService.findByNameAndDate(name, DateUtil.parse(date));
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);

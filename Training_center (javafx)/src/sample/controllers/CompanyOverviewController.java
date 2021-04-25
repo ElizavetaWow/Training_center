@@ -21,6 +21,8 @@ public class CompanyOverviewController extends OverviewController{
     private Label nameLabel;
     @FXML
     private Label accountLabel;
+    @FXML
+    private Button showEmployeesButton;
 
     @FXML
     private BarChart chart;
@@ -47,6 +49,10 @@ public class CompanyOverviewController extends OverviewController{
         updateCompanyList();
     }
 
+    public void setShowEmployeesButtonVisible(boolean status){
+        showEmployeesButton.setVisible(status);
+    }
+
     private void showChart(Company company){
         if (company != null){
         }
@@ -56,6 +62,7 @@ public class CompanyOverviewController extends OverviewController{
 
     private void showCompanyDetails(Company company){
         if (company != null){
+            item = company;
             nameLabel.setText(company.getName());
             accountLabel.setText(company.getAccount());
         }

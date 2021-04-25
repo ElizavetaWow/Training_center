@@ -14,7 +14,7 @@ public class Employee extends Person{
     private ObjectProperty<Company> company;
 
     public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
-        super(firstName, lastName, password, email, birthday);
+        super(id, firstName, lastName, password, email, birthday);
         this.id = new SimpleLongProperty(id);
         this.company = new SimpleObjectProperty<Company>(company);
     }

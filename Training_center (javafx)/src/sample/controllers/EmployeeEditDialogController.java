@@ -3,11 +3,9 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.models.Company;
 import sample.models.Employee;
 import sample.utils.ApiSession;
@@ -25,17 +23,17 @@ public class EmployeeEditDialogController {
     @FXML
     private DatePicker birthdayPicker;
     @FXML
-    private ComboBox<String> companyBox;
+    private Label companyLabel;
     @FXML
     private TextField passwordField;
 
 
     private Employee employee;
+    private Company selectedCompany;
+    private Main main;
     private Stage dialogStage;
     private boolean okClicked = false;
     private boolean update = false;
-    private ObservableList<String> companyList = FXCollections.observableArrayList();
-    private List<Company> companies = new ArrayList<>();
 
     private ApiSession apiSession;
 
@@ -45,16 +43,17 @@ public class EmployeeEditDialogController {
     private void initialize(){
     }
 
-    public void setDialogStage(Stage dialogStage, ApiSession apiSession) {
+    public void setDialogStage(Stage dialogStage, ApiSession apiSession, Main main) {
         this.dialogStage = dialogStage;
         this.apiSession = apiSession;
-        setCompanyBoxItems();
+        this.main = main;
     }
 
     public void setEmployee(Employee employee){
         if (employee.getFirstName() != null){
             this.update = true;
-            companyBox.getSelectionModel().select(employee.getCompany().getName());
+            selectedCompany = employee.getCompany();
+            companyLabel.setText(employee.getCompany().getName());
         }
         this.employee = employee;
         firstNameField.setText(employee.getFirstName());
@@ -63,6 +62,14 @@ public class EmployeeEditDialogController {
         passwordField.setText(employee.getPassword());
         birthdayPicker.setValue(employee.getBirthday());
 
+    }
+
+    @FXML
+    private void handleSelectCompany(){
+        selectedCompany = main.showChooseCompanyDialog(dialogStage);
+        if (selectedCompany != null){
+            companyLabel.setText(selectedCompany.getName());
+        }
     }
 
     public boolean isOkClicked(){
@@ -82,8 +89,7 @@ public class EmployeeEditDialogController {
             employee.setEmail(emailField.getText());
             employee.setBirthday(birthdayPicker.getValue());
             employee.setPassword(passwordField.getText());
-            employee.setCompany(apiSession.getCompaniesByName(
-                    companyBox.getSelectionModel().getSelectedItem()).get(0));
+            employee.setCompany(selectedCompany);
             if (update) {
                 apiSession.updateEmployee(employee);
             }
@@ -113,7 +119,7 @@ public class EmployeeEditDialogController {
         if (emailField.getText() == null || emailField.getText().length() == 0) {
             errorMessage += "No password input!\n";
         }
-        if (companyBox.getSelectionModel().getSelectedIndex() < 0) {
+        if (companyLabel.getText() == null || companyLabel.getText().length() == 0) {
             errorMessage += "No company selection!\n";
         }
 
@@ -130,12 +136,4 @@ public class EmployeeEditDialogController {
         }
     }
 
-    public void setCompanyBoxItems(){
-        companies = apiSession.getCompanies();
-        companyList.clear();
-        for (Company company: companies){
-            companyList.add(company.getName());
-        }
-        companyBox.setItems(companyList);
-    }
 }

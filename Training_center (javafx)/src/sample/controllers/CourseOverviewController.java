@@ -18,7 +18,7 @@ public class CourseOverviewController extends OverviewController {
     @FXML
     private TableColumn<Course, LocalDate> startDateColumn;
     @FXML
-    private TableColumn<Course, String> finishDateColumn;
+    private TableColumn<Course, LocalDate> finishDateColumn;
     @FXML
     private TableColumn<Course, String> facultyColumn;
 
@@ -36,9 +36,11 @@ public class CourseOverviewController extends OverviewController {
     @FXML
     private void initialize(){
         startDateColumn.setCellValueFactory(cellData -> cellData.getValue().getStartDateProperty());
-        finishDateColumn.setCellValueFactory(cellData -> cellData.getValue().getFinishDateProperty().asString());
+        finishDateColumn.setCellValueFactory(cellData -> cellData.getValue().getFinishDateProperty());
         courseInfoColumn.setCellValueFactory(cellData -> cellData.getValue().getCourseInfo().getNameProperty());
         facultyColumn.setCellValueFactory(cellData -> cellData.getValue().getFaculty().getNamesAndEmailProperty());
+        courseTableView.getSelectionModel().selectedItemProperty().addListener(
+                (observable, oldValue, newValue )-> item = newValue);
     }
 
     public void setApiSession(ApiSession apiSession) {

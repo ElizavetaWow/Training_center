@@ -52,7 +52,7 @@
              <NumberAxis prefHeight="163.0" prefWidth="19.0" side="LEFT" />
            </yAxis>
          </BarChart>
-         <Button layoutX="18.0" layoutY="112.0" mnemonicParsing="false" onAction="#handleShowEmployees" text="Show Employees" />
+         <Button fx:id="showEmployeesButton" layoutX="18.0" layoutY="112.0" mnemonicParsing="false" onAction="#handleShowEmployees" text="Show Employees" />
         </AnchorPane>
     </SplitPane>
 </AnchorPane>
