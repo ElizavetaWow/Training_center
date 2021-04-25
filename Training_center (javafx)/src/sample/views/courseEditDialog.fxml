@@ -4,11 +4,11 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="412.0" prefWidth="376.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseEditDialogController">
-    <GridPane layoutX="25.0" layoutY="57.0" prefHeight="271.0" prefWidth="321.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="57.0">
+<AnchorPane prefHeight="519.0" prefWidth="482.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseEditDialogController">
+    <GridPane layoutX="25.0" layoutY="57.0" prefHeight="397.0" prefWidth="433.0" AnchorPane.leftAnchor="25.0" AnchorPane.topAnchor="57.0">
         <columnConstraints>
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="153.66666666666666" />
-            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="269.0" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="111.33333333333334" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="332.0" minWidth="10.0" prefWidth="322.66666666666663" />
         </columnConstraints>
         <rowConstraints>
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
@@ -19,13 +19,23 @@
         <Label text="Start Date" GridPane.rowIndex="1" />
         <Label text="Finish Date" GridPane.rowIndex="2" />
         <Label text="Faculty" GridPane.rowIndex="3" />
-      <ComboBox fx:id="facultyBox" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <DatePicker fx:id="startPicker" prefHeight="25.0" prefWidth="218.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <DatePicker fx:id="startPicker" prefHeight="25.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="Name" />
-      <DatePicker fx:id="finishPicker" prefHeight="25.0" prefWidth="224.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <ComboBox fx:id="nameBox" prefHeight="25.0" prefWidth="226.0" GridPane.columnIndex="1" />
+      <DatePicker fx:id="finishPicker" prefHeight="25.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <HBox alignment="CENTER" prefHeight="120.0" prefWidth="257.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+         <children>
+            <Label fx:id="facultyLabel" prefHeight="30.0" prefWidth="210.0" />
+            <Button mnemonicParsing="false" onAction="#handleSelectFaculty" prefHeight="25.0" prefWidth="100.0" text="Select Faculty" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="110.0" prefWidth="228.0" spacing="10.0" GridPane.columnIndex="1">
+         <children>
+            <Label fx:id="nameLabel" prefHeight="30.0" prefWidth="210.0" />
+            <Button mnemonicParsing="false" onAction="#handleSelectName" prefHeight="25.0" prefWidth="100.0" text="Select Name" />
+         </children>
+      </HBox>
     </GridPane>
-    <HBox layoutX="108.0" layoutY="355.0" spacing="10.0" AnchorPane.bottomAnchor="31.666666666666686" AnchorPane.rightAnchor="78.0">
+    <HBox alignment="CENTER" layoutX="108.0" layoutY="355.0" spacing="10.0" AnchorPane.bottomAnchor="10.0">
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" prefHeight="25.0" prefWidth="90.0" text="Ok" />
         <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="90.0" text="Cancel" />
     </HBox>

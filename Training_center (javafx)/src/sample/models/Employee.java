@@ -10,11 +10,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class Employee extends Person{
-
+    private LongProperty id;
     private ObjectProperty<Company> company;
 
     public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
-        super(id, firstName, lastName, password, email, birthday);
+        super(firstName, lastName, password, email, birthday);
+        this.id = new SimpleLongProperty(id);
         this.company = new SimpleObjectProperty<Company>(company);
     }
 
@@ -47,6 +48,9 @@ public class Employee extends Person{
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
         map.put("firstName", getFirstName());
         map.put("lastName", getLastName());
         map.put("password", getPassword());

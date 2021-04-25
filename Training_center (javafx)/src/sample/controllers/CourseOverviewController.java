@@ -10,7 +10,7 @@ import sample.utils.ApiSession;
 
 import java.time.LocalDate;
 
-public class CourseOverviewController {
+public class CourseOverviewController extends OverviewController {
     @FXML
     private TableView<Course> courseTableView;
     @FXML
@@ -111,7 +111,7 @@ public class CourseOverviewController {
     private void handleEditCourse(){
         Course currentCourse = courseTableView.getSelectionModel().getSelectedItem();
         if (currentCourse != null) {
-            boolean okClicked = main.showCourseEditDialog(currentCourse, nameBox.getSelectionModel().getSelectedItem());
+            boolean okClicked = main.showCourseEditDialog(currentCourse);
             setNameBoxItems();
             updateCoursesTable();
         } else {
@@ -128,7 +128,7 @@ public class CourseOverviewController {
     @FXML
     private void handleNewCourse(){
         Course tempCourse = new Course();
-        boolean okClicked = main.showCourseEditDialog(tempCourse, nameBox.getSelectionModel().getSelectedItem());
+        boolean okClicked = main.showCourseEditDialog(tempCourse);
         setNameBoxItems();
         updateCoursesTable();
     }

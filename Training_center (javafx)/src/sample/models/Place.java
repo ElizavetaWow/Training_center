@@ -85,6 +85,15 @@ public class Place implements ApiModel{
         this.room.set(room);
     }
 
+    public StringProperty getFullPlaceProperty(){
+        return new SimpleStringProperty(getCity()+" "+getStreet()+" "+getBuilding()+" "+getRoom());
+    }
+
+    public String getFullPlace(){
+        return getCity()+" "+getStreet()+" "+getBuilding()+" "+getRoom();
+    }
+
+
     @Override
     public String toJSON() {
         Map<String, String> map = new HashMap<>();

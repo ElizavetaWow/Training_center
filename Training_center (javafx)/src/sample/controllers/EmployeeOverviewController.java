@@ -13,7 +13,7 @@ import sample.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeOverviewController {
+public class EmployeeOverviewController extends OverviewController {
     @FXML
     private TableView<Employee> employeeTableView;
     @FXML

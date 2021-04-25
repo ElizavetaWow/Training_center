@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,17 +36,41 @@ public class TimetableController {
     }
 
     @GetMapping("/timetables/{id}")
-    public ResponseEntity<Optional<Timetable>> find(@PathVariable(name = "id") Long id){
-        final Optional<Timetable> timetable = timetableService.find(id);
+    public ResponseEntity<Optional<Timetable>> findById(@PathVariable(name = "id") Long id){
+        final Optional<Timetable> timetable = timetableService.findById(id);
         return timetable != null
                 ? new ResponseEntity<>(timetable, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/timetables/cn_{name}")
+    public ResponseEntity<List<Timetable>> findByName(@PathVariable(name = "name") String name){
+        final List<Timetable> timetableList = timetableService.findByName(name);
+        return timetableList != null && !timetableList.isEmpty()
+                ? new ResponseEntity<>(timetableList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @GetMapping("/timetables/date_{date}")
+    public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") LocalDate date){
+        final List<Timetable> timetableList = timetableService.findByDate(date);
+        return timetableList != null && !timetableList.isEmpty()
+                ? new ResponseEntity<>(timetableList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+    @GetMapping("/timetables/cn_{name}_date_{date}")
+    public ResponseEntity<List<Timetable>> findByName(@PathVariable(name = "name") String name,
+                                                      @PathVariable(name = "date") LocalDate date){
+        final List<Timetable> timetableList = timetableService.findByNameAndDate(name, date);
+        return timetableList != null && !timetableList.isEmpty()
+                ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
     @PutMapping("/timetables/{id}")
     public ResponseEntity<?> updateTimetable(@PathVariable(name = "id") Long id, @RequestBody Timetable timetableUpdate) {
-        return timetableService.find(id).map(timetable -> {
+        return timetableService.findById(id).map(timetable -> {
             timetable.setDate(timetableUpdate.getDate());
             timetable.setTime(timetableUpdate.getTime());
             timetable.setPlace(timetableUpdate.getPlace());
@@ -58,7 +83,7 @@ public class TimetableController {
 
     @DeleteMapping("/timetables/{id}")
     public ResponseEntity<?> deleteTimetable(@PathVariable(name = "id") Long id) {
-        return timetableService.find(id).map(timetable -> {
+        return timetableService.findById(id).map(timetable -> {
             timetableService.delete(timetable);
             return ResponseEntity.ok().build();
         }).orElseThrow(() -> new IllegalArgumentException());

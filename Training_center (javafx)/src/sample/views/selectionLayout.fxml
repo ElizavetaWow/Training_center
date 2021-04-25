@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane prefHeight="426.0" prefWidth="621.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.SelectionController">
+   <bottom>
+      <HBox alignment="CENTER" prefHeight="36.0" prefWidth="621.0" spacing="10.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleSelect" prefHeight="25.0" prefWidth="108.0" text="Select">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin></Button>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#handleCancel" prefHeight="25.0" prefWidth="101.0" text="Cancel" />
+         </children>
+      </HBox>
+   </bottom>
+</BorderPane>

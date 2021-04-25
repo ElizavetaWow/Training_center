@@ -19,6 +19,7 @@ import java.io.IOException;
 public class Main extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private BorderPane selectionLayout;
     private ApiSession apiSession;
 
     public Main(){
@@ -254,7 +255,7 @@ public class Main extends Application {
         }
     }
 
-    public boolean showCourseEditDialog(Course course, String name){
+    public boolean showCourseEditDialog(Course course){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/courseEditDialog.fxml"));
@@ -267,8 +268,7 @@ public class Main extends Application {
             dialogStage.setScene(scene);
 
             CourseEditDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage, apiSession);
-            controller.setName(name);
+            controller.setDialogStage(dialogStage, apiSession, this);
             controller.setCourse(course);
             dialogStage.showAndWait();
 
@@ -278,4 +278,63 @@ public class Main extends Application {
             return false;
         }
     }
+
+    public Faculty showChooseFacultyDialog(Stage owner){
+        try {
+
+            Stage dialogStage = new Stage();
+            dialogStage.initOwner(owner);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/faculty.fxml"));
+            AnchorPane page = loader.load();
+            FacultyOverviewController controller = loader.getController();
+            controller.setApiSession(apiSession);
+            controller.setMainApp(this);
+            loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
+            selectionLayout = loader.load();
+            SelectionController selectionController = loader.getController();
+            selectionController.setDialogStage(dialogStage);
+            selectionController.setSceneController(controller);
+            selectionLayout.setCenter(page);
+            Scene scene= new Scene(selectionLayout);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+            return (Faculty) selectionController.getSelectedItem();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public CourseInfo showChooseCourseInfoDialog(Stage owner){
+        try {
+
+            Stage dialogStage = new Stage();
+            dialogStage.initOwner(owner);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/courseInfo.fxml"));
+            AnchorPane page = loader.load();
+            CourseInfoOverviewController controller = loader.getController();
+            controller.setApiSession(apiSession);
+            controller.setMainApp(this);
+            loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
+            selectionLayout = loader.load();
+            SelectionController selectionController = loader.getController();
+            selectionController.setDialogStage(dialogStage);
+            selectionController.setSceneController(controller);
+            selectionLayout.setCenter(page);
+            Scene scene= new Scene(selectionLayout);
+            dialogStage.setScene(scene);
+            dialogStage.showAndWait();
+            return (CourseInfo) selectionController.getSelectedItem();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
 }

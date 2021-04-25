@@ -99,6 +99,9 @@ public class Timetable implements ApiModel{
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
         map.put("course", new Gson().fromJson(getCourse().toJSON(), JsonObject.class));
         map.put("place", new Gson().fromJson(getPlace().toJSON(), JsonObject.class));
         map.put("date", DateUtil.format(getDate()));

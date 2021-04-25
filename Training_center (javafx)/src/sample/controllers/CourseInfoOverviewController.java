@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class CourseInfoOverviewController {
+public class CourseInfoOverviewController extends OverviewController{
     @FXML
     private ListView<String> courseInfoListView;
 
@@ -37,6 +37,7 @@ public class CourseInfoOverviewController {
 
     public void showCourseInfoName(String name){
         nameField.setText(name);
+        item = apiSession.getCourseInfosByName(name);
     }
 
     public void setApiSession(ApiSession apiSession) {

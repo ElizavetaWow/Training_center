@@ -13,7 +13,7 @@ import sample.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PlaceOverviewController {
+public class PlaceOverviewController extends OverviewController {
     @FXML
     private TableView<Place> placeTableView;
     @FXML

@@ -11,7 +11,7 @@ import sample.models.Company;
 import sample.utils.ApiSession;
 
 
-public class CompanyOverviewController {
+public class CompanyOverviewController extends OverviewController{
     @FXML
     private TableView<Company> companyTableView;
     @FXML

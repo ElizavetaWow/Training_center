@@ -6,6 +6,7 @@ import com.google.gson.JsonParser;
 import sample.models.*;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -389,5 +390,94 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/courses/" + id);
+    }
+
+    public void createTimetable(Timetable timetable) {
+        HttpClass.PostRequest(url + "/timetables", timetable.toJSON());
+    }
+
+    public Timetable getTimetablesById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/timetables/"+id);
+        JsonObject currentTimetable = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentTimetable != null){
+            return timetableFromJson(currentTimetable);
+        }
+        return null;
+    }
+    public List<Timetable> getTimetablesByCourseName(String name) {
+        List<Timetable> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
+                result.add(timetableFromJson(currentTimetable));
+            }
+        }
+        return result;
+    }
+
+    public List<Timetable> getTimetablesByDate(LocalDate date) {
+        List<Timetable> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/timetables/date_"+date);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
+                result.add(timetableFromJson(currentTimetable));
+            }
+        }
+        return result;
+    }
+
+    public List<Timetable> getTimetablesByCourseNameAndDate(String name, LocalDate date) {
+        List<Timetable> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name+"_date_"+date);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
+                result.add(timetableFromJson(currentTimetable));
+            }
+        }
+        return result;
+    }
+
+    public List<Timetable> getTimetables() {
+        List<Timetable> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/timetables");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
+                result.add(timetableFromJson(currentTimetable));
+            }
+        }
+        return result;
+
+    }
+
+    public Timetable timetableFromJson(JsonObject currentTimetable){
+        LocalDate date = DateUtil.parse(currentTimetable.get("date").getAsString());
+        LocalTime time = TimeUtil.parse(currentTimetable.get("time").getAsString());
+        Course course = courseFromJson(currentTimetable.get("course").getAsJsonObject());
+        Place place = placeFromJson(currentTimetable.get("place").getAsJsonObject());
+        Long id = currentTimetable.get("id").getAsLong();
+        return new Timetable(id, course, place, time, date);
+    }
+
+
+    public void updateTimetable(Timetable timetable) {
+        long id = timetable.getId();
+        String jsonString = timetable.toJSON();
+        HttpClass.PutRequest(url + "/timetables/" + id, jsonString);
+    }
+
+    public boolean deleteTimetable(Timetable timetable) {
+        Long id = timetable.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/timetables/" + id);
     }
 }

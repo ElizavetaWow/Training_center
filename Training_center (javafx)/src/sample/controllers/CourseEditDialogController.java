@@ -6,7 +6,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.models.Course;
 import sample.models.CourseInfo;
 import sample.models.Faculty;
@@ -23,11 +25,16 @@ public class CourseEditDialogController {
     @FXML
     private DatePicker finishPicker;
     @FXML
-    private ComboBox<String> facultyBox;
+    private Label facultyLabel;
+    @FXML
+    private Label nameLabel;
 
 
 
     private Course course;
+    private Faculty selectedFaculty;
+    private CourseInfo selectedCourseInfo;
+    private Main main;
     private Stage dialogStage;
     private boolean okClicked = false;
     private boolean update = false;
@@ -44,29 +51,23 @@ public class CourseEditDialogController {
     private void initialize(){
     }
 
-    public void setDialogStage(Stage dialogStage, ApiSession apiSession) {
+    public void setDialogStage(Stage dialogStage, ApiSession apiSession, Main main) {
         this.dialogStage = dialogStage;
         this.apiSession = apiSession;
-        setNameBoxItems();
-        setFacultyBoxItems();
+        this.main = main;
     }
 
     public void setCourse(Course course){
         if (course.getCourseInfo() != null){
             this.update = true;
-            nameBox.getSelectionModel().select(course.getCourseInfo().getName());
-            facultyBox.getSelectionModel().select(course.getFaculty().getNamesAndEmail());
+            selectedCourseInfo = course.getCourseInfo();
+            nameLabel.setText(course.getCourseInfo().getName());
+            selectedFaculty = course.getFaculty();
+            facultyLabel.setText(course.getFaculty().getNamesAndEmail());
         }
         this.course = course;
         startPicker.setValue(course.getStartDate());
         finishPicker.setValue(course.getFinishDate());
-
-    }
-
-    public void setName(String name){
-        if (name != null && !name.equals("All Courses")){
-            nameBox.getSelectionModel().select(name);
-        }
     }
 
     public boolean isOkClicked(){
@@ -79,14 +80,28 @@ public class CourseEditDialogController {
     }
 
     @FXML
+    private void handleSelectFaculty(){
+       selectedFaculty = main.showChooseFacultyDialog(dialogStage);
+       if (selectedFaculty != null){
+           facultyLabel.setText(selectedFaculty.getNamesAndEmail());
+       }
+    }
+
+    @FXML
+    private void handleSelectName(){
+        selectedCourseInfo = main.showChooseCourseInfoDialog(dialogStage);
+        if (selectedCourseInfo != null){
+            nameLabel.setText(selectedCourseInfo.getName());
+        }
+    }
+
+    @FXML
     private void handleOk(){
         if(isInputValid()){
             course.setStartDate(startPicker.getValue());
             course.setFinishDate(finishPicker.getValue());
-            course.setCourseInfo(apiSession.getCourseInfosByName(nameBox.getSelectionModel().getSelectedItem()));
-            String facultyString = facultyBox.getSelectionModel().getSelectedItem();
-            course.setFaculty(apiSession.getFacultiesByEmail(
-                    facultyString.substring(facultyString.indexOf("[") + 1, facultyString.lastIndexOf("]"))));
+            course.setCourseInfo(selectedCourseInfo);
+            course.setFaculty(selectedFaculty);
             if (update) {
                 apiSession.updateCourse(course);
             }
@@ -100,7 +115,7 @@ public class CourseEditDialogController {
 
     private boolean isInputValid(){
         String errorMessage = "";
-        if (nameBox.getSelectionModel().getSelectedIndex() < 0) {
+        if (nameLabel.getText() == null || nameLabel.getText().length() == 0) {
             errorMessage += "No name selection!\n";
         }
         if (startPicker.getValue() == null) {
@@ -110,7 +125,7 @@ public class CourseEditDialogController {
             errorMessage += "No finish date selection!\n";
         }
 
-        if (facultyBox.getSelectionModel().getSelectedIndex() < 0) {
+        if (facultyLabel.getText() == null || facultyLabel.getText().length() == 0) {
             errorMessage += "No faculty selection!\n";
         }
         if (startPicker.getValue().isAfter(finishPicker.getValue())){
@@ -130,21 +145,4 @@ public class CourseEditDialogController {
         }
     }
 
-    public void setNameBoxItems(){
-        courseInfos = apiSession.getCourseInfos();
-        namesList.clear();
-        for (CourseInfo courseInfo: courseInfos){
-            namesList.add(courseInfo.getName());
-        }
-        nameBox.setItems(namesList);
-    }
-
-    public void setFacultyBoxItems(){
-        faculties = apiSession.getFaculties();
-        facultyList.clear();
-        for (Faculty faculty: faculties){
-            facultyList.add(faculty.getNamesAndEmail());
-        }
-        facultyBox.setItems(facultyList);
-    }
 }

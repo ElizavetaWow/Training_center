@@ -94,10 +94,14 @@ public class Course implements ApiModel{
     }
 
 
+
     @Override
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
+        if (id != null){
+            map.put("id", String.valueOf(getId()));
+        }
         map.put("startDate", DateUtil.format(getStartDate()));
         map.put("finishDate", DateUtil.format(getFinishDate()));
         map.put("courseInfo", new Gson().fromJson(getCourseInfo().toJSON(), JsonObject.class));

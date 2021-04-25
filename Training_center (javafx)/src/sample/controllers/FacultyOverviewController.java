@@ -13,7 +13,7 @@ import sample.utils.DateUtil;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FacultyOverviewController {
+public class FacultyOverviewController extends OverviewController {
     @FXML
     private TableView<Faculty> facultyTableView;
     @FXML
@@ -66,6 +66,7 @@ public class FacultyOverviewController {
 
     private void showFacultyDetails(Faculty faculty){
         if (faculty != null){
+            item = faculty;
             firstNameLabel.setText(faculty.getFirstName());
             lastNameLabel.setText(faculty.getLastName());
             birthdayLabel.setText(DateUtil.format(faculty.getBirthday()));
