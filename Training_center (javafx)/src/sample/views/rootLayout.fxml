@@ -3,14 +3,20 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<BorderPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.RootController">
    <top>
      <MenuBar BorderPane.alignment="CENTER">
        <Menu mnemonicParsing="false" text="File">
          <MenuItem mnemonicParsing="false" text="Close" />
        </Menu>
-       <Menu mnemonicParsing="false" text="Edit">
-         <MenuItem mnemonicParsing="false" text="Delete" />
+       <Menu mnemonicParsing="false" text="Open">
+         <MenuItem mnemonicParsing="false" onAction="#showCompanies" text="Companies" />
+            <MenuItem mnemonicParsing="false" onAction="#showStudents" text="Students" />
+            <MenuItem mnemonicParsing="false" onAction="#showFaculties" text="Faculties" />
+            <MenuItem mnemonicParsing="false" onAction="#showConcreteCourses" text="Concrete courses" />
+            <MenuItem mnemonicParsing="false" onAction="#showPlaces" text="Addresses" />
+            <MenuItem mnemonicParsing="false" onAction="#showCourses" text="Courses" />
+            <MenuItem mnemonicParsing="false" onAction="#showTimetable" text="Timetable" />
        </Menu>
        <Menu mnemonicParsing="false" text="Help">
          <MenuItem mnemonicParsing="false" text="About" />

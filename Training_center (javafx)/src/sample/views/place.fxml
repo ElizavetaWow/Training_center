@@ -2,17 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PlaceOverviewController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.PlaceOverviewController">
     <children>
-        <Label layoutX="26.0" layoutY="25.0" text="Addresses" />
-        <HBox layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+        <Label layoutX="26.0" layoutY="25.0" text="Addresses" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+        <HBox layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#handleNewPlace" prefHeight="25.0" prefWidth="70.0" text="New" />
                 <Button mnemonicParsing="false" onAction="#handleEditPlace" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                 <Button mnemonicParsing="false" onAction="#handleDeletePlace" prefHeight="25.0" prefWidth="70.0" text="Delete" />
             </children></HBox>
-      <TableView fx:id="placeTableView" layoutX="23.0" layoutY="98.0" prefHeight="222.0" prefWidth="549.0">
+      <TableView fx:id="placeTableView" layoutX="23.0" layoutY="98.0" prefHeight="222.0" prefWidth="549.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
         <columns>
           <TableColumn fx:id="cityColumn" prefWidth="75.0" text="City" />
           <TableColumn fx:id="streetColumn" prefWidth="138.3332977294922" text="Street" />
@@ -23,6 +27,6 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="cityBox" layoutX="26.0" layoutY="57.0" onAction="#updatePlacesTable" prefWidth="150.0" promptText="City" />
+      <ComboBox fx:id="cityBox" layoutX="26.0" layoutY="57.0" onAction="#updatePlacesTable" prefHeight="25.0" prefWidth="231.0" promptText="City" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
     </children>
 </AnchorPane>

@@ -2,17 +2,21 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseOverviewController">
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseOverviewController">
     <children>
-        <Label layoutX="26.0" layoutY="25.0" text="Courses" />
-        <HBox layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+        <Label contentDisplay="CENTER" layoutX="26.0" layoutY="17.0" prefHeight="25.0" prefWidth="800.0" text="Concrete Courses" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+         <font>
+            <Font size="20.0" />
+         </font></Label>
+        <HBox layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="10.0">
             <children>
                 <Button mnemonicParsing="false" onAction="#handleNewCourse" prefHeight="25.0" prefWidth="70.0" text="New" />
                 <Button mnemonicParsing="false" onAction="#handleEditCourse" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                 <Button mnemonicParsing="false" onAction="#handleDeleteCourse" prefHeight="25.0" prefWidth="70.0" text="Delete" />
             </children></HBox>
-      <TableView fx:id="courseTableView" layoutX="23.0" layoutY="98.0" prefHeight="222.0" prefWidth="549.0">
+      <TableView fx:id="courseTableView" layoutX="23.0" layoutY="98.0" prefHeight="346.0" prefWidth="770.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
         <columns>
             <TableColumn fx:id="courseInfoColumn" prefWidth="185.33333778381348" text="Name" />
             <TableColumn fx:id="startDateColumn" prefWidth="89.33335876464844" text="Start Date" />
@@ -23,6 +27,6 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <ComboBox fx:id="nameBox" layoutX="26.0" layoutY="57.0" onAction="#updateCoursesTable" prefWidth="150.0" promptText="Course name" />
+      <ComboBox fx:id="nameBox" layoutX="26.0" layoutY="50.0" onAction="#updateCoursesTable" prefHeight="30.0" prefWidth="335.0" promptText="Course name" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
     </children>
 </AnchorPane>

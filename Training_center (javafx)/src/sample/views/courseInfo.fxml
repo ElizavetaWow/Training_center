@@ -1,14 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseInfoOverviewController">
-      <HBox layoutX="349.0" layoutY="37.0" prefHeight="25.0" prefWidth="230.0" spacing="10.0" AnchorPane.rightAnchor="21.0" AnchorPane.topAnchor="37.0">
-          <Button mnemonicParsing="false" onAction="#handleNewCourseInfo" prefHeight="25.0" prefWidth="70.0" text="New" />
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseInfoOverviewController">
+      <HBox layoutX="6.0" layoutY="62.0" prefHeight="25.0" prefWidth="787.0" spacing="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+      <TextField fx:id="nameField" prefHeight="25.0" prefWidth="557.0" promptText="Course Name">
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+      </TextField>
+          <Button mnemonicParsing="false" onAction="#handleNewCourseInfo" prefHeight="25.0" prefWidth="66.0" text="New" />
           <Button mnemonicParsing="false" onAction="#handleEditCourseInfo" prefHeight="25.0" prefWidth="70.0" text="Edit" />
           <Button mnemonicParsing="false" onAction="#handleDeleteCourseInfo" prefHeight="25.0" prefWidth="70.0" text="Delete" />
+      <HBox.margin>
+         <Insets left="10.0" />
+      </HBox.margin>
       </HBox>
-   <ListView fx:id="courseInfoListView" layoutX="20.0" layoutY="82.0" prefHeight="269.0" prefWidth="559.0" />
-   <TextField fx:id="nameField" layoutX="22.0" layoutY="37.0" prefHeight="25.0" prefWidth="299.0" promptText="Course Name" />
+   <ListView fx:id="courseInfoListView" layoutX="20.0" layoutY="102.0" prefHeight="385.0" prefWidth="757.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0" />
+   <Label alignment="TOP_LEFT" layoutX="227.0" layoutY="21.0" text="Courses" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+      <font>
+         <Font size="20.0" />
+      </font>
+   </Label>
 </AnchorPane>
