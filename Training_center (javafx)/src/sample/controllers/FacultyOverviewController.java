@@ -3,15 +3,14 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import sample.Main;
-import sample.models.Company;
 import sample.models.Faculty;
 import sample.utils.ApiSession;
 import sample.utils.DateUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class FacultyOverviewController extends OverviewController {
     @FXML
@@ -32,7 +31,6 @@ public class FacultyOverviewController extends OverviewController {
 
     private Main main;
     private ApiSession apiSession;
-    private ObservableList<Faculty> facultyList = FXCollections.observableArrayList();
 
     public FacultyOverviewController(){
     }
@@ -58,6 +56,7 @@ public class FacultyOverviewController extends OverviewController {
 
     @FXML
     private void updateFacultiesTable(){
+        ObservableList<Faculty> facultyList = FXCollections.observableArrayList();
         facultyList.clear();
         facultyList.addAll(apiSession.getFaculties());
         facultyTableView.setItems(facultyList);
@@ -66,7 +65,7 @@ public class FacultyOverviewController extends OverviewController {
 
     private void showFacultyDetails(Faculty faculty){
         if (faculty != null){
-            item = faculty;
+            setItem(faculty);
             firstNameLabel.setText(faculty.getFirstName());
             lastNameLabel.setText(faculty.getLastName());
             birthdayLabel.setText(DateUtil.format(faculty.getBirthday()));

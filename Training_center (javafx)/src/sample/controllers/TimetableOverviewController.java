@@ -35,7 +35,6 @@ public class TimetableOverviewController  extends OverviewController {
     private Main main;
     private ApiSession apiSession;
     private final ObservableList<Timetable> timetableList = FXCollections.observableArrayList();
-    private ObservableList<String> courseList = FXCollections.observableArrayList();
     public TimetableOverviewController(){
     }
 
@@ -60,6 +59,7 @@ public class TimetableOverviewController  extends OverviewController {
 
     public void setCourseBoxItems(){
         updateTimetableList();
+        ObservableList<String> courseList = FXCollections.observableArrayList();
         courseList.clear();
         courseList.add("All Courses");
         for (Timetable timetable: timetableList){
@@ -79,13 +79,13 @@ public class TimetableOverviewController  extends OverviewController {
         if (selectionIndex > 0 && selectedDate == null) {
             updateTimetableList(courseBox.getSelectionModel().getSelectedItem());
         }
-        else if (selectionIndex > 0 && selectedDate != null) {
+        else if (selectionIndex > 0) {
             updateTimetableList(courseBox.getSelectionModel().getSelectedItem(), selectedDate);
         }
         else if (selectionIndex == 0 && selectedDate != null) {
             updateTimetableList(selectedDate);
         }
-        else if (selectionIndex == 0 && selectedDate == null) {
+        else if (selectionIndex == 0) {
             updateTimetableList();
         }
         timetableTableView.setItems(timetableList);
@@ -141,7 +141,7 @@ public class TimetableOverviewController  extends OverviewController {
     private void handleEditTimetable(){
         Timetable currentTimetable = timetableTableView.getSelectionModel().getSelectedItem();
         if (currentTimetable != null) {
-            boolean okClicked = main.showTimetableEditDialog(currentTimetable);
+            main.showTimetableEditDialog(currentTimetable);
             setCourseBoxItems();
             updateTimetablesTable();
         } else {
@@ -158,7 +158,7 @@ public class TimetableOverviewController  extends OverviewController {
     @FXML
     private void handleNewTimetable(){
         Timetable tempTimetable = new Timetable();
-        boolean okClicked = main.showTimetableEditDialog(tempTimetable);
+        main.showTimetableEditDialog(tempTimetable);
         setCourseBoxItems();
         updateTimetablesTable();
     }

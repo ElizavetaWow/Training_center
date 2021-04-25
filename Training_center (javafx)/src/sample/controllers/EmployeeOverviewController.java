@@ -38,7 +38,6 @@ public class EmployeeOverviewController extends OverviewController {
     private Main main;
     private ApiSession apiSession;
     private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
-    private ObservableList<String> companyNameList = FXCollections.observableArrayList();
     private List<Company> companyList = new ArrayList<>();
 
     public EmployeeOverviewController(){
@@ -66,6 +65,7 @@ public class EmployeeOverviewController extends OverviewController {
 
     public void setCompanyBoxItems(){
         companyList = apiSession.getCompanies();
+        ObservableList<String> companyNameList = FXCollections.observableArrayList();
         companyNameList.clear();
         companyNameList.add("All Companies");
         for (Company company: companyList){

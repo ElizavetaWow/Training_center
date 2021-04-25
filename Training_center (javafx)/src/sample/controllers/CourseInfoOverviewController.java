@@ -3,14 +3,13 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ListView;
+import javafx.scene.control.TextField;
 import sample.Main;
-import sample.models.Company;
 import sample.models.CourseInfo;
 import sample.utils.ApiSession;
-import sample.utils.DateUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -24,7 +23,6 @@ public class CourseInfoOverviewController extends OverviewController{
     private Main main;
     private ApiSession apiSession;
     private ObservableList<String> courseInfoList = FXCollections.observableArrayList();
-    private List<CourseInfo> courseInfos = new ArrayList<>();
 
     public CourseInfoOverviewController(){
     }
@@ -37,7 +35,7 @@ public class CourseInfoOverviewController extends OverviewController{
 
     public void showCourseInfoName(String name){
         nameField.setText(name);
-        item = apiSession.getCourseInfosByName(name);
+        setItem(apiSession.getCourseInfosByName(name));
     }
 
     public void setApiSession(ApiSession apiSession) {
@@ -52,7 +50,7 @@ public class CourseInfoOverviewController extends OverviewController{
     @FXML
     private void updateCourseInfoListView(){
         courseInfoList.clear();
-        courseInfos = apiSession.getCourseInfos();
+        List<CourseInfo> courseInfos = apiSession.getCourseInfos();
         for (CourseInfo courseInfo: courseInfos){
             courseInfoList.add(courseInfo.getName());
         }

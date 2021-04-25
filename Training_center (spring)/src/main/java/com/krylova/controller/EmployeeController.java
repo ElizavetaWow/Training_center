@@ -1,6 +1,5 @@
 package com.krylova.controller;
 
-import com.krylova.entity.Company;
 import com.krylova.entity.Employee;
 import com.krylova.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;

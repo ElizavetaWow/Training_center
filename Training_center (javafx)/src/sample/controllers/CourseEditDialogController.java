@@ -1,10 +1,7 @@
 package sample.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
@@ -14,12 +11,7 @@ import sample.models.CourseInfo;
 import sample.models.Faculty;
 import sample.utils.ApiSession;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class CourseEditDialogController {
-    @FXML
-    private ComboBox<String> nameBox;
     @FXML
     private DatePicker startPicker;
     @FXML
@@ -38,10 +30,6 @@ public class CourseEditDialogController {
     private Stage dialogStage;
     private boolean okClicked = false;
     private boolean update = false;
-    private ObservableList<String> namesList = FXCollections.observableArrayList();
-    private List<CourseInfo> courseInfos = new ArrayList<>();
-    private ObservableList<String> facultyList = FXCollections.observableArrayList();
-    private List<Faculty> faculties = new ArrayList<>();
 
     private ApiSession apiSession;
 

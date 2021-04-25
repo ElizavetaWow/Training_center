@@ -1,7 +1,6 @@
 package com.krylova.controller;
 
 import com.krylova.entity.Course;
-import com.krylova.entity.CourseInfo;
 import com.krylova.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

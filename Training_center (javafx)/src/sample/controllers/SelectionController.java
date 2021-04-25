@@ -2,10 +2,7 @@ package sample.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
 import javafx.stage.Stage;
-import sample.models.ApiModel;
-import sample.utils.ApiSession;
 
 public class SelectionController {
 

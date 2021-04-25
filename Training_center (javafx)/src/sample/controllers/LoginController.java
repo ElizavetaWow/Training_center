@@ -5,13 +5,11 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.Main;
 import sample.models.Admin;
 import sample.models.Employee;
 import sample.models.Faculty;
 import sample.models.Person;
 import sample.utils.ApiSession;
-
 
 
 public class LoginController {
@@ -22,7 +20,6 @@ public class LoginController {
     private PasswordField passwordField;
 
 
-    private Main main;
     private ApiSession apiSession;
     private Stage stage;
     private Person user;
@@ -87,8 +84,7 @@ public class LoginController {
         }
     }
 
-    public void setMain(Main main) {
-        this.main = main;
+    public void setMain() {
     }
 
     public void setApiSession(ApiSession apiSession) {

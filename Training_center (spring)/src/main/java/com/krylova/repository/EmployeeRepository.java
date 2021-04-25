@@ -1,7 +1,6 @@
 package com.krylova.repository;
 
 
-import com.krylova.entity.Company;
 import com.krylova.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 

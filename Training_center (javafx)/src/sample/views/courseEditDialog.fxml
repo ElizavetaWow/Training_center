@@ -4,7 +4,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="400.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseEditDialogController">
+<AnchorPane prefHeight="500.0" prefWidth="400.0"  xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseEditDialogController">
     <GridPane layoutX="25.0" layoutY="57.0" prefHeight="397.0" prefWidth="433.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="111.33333333333334" />
@@ -22,24 +22,23 @@
       <DatePicker fx:id="startPicker" prefHeight="25.0" prefWidth="317.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
       <Label text="Name:" />
       <DatePicker fx:id="finishPicker" prefHeight="25.0" prefWidth="318.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-      <HBox alignment="CENTER" prefHeight="120.0" prefWidth="257.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <children>
-            <Label fx:id="facultyLabel" prefHeight="25.0" prefWidth="210.0" />
-            <Button mnemonicParsing="false" onAction="#handleSelectFaculty" prefHeight="25.0" prefWidth="105.0" text="Select Faculty" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="110.0" prefWidth="228.0" spacing="10.0" GridPane.columnIndex="1">
-         <children>
-            <Label fx:id="nameLabel" prefHeight="25.0" prefWidth="210.0" />
-            <Button mnemonicParsing="false" onAction="#handleSelectName" prefHeight="25.0" prefWidth="100.0" text="Select Name" />
-         </children>
-      </HBox>
+        <HBox alignment="CENTER" prefHeight="120.0" prefWidth="257.0" spacing="10.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="3">
+            <Label fx:id="facultyLabel" prefHeight="25.0" prefWidth="210.0"/>
+            <Button mnemonicParsing="false" onAction="#handleSelectFaculty" prefHeight="25.0" prefWidth="105.0"
+                    text="Select Faculty"/>
+        </HBox>
+        <HBox alignment="CENTER" prefHeight="110.0" prefWidth="228.0" spacing="10.0" GridPane.columnIndex="1">
+            <Label fx:id="nameLabel" prefHeight="25.0" prefWidth="210.0"/>
+            <Button mnemonicParsing="false" onAction="#handleSelectName" prefHeight="25.0" prefWidth="100.0"
+                    text="Select Name"/>
+        </HBox>
     </GridPane>
     <HBox alignment="CENTER" layoutX="108.0" layoutY="355.0" prefWidth="35.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" prefHeight="35.0" prefWidth="100.0" text="Ok" />
         <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0" text="Cancel" />
     </HBox>
-    <Label alignment="CENTER" layoutX="127.0" layoutY="26.0" prefHeight="20.0" prefWidth="121.0" styleClass="label-subheader" text="Course Edit" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+    <Label alignment="CENTER" layoutX="127.0" layoutY="26.0" prefHeight="20.0" prefWidth="121.0" text="Course Edit" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <font>
             <Font size="20.0" />
         </font></Label>

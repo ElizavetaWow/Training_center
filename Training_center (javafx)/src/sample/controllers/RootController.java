@@ -3,8 +3,6 @@ package sample.controllers;
 import javafx.fxml.FXML;
 import sample.Main;
 
-import java.time.LocalDate;
-
 public class RootController {
 
     private Main main;

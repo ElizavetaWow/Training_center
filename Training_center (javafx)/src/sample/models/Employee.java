@@ -16,13 +16,13 @@ public class Employee extends Person{
     public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(id, firstName, lastName, password, email, birthday);
         this.id = new SimpleLongProperty(id);
-        this.company = new SimpleObjectProperty<Company>(company);
+        this.company = new SimpleObjectProperty<>(company);
         this.setRole(getRoles().indexOf("student"));
     }
 
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(firstName, lastName, password, email, birthday);
-        this.company = new SimpleObjectProperty<Company>(company);
+        this.company = new SimpleObjectProperty<>(company);
         this.setRole(getRoles().indexOf("student"));
     }
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday){
@@ -44,7 +44,7 @@ public class Employee extends Person{
     }
 
     public void setCompany(Company company) {
-        this.company = new SimpleObjectProperty<Company>(company);
+        this.company = new SimpleObjectProperty<>(company);
     }
 
     @Override

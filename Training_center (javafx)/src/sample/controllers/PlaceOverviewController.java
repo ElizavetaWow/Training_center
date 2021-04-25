@@ -3,15 +3,13 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import sample.Main;
-import sample.models.Company;
 import sample.models.Place;
 import sample.utils.ApiSession;
-import sample.utils.DateUtil;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class PlaceOverviewController extends OverviewController {
     @FXML
@@ -32,7 +30,7 @@ public class PlaceOverviewController extends OverviewController {
     private Main main;
     private ApiSession apiSession;
     private final ObservableList<Place> placeList = FXCollections.observableArrayList();
-    private ObservableList<String> cityList = FXCollections.observableArrayList();
+
     public PlaceOverviewController(){
     }
 
@@ -43,7 +41,7 @@ public class PlaceOverviewController extends OverviewController {
         buildingColumn.setCellValueFactory(cellData -> cellData.getValue().getBuildingProperty());
         roomColumn.setCellValueFactory(cellData -> cellData.getValue().getRoomProperty().asObject());
         placeTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> item = newValue);
+                (observable, oldValue, newValue )-> setItem(newValue));
     }
 
     public void setApiSession(ApiSession apiSession) {
@@ -58,6 +56,7 @@ public class PlaceOverviewController extends OverviewController {
 
     public void setCityBoxItems(){
         updatePlaceList();
+        ObservableList<String> cityList = FXCollections.observableArrayList();
         cityList.clear();
         cityList.add("All Cities");
         for (Place place: placeList){
@@ -121,7 +120,7 @@ public class PlaceOverviewController extends OverviewController {
     private void handleEditPlace(){
         Place currentPlace = placeTableView.getSelectionModel().getSelectedItem();
         if (currentPlace != null) {
-            boolean okClicked = main.showPlaceEditDialog(currentPlace);
+            main.showPlaceEditDialog(currentPlace);
             setCityBoxItems();
             updatePlacesTable();
         } else {
@@ -138,7 +137,7 @@ public class PlaceOverviewController extends OverviewController {
     @FXML
     private void handleNewPlace(){
         Place tempPlace = new Place();
-        boolean okClicked = main.showPlaceEditDialog(tempPlace);
+        main.showPlaceEditDialog(tempPlace);
         setCityBoxItems();
         updatePlacesTable();
     }

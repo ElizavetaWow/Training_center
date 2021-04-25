@@ -66,7 +66,7 @@ public class Main extends Application {
             dialogStage.setScene(scene);
 
             LoginController controller = loader.getController();
-            controller.setMain(this);
+            controller.setMain();
             controller.setApiSession(apiSession);
             controller.setStage(dialogStage);
             dialogStage.showAndWait();

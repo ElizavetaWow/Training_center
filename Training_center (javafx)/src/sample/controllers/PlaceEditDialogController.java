@@ -1,20 +1,13 @@
 package sample.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import sample.models.Company;
-import sample.models.Employee;
 import sample.models.Place;
 import sample.utils.ApiSession;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Objects;
 
 public class PlaceEditDialogController {
     @FXML
@@ -31,8 +24,6 @@ public class PlaceEditDialogController {
     private Stage dialogStage;
     private boolean okClicked = false;
     private boolean update = false;
-    private ObservableList<String> companyList = FXCollections.observableArrayList();
-    private List<Company> companies = new ArrayList<>();
 
     private ApiSession apiSession;
 
@@ -100,7 +91,7 @@ public class PlaceEditDialogController {
         if (roomField.getText() == null || roomField.getText().length() == 0) {
             errorMessage += "No room input!\n";
         }
-        if (!roomField.getText().matches("\\d+")) {
+        if (!Objects.requireNonNull(roomField.getText()).matches("\\d+")) {
             errorMessage += "Room must be a number!\n";
         }
         if (errorMessage.length() == 0) {

@@ -62,7 +62,7 @@ public class CompanyOverviewController extends OverviewController{
 
     private void showCompanyDetails(Company company){
         if (company != null){
-            item = company;
+            setItem(company);
             nameLabel.setText(company.getName());
             accountLabel.setText(company.getAccount());
         }

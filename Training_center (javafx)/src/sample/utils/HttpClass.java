@@ -15,7 +15,7 @@ public class HttpClass {
             StringBuilder sb = new StringBuilder();
             InputStream is = new BufferedInputStream(conn.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String inputLine = "";
+            String inputLine;
             while ((inputLine = br.readLine()) != null) {
                 sb.append(inputLine);
             }
@@ -50,7 +50,7 @@ public class HttpClass {
             StringBuilder sb = new StringBuilder();
             InputStream is = new BufferedInputStream(conn.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String inputLine = "";
+            String inputLine;
             while ((inputLine = br.readLine()) != null) {
                 sb.append(inputLine);
             }
@@ -100,7 +100,7 @@ public class HttpClass {
             StringBuilder sb = new StringBuilder();
             InputStream is = new BufferedInputStream(conn.getInputStream());
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String inputLine = "";
+            String inputLine;
             while ((inputLine = br.readLine()) != null) {
                 sb.append(inputLine);
             }

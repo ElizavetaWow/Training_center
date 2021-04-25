@@ -1,6 +1,5 @@
 package com.krylova.controller;
 
-import com.krylova.entity.Company;
 import com.krylova.entity.CourseInfo;
 import com.krylova.service.CourseInfoService;
 import org.springframework.beans.factory.annotation.Autowired;

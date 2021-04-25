@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-<AnchorPane prefHeight="500.0" prefWidth="400.0" styleClass="background" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.TimetableEditDialogController">
+<AnchorPane prefHeight="500.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.TimetableEditDialogController">
     <GridPane layoutX="25.0" layoutY="56.0" prefHeight="340.0" prefWidth="371.0" AnchorPane.bottomAnchor="75.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="55.0">
         <columnConstraints>
             <ColumnConstraints hgrow="SOMETIMES" maxWidth="238.0" minWidth="10.0" prefWidth="62.33333333333333" />
@@ -21,29 +21,30 @@
         <Label text="Time:" GridPane.rowIndex="1" />
         <Label text="Course:" GridPane.rowIndex="2" />
         <Label text="Place:" GridPane.rowIndex="3" />
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <children>
-            <Label fx:id="placeLabel" prefHeight="25.0" prefWidth="205.0" />
-            <Button mnemonicParsing="false" onAction="#handleSelectPlace" prefHeight="25.0" prefWidth="90.0" text="Select Place" />
-         </children>
-      </HBox>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1"
+              GridPane.rowIndex="3">
+            <Label fx:id="placeLabel" prefHeight="25.0" prefWidth="205.0"/>
+            <Button mnemonicParsing="false" onAction="#handleSelectPlace" prefHeight="25.0" prefWidth="90.0"
+                    text="Select Place"/>
+        </HBox>
       <DatePicker fx:id="datePicker" layoutX="138.0" layoutY="168.0" prefHeight="25.0" prefWidth="318.0" GridPane.columnIndex="1" />
-      <HBox alignment="CENTER" layoutX="138.0" layoutY="282.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <children>
-            <Label fx:id="courseLabel" prefHeight="25.0" prefWidth="205.0" />
-            <Button mnemonicParsing="false" onAction="#handleSelectCourse" prefHeight="25.0" prefWidth="90.0" text="Select Course">
-               <HBox.margin>
-                  <Insets />
-               </HBox.margin></Button>
-         </children>
-      </HBox>
+        <HBox alignment="CENTER" layoutX="138.0" layoutY="282.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
+              GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Label fx:id="courseLabel" prefHeight="25.0" prefWidth="205.0"/>
+            <Button mnemonicParsing="false" onAction="#handleSelectCourse" prefHeight="25.0" prefWidth="90.0"
+                    text="Select Course">
+                <HBox.margin>
+                    <Insets/>
+                </HBox.margin>
+            </Button>
+        </HBox>
       <TextField fx:id="timeField" promptText="Example: 18:30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
     </GridPane>
     <HBox alignment="CENTER" layoutX="108.0" layoutY="355.0" prefHeight="35.0" prefWidth="400.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" prefHeight="35.0" prefWidth="100.0" text="Ok" />
         <Button mnemonicParsing="false" onAction="#handleCancel" prefHeight="35.0" prefWidth="100.0" text="Cancel" />
     </HBox>
-    <Label alignment="CENTER" layoutX="127.0" layoutY="26.0" prefHeight="20.0" prefWidth="121.0" styleClass="label-subheader" text="Timetable Edit" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
+    <Label alignment="CENTER" layoutX="127.0" layoutY="26.0" prefHeight="20.0" prefWidth="121.0" text="Timetable Edit" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="25.0">
         <font>
             <Font size="20.0" />
         </font></Label>

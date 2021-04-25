@@ -1,17 +1,15 @@
 package sample.controllers;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.DatePicker;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.models.Company;
 import sample.models.Employee;
 import sample.utils.ApiSession;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class EmployeeEditDialogController {
     @FXML

@@ -18,18 +18,18 @@ public class Course implements ApiModel{
 
     public Course(Long id, LocalDate startDate, LocalDate finishDate, CourseInfo courseInfo, Faculty faculty){
         this.id = new SimpleLongProperty(id);
-        this.startDate = new SimpleObjectProperty<LocalDate>(startDate);
-        this.finishDate = new SimpleObjectProperty<LocalDate>(finishDate);
-        this.courseInfo = new SimpleObjectProperty<CourseInfo>(courseInfo);
-        this.faculty = new SimpleObjectProperty<Faculty>(faculty);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.finishDate = new SimpleObjectProperty<>(finishDate);
+        this.courseInfo = new SimpleObjectProperty<>(courseInfo);
+        this.faculty = new SimpleObjectProperty<>(faculty);
     }
 
     public Course(LocalDate startDate, LocalDate finishDate, CourseInfo courseInfo, Faculty faculty){
         this.id = null;
-        this.startDate = new SimpleObjectProperty<LocalDate>(startDate);
-        this.finishDate = new SimpleObjectProperty<LocalDate>(finishDate);
-        this.courseInfo = new SimpleObjectProperty<CourseInfo>(courseInfo);
-        this.faculty = new SimpleObjectProperty<Faculty>(faculty);
+        this.startDate = new SimpleObjectProperty<>(startDate);
+        this.finishDate = new SimpleObjectProperty<>(finishDate);
+        this.courseInfo = new SimpleObjectProperty<>(courseInfo);
+        this.faculty = new SimpleObjectProperty<>(faculty);
     }
 
 

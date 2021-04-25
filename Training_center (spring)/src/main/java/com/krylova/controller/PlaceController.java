@@ -37,7 +37,7 @@ public class PlaceController {
     @GetMapping("/places/{id}")
     public ResponseEntity<Optional<Place>> findById(@PathVariable(name = "id") Long id){
         final Optional<Place> place = placeService.findById(id);
-        return place != null
+        return place.isPresent()
                 ? new ResponseEntity<>(place, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }

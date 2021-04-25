@@ -16,7 +16,7 @@ public abstract class Person implements ApiModel{
     private ObjectProperty<LocalDate> birthday;
     private int role;
 
-    public final List roles = new ArrayList(Arrays.asList("student", "faculty", "admin"));
+    public final ArrayList<String> roles = new ArrayList<>(Arrays.asList("student", "faculty", "admin"));
 
     public Person(Long id, String firstName, String lastName, String password, String email, LocalDate birthday){
         this.id = new SimpleLongProperty(id);
@@ -24,7 +24,7 @@ public abstract class Person implements ApiModel{
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
-        this.birthday = new SimpleObjectProperty<LocalDate>(birthday);
+        this.birthday = new SimpleObjectProperty<>(birthday);
 
     }
 
@@ -35,7 +35,7 @@ public abstract class Person implements ApiModel{
         this.lastName = new SimpleStringProperty(lastName);
         this.email = new SimpleStringProperty(email);
         this.password = new SimpleStringProperty(password);
-        this.birthday = new SimpleObjectProperty<LocalDate>(birthday);
+        this.birthday = new SimpleObjectProperty<>(birthday);
 
     }
 
@@ -115,7 +115,7 @@ public abstract class Person implements ApiModel{
         this.role = role;
     }
 
-    public List getRoles() {
+    public ArrayList<String> getRoles() {
         return roles;
     }
 

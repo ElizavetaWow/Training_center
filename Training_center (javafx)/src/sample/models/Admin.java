@@ -1,8 +1,5 @@
 package sample.models;
 
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-
 import java.time.LocalDate;
 
 public class Admin extends Person{

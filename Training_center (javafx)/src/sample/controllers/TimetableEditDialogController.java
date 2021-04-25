@@ -7,7 +7,6 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.models.Company;
 import sample.models.Course;
 import sample.models.Place;
 import sample.models.Timetable;

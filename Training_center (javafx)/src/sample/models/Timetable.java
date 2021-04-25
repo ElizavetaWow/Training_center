@@ -20,18 +20,18 @@ public class Timetable implements ApiModel{
 
     public Timetable(Long id, Course course, Place place, LocalTime time, LocalDate date){
         this.id = new SimpleLongProperty(id);
-        this.course = new SimpleObjectProperty<Course>(course);
-        this.place = new SimpleObjectProperty<Place>(place);
-        this.time = new SimpleObjectProperty<LocalTime>(time);
-        this.date = new SimpleObjectProperty<LocalDate>(date);
+        this.course = new SimpleObjectProperty<>(course);
+        this.place = new SimpleObjectProperty<>(place);
+        this.time = new SimpleObjectProperty<>(time);
+        this.date = new SimpleObjectProperty<>(date);
     }
 
     public Timetable(Course course, Place place, LocalTime time, LocalDate date){
         this.id = null;
-        this.course = new SimpleObjectProperty<Course>(course);
-        this.place = new SimpleObjectProperty<Place>(place);
-        this.time = new SimpleObjectProperty<LocalTime>(time);
-        this.date = new SimpleObjectProperty<LocalDate>(date);
+        this.course = new SimpleObjectProperty<>(course);
+        this.place = new SimpleObjectProperty<>(place);
+        this.time = new SimpleObjectProperty<>(time);
+        this.date = new SimpleObjectProperty<>(date);
     }
 
 

@@ -29,7 +29,6 @@ public class CourseOverviewController extends OverviewController {
     private Main main;
     private ApiSession apiSession;
     private final ObservableList<Course> courseList = FXCollections.observableArrayList();
-    private ObservableList<String> nameList = FXCollections.observableArrayList();
     public CourseOverviewController(){
     }
 
@@ -40,7 +39,7 @@ public class CourseOverviewController extends OverviewController {
         courseInfoColumn.setCellValueFactory(cellData -> cellData.getValue().getCourseInfo().getNameProperty());
         facultyColumn.setCellValueFactory(cellData -> cellData.getValue().getFaculty().getNamesAndEmailProperty());
         courseTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> item = newValue);
+                (observable, oldValue, newValue )-> setItem(newValue));
     }
 
     public void setApiSession(ApiSession apiSession) {
@@ -55,6 +54,7 @@ public class CourseOverviewController extends OverviewController {
 
     public void setNameBoxItems(){
         updateCourseList();
+        ObservableList<String> nameList = FXCollections.observableArrayList();
         nameList.clear();
         nameList.add("All Courses");
         for (Course course: courseList){
@@ -113,7 +113,7 @@ public class CourseOverviewController extends OverviewController {
     private void handleEditCourse(){
         Course currentCourse = courseTableView.getSelectionModel().getSelectedItem();
         if (currentCourse != null) {
-            boolean okClicked = main.showCourseEditDialog(currentCourse);
+            main.showCourseEditDialog(currentCourse);
             setNameBoxItems();
             updateCoursesTable();
         } else {
@@ -130,7 +130,7 @@ public class CourseOverviewController extends OverviewController {
     @FXML
     private void handleNewCourse(){
         Course tempCourse = new Course();
-        boolean okClicked = main.showCourseEditDialog(tempCourse);
+        main.showCourseEditDialog(tempCourse);
         setNameBoxItems();
         updateCoursesTable();
     }
