@@ -81,16 +81,18 @@ public class CourseEditDialogController {
 
     @FXML
     private void handleSelectFaculty(){
-       selectedFaculty = main.showChooseFacultyDialog(dialogStage);
-       if (selectedFaculty != null){
+       Faculty faculty = main.showChooseFacultyDialog(dialogStage);
+       if (faculty != null){
+           selectedFaculty = faculty;
            facultyLabel.setText(selectedFaculty.getNamesAndEmail());
        }
     }
 
     @FXML
     private void handleSelectName(){
-        selectedCourseInfo = main.showChooseCourseInfoDialog(dialogStage);
-        if (selectedCourseInfo != null){
+        CourseInfo courseInfo = main.showChooseCourseInfoDialog(dialogStage);
+        if (courseInfo != null){
+            selectedCourseInfo = courseInfo;
             nameLabel.setText(selectedCourseInfo.getName());
         }
     }

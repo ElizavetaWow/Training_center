@@ -66,8 +66,9 @@ public class EmployeeEditDialogController {
 
     @FXML
     private void handleSelectCompany(){
-        selectedCompany = main.showChooseCompanyDialog(dialogStage);
-        if (selectedCompany != null){
+        Company company = main.showChooseCompanyDialog(dialogStage);
+        if (company != null){
+            selectedCompany = company;
             companyLabel.setText(selectedCompany.getName());
         }
     }

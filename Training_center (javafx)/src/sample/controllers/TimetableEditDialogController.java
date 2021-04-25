@@ -61,16 +61,18 @@ public class TimetableEditDialogController {
 
     @FXML
     private void handleSelectPlace(){
-        selectedPlace = main.showChoosePlaceDialog(dialogStage);
-        if (selectedPlace != null){
+        Place place = main.showChoosePlaceDialog(dialogStage);
+        if (place != null){
+            selectedPlace = place;
             placeLabel.setText(selectedPlace.getFullPlace());
         }
     }
 
     @FXML
     private void handleSelectCourse(){
-        selectedCourse = main.showChooseCourseDialog(dialogStage);
-        if (selectedCourse != null){
+        Course course = main.showChooseCourseDialog(dialogStage);
+        if (course != null){
+            selectedCourse = course;
             courseLabel.setText(selectedCourse.getCourseInfo().getName());
         }
     }
