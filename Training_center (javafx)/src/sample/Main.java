@@ -18,6 +18,7 @@ import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
+    private Person user;
     private BorderPane rootLayout;
     private BorderPane selectionLayout;
     private ApiSession apiSession;
@@ -29,9 +30,12 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("");
-        initRootLayout();
-        showTimetableOverview();
+        this.primaryStage.setTitle("Training Center");
+        user = showLoginForm();
+        if (user != null){
+            initRootLayout();
+            showTimetableOverview();
+        }
     }
 
     public void initRootLayout(){
@@ -47,6 +51,30 @@ public class Main extends Application {
         }catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public Person showLoginForm(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/loginForm.fxml"));
+            AnchorPane page = loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Log in");
+            dialogStage.initOwner(primaryStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            LoginController controller = loader.getController();
+            controller.setMain(this);
+            controller.setApiSession(apiSession);
+            controller.setStage(dialogStage);
+            dialogStage.showAndWait();
+            return controller.getUser();
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public void showEmployeeOverview(Company company){

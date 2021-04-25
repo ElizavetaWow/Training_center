@@ -5,8 +5,7 @@ import javafx.beans.property.*;
 import sample.utils.DateUtil;
 
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public abstract class Person implements ApiModel{
     private LongProperty id;
@@ -15,6 +14,9 @@ public abstract class Person implements ApiModel{
     private StringProperty email;
     private StringProperty password;
     private ObjectProperty<LocalDate> birthday;
+    private int role;
+
+    public final List roles = new ArrayList(Arrays.asList("student", "faculty", "admin"));
 
     public Person(Long id, String firstName, String lastName, String password, String email, LocalDate birthday){
         this.id = new SimpleLongProperty(id);
@@ -25,6 +27,7 @@ public abstract class Person implements ApiModel{
         this.birthday = new SimpleObjectProperty<LocalDate>(birthday);
 
     }
+
 
     public Person(String firstName, String lastName, String password, String email, LocalDate birthday){
         this.id = null;
@@ -103,6 +106,19 @@ public abstract class Person implements ApiModel{
     public void setBirthday(LocalDate birthday) {
         this.birthday = new SimpleObjectProperty<>(birthday);
     }
+
+    public int getRole() {
+        return role;
+    }
+
+    public void setRole(int role) {
+        this.role = role;
+    }
+
+    public List getRoles() {
+        return roles;
+    }
+
 
     @Override
     public String toJSON() {

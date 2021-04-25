@@ -51,6 +51,14 @@ public class EmployeeController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/employees/email_{email}")
+    public ResponseEntity<List<Employee>> findByEmail(@PathVariable(name = "email") String email){
+        final List<Employee> employeeList = employeeService.findByEmail(email);
+        return employeeList != null && !employeeList.isEmpty()
+                ? new ResponseEntity<>(employeeList, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
 
     @PutMapping("/employees/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employeeUpdate) {

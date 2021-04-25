@@ -115,6 +115,15 @@ public class ApiSession {
         }
         return result;
     }
+    public Employee getEmployeesByEmail(String email) {
+        String answer = HttpClass.GetRequest(url + "/employees/email_"+email);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            JsonObject currentEmployee = jsonAnswer.get(0).getAsJsonObject();
+            return employeeFromJson(currentEmployee);
+        }
+        return null;
+    }
 
 
     public Employee employeeFromJson(JsonObject currentEmployee){
@@ -479,5 +488,68 @@ public class ApiSession {
         if (id == null)
             return false;
         return HttpClass.DeleteRequest(url + "/timetables/" + id);
+    }
+
+    public void createAdmin(Admin admin) {
+        HttpClass.PostRequest(url + "/admins", admin.toJSON());
+    }
+
+    public Admin getAdminsById(Long id) {
+        String answer = HttpClass.GetRequest(url + "/admins/"+id);
+        JsonObject currentAdmin = JsonParser.parseString(answer).getAsJsonObject();
+        if (currentAdmin != null){
+            return adminFromJson(currentAdmin);
+        }
+        return null;
+    }
+
+    public Admin getAdminsByEmail(String email) {
+        String answer = HttpClass.GetRequest(url + "/admins/email_"+email);
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+            JsonObject currentAdmin = jsonAnswer.get(0).getAsJsonObject();
+            return adminFromJson(currentAdmin);
+        }
+        return null;
+    }
+
+
+    public List<Admin> getAdmins() {
+        List<Admin> result = new ArrayList<>();
+        String answer = HttpClass.GetRequest(url + "/admins");
+        if (answer != null) {
+            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
+
+            for (int i = 0; i < jsonAnswer.size(); i++) {
+                JsonObject currentAdmin = jsonAnswer.get(i).getAsJsonObject();
+                result.add(adminFromJson(currentAdmin));
+            }
+        }
+        return result;
+
+    }
+
+    public Admin adminFromJson(JsonObject currentAdmin){
+        String firstName = currentAdmin.get("firstName").getAsString();
+        String lastName = currentAdmin.get("lastName").getAsString();
+        String password = currentAdmin.get("password").getAsString();
+        String email = currentAdmin.get("email").getAsString();
+        LocalDate birthday = DateUtil.parse(currentAdmin.get("birthday").getAsString());
+        Long id = currentAdmin.get("id").getAsLong();
+        return new Admin(id, firstName, lastName, password, email, birthday);
+    }
+
+
+    public void updateAdmin(Admin admin) {
+        long id = admin.getId();
+        String jsonString = admin.toJSON();
+        HttpClass.PutRequest(url + "/admins/" + id, jsonString);
+    }
+
+    public boolean deleteAdmin(Admin admin) {
+        Long id = admin.getId();
+        if (id == null)
+            return false;
+        return HttpClass.DeleteRequest(url + "/admins/" + id);
     }
 }

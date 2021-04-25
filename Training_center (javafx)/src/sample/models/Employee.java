@@ -17,15 +17,18 @@ public class Employee extends Person{
         super(id, firstName, lastName, password, email, birthday);
         this.id = new SimpleLongProperty(id);
         this.company = new SimpleObjectProperty<Company>(company);
+        this.setRole(getRoles().indexOf("student"));
     }
 
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(firstName, lastName, password, email, birthday);
         this.company = new SimpleObjectProperty<Company>(company);
+        this.setRole(getRoles().indexOf("student"));
     }
     public Employee(String firstName, String lastName, String password, String email, LocalDate birthday){
         super(firstName, lastName, password, email, birthday);
         this.company = null;
+        this.setRole(getRoles().indexOf("student"));
     }
 
     public Employee(){
