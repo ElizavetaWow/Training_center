@@ -115,6 +115,9 @@ public class TimetableEditDialogController {
         }
         if (datePicker.getValue() == null) {
             errorMessage += "No date selection!\n";
+        } else if (datePicker.getValue().isAfter(selectedCourse.getFinishDate())
+                || datePicker.getValue().isBefore(selectedCourse.getStartDate())){
+            errorMessage += "Date must be between "+selectedCourse.getStartDate()+" and "+selectedCourse.getFinishDate()+"!\n";
         }
 
         if (courseLabel.getText() == null || courseLabel.getText().length() == 0) {

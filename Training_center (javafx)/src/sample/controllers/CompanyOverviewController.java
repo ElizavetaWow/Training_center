@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.chart.BarChart;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Company;
 import sample.utils.ApiSession;
@@ -23,7 +24,8 @@ public class CompanyOverviewController extends OverviewController{
     private Label accountLabel;
     @FXML
     private Button showEmployeesButton;
-
+    @FXML
+    private HBox buttonsHBox;
     @FXML
     private BarChart chart;
 
@@ -145,6 +147,10 @@ public class CompanyOverviewController extends OverviewController{
         companyList.clear();
         companyList.addAll(apiSession.getCompanies());
         companyTableView.setItems(companyList);
+    }
+
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
     }
 
 }

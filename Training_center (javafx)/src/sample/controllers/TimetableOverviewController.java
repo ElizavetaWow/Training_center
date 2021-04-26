@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Timetable;
 import sample.utils.ApiSession;
@@ -24,7 +25,8 @@ public class TimetableOverviewController  extends OverviewController {
     private TableColumn<Timetable, String> facultyColumn;
     @FXML
     private TableColumn<Timetable, String> placeColumn;
-
+    @FXML
+    private HBox buttonsHBox;
 
 
     @FXML
@@ -161,6 +163,10 @@ public class TimetableOverviewController  extends OverviewController {
         main.showTimetableEditDialog(tempTimetable);
         setCourseBoxItems();
         updateTimetablesTable();
+    }
+
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
     }
 
 }

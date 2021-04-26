@@ -8,6 +8,7 @@ import sample.models.*;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class ApiSession {
@@ -21,15 +22,18 @@ public class ApiSession {
 
     public Company getCompaniesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/companies/"+id);
-        JsonObject currentCompany = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentCompany != null){
-            return companyFromJson(currentCompany);
+        if (answer != null) {
+            return companyFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
     public List<Company> getCompaniesByName(String name) {
-        List<Company> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/companies/n_"+name);
+        return getCompanyList(answer);
+    }
+
+    private List<Company> getCompanyList(String answer) {
+        List<Company> result = new ArrayList<>();
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             for (int i = 0; i < jsonAnswer.size(); i++) {
@@ -41,17 +45,8 @@ public class ApiSession {
     }
 
     public List<Company> getCompanies() {
-        List<Company> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/companies");
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentCompany = jsonAnswer.get(i).getAsJsonObject();
-                result.add(companyFromJson(currentCompany));
-            }
-        }
-        return result;
+        return getCompanyList(answer);
 
     }
 
@@ -70,9 +65,7 @@ public class ApiSession {
     }
 
     public boolean deleteCompany(Company company) {
-        Long id = company.getId();
-        if (id == null)
-            return false;
+        long id = company.getId();
         return HttpClass.DeleteRequest(url + "/companies/" + id);
     }
 
@@ -82,8 +75,12 @@ public class ApiSession {
     }
 
     public List<Employee> getEmployees() {
-        List<Employee> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/employees");
+        return getEmployeeList(answer);
+    }
+
+    private List<Employee> getEmployeeList(String answer) {
+        List<Employee> result = new ArrayList<>();
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             for (int i = 0; i < jsonAnswer.size(); i++) {
@@ -96,24 +93,15 @@ public class ApiSession {
 
     public Employee getEmployeesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/employees/"+id);
-        JsonObject currentEmployee = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentEmployee != null){
-            return employeeFromJson(currentEmployee);
+        if (answer != null) {
+            return employeeFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
 
     public List<Employee> getEmployeesByCompanyName(String companyName) {
-        List<Employee> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/employees/comp_"+companyName);
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentEmployee = jsonAnswer.get(i).getAsJsonObject();
-                result.add(employeeFromJson(currentEmployee));
-            }
-        }
-        return result;
+        return getEmployeeList(answer);
     }
     public Employee getEmployeesByEmail(String email) {
         String answer = HttpClass.GetRequest(url + "/employees/email_"+email);
@@ -127,26 +115,39 @@ public class ApiSession {
 
 
     public Employee employeeFromJson(JsonObject currentEmployee){
-        String firstName = currentEmployee.get("firstName").getAsString();
-        String lastName = currentEmployee.get("lastName").getAsString();
-        String password = currentEmployee.get("password").getAsString();
-        String email = currentEmployee.get("email").getAsString();
-        LocalDate birthday = DateUtil.parse(currentEmployee.get("birthday").getAsString());
         Company company = companyFromJson(currentEmployee.get("company").getAsJsonObject());
-        Long id = currentEmployee.get("id").getAsLong();
-        return new Employee(id, firstName, lastName, password, email, birthday, company);
+        Employee employee = (Employee) personFromJson(currentEmployee, "s");
+        employee.setCompany(company);
+        return employee;
+    }
+
+    private Person personFromJson(JsonObject currentPerson, String type){
+        String firstName = currentPerson.get("firstName").getAsString();
+        String lastName = currentPerson.get("lastName").getAsString();
+        String password = currentPerson.get("password").getAsString();
+        String email = currentPerson.get("email").getAsString();
+        LocalDate birthday = DateUtil.parse(currentPerson.get("birthday").getAsString());
+        Long id = currentPerson.get("id").getAsLong();
+        if (type.equals("s")){
+            return new Employee(id, firstName, lastName, password, email, birthday);
+        }
+        if (type.equals("f")){
+            return new Faculty(id, firstName, lastName, password, email, birthday);
+        }
+        if (type.equals("a")){
+            return new Admin(id, firstName, lastName, password, email, birthday);
+        }
+        return null;
     }
 
     public void updateEmployee(Employee employee) {
-        Long id = employee.getId();
+        long id = employee.getId();
         String jsonString = employee.toJSON();
         HttpClass.PutRequest(url + "/employees/" + id, jsonString);
     }
 
     public boolean deleteEmployee(Employee employee) {
-        Long id = employee.getId();
-        if (id == null)
-            return false;
+        long id = employee.getId();
         return HttpClass.DeleteRequest(url + "/employees/" + id);
     }
 
@@ -157,15 +158,18 @@ public class ApiSession {
 
     public Place getPlacesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/places/"+id);
-        JsonObject currentPlace = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentPlace != null){
-            return placeFromJson(currentPlace);
+        if (answer != null) {
+            return placeFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
     public List<Place> getPlacesByCity(String city) {
-        List<Place> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/places/city_"+city);
+        return getPlaceList(answer);
+    }
+
+    private List<Place> getPlaceList(String answer) {
+        List<Place> result = new ArrayList<>();
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             for (int i = 0; i < jsonAnswer.size(); i++) {
@@ -177,17 +181,8 @@ public class ApiSession {
     }
 
     public List<Place> getPlaces() {
-        List<Place> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/places");
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentPlace = jsonAnswer.get(i).getAsJsonObject();
-                result.add(placeFromJson(currentPlace));
-            }
-        }
-        return result;
+        return getPlaceList(answer);
 
     }
 
@@ -208,9 +203,7 @@ public class ApiSession {
     }
 
     public boolean deletePlace(Place place) {
-        Long id = place.getId();
-        if (id == null)
-            return false;
+        long id = place.getId();
         return HttpClass.DeleteRequest(url + "/places/" + id);
     }
 
@@ -221,9 +214,8 @@ public class ApiSession {
 
     public Faculty getFacultiesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/faculties/"+id);
-        JsonObject currentFaculty = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentFaculty != null){
-            return facultyFromJson(currentFaculty);
+        if (answer != null) {
+            return facultyFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
@@ -255,13 +247,7 @@ public class ApiSession {
     }
 
     public Faculty facultyFromJson(JsonObject currentFaculty){
-        String firstName = currentFaculty.get("firstName").getAsString();
-        String lastName = currentFaculty.get("lastName").getAsString();
-        String password = currentFaculty.get("password").getAsString();
-        String email = currentFaculty.get("email").getAsString();
-        LocalDate birthday = DateUtil.parse(currentFaculty.get("birthday").getAsString());
-        Long id = currentFaculty.get("id").getAsLong();
-        return new Faculty(id, firstName, lastName, password, email, birthday);
+        return (Faculty) personFromJson(currentFaculty, "f");
     }
 
 
@@ -272,9 +258,7 @@ public class ApiSession {
     }
 
     public boolean deleteFaculty(Faculty faculty) {
-        Long id = faculty.getId();
-        if (id == null)
-            return false;
+        long id = faculty.getId();
         return HttpClass.DeleteRequest(url + "/faculties/" + id);
     }
 
@@ -284,9 +268,8 @@ public class ApiSession {
 
     public CourseInfo getCourseInfosById(Long id) {
         String answer = HttpClass.GetRequest(url + "/courseInfos/"+id);
-        JsonObject currentCourseInfo = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentCourseInfo != null){
-            return courseInfoFromJson(currentCourseInfo);
+        if (answer != null) {
+            return courseInfoFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
@@ -329,9 +312,7 @@ public class ApiSession {
     }
 
     public boolean deleteCourseInfo(CourseInfo courseInfo) {
-        Long id = courseInfo.getId();
-        if (id == null)
-            return false;
+        long id = courseInfo.getId();
         return HttpClass.DeleteRequest(url + "/courseInfos/" + id);
     }
 
@@ -341,40 +322,34 @@ public class ApiSession {
 
     public Course getCoursesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/courses/"+id);
-        JsonObject currentCourse = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentCourse != null){
-            return courseFromJson(currentCourse);
+        if (answer != null) {
+            return courseFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
 
 
     public List<Course> getCoursesByName(String courseInfo) {
-        List<Course> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/courses/ci_"+courseInfo);
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentCourse = jsonAnswer.get(i).getAsJsonObject();
-                result.add(courseFromJson(currentCourse));
-            }
-        }
-        return result;
+        return getCourseList(answer);
 
     }
 
-    public List<Course> getCourses() {
+    private List<Course> getCourseList(String answer) {
         List<Course> result = new ArrayList<>();
-        String answer = HttpClass.GetRequest(url + "/courses");
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
             for (int i = 0; i < jsonAnswer.size(); i++) {
                 JsonObject currentCourse = jsonAnswer.get(i).getAsJsonObject();
                 result.add(courseFromJson(currentCourse));
             }
         }
         return result;
+    }
+
+    public List<Course> getCourses() {
+        String answer = HttpClass.GetRequest(url + "/courses");
+        return getCourseList(answer);
 
     }
 
@@ -395,9 +370,7 @@ public class ApiSession {
     }
 
     public boolean deleteCourse(Course course) {
-        Long id = course.getId();
-        if (id == null)
-            return false;
+        long id = course.getId();
         return HttpClass.DeleteRequest(url + "/courses/" + id);
     }
 
@@ -407,15 +380,18 @@ public class ApiSession {
 
     public Timetable getTimetablesById(Long id) {
         String answer = HttpClass.GetRequest(url + "/timetables/"+id);
-        JsonObject currentTimetable = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentTimetable != null){
-            return timetableFromJson(currentTimetable);
+        if (answer != null) {
+            return timetableFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
     public List<Timetable> getTimetablesByCourseName(String name) {
-        List<Timetable> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name);
+        return getTimetableList(answer);
+    }
+
+    private List<Timetable> getTimetableList(String answer) {
+        List<Timetable> result = new ArrayList<>();
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             for (int i = 0; i < jsonAnswer.size(); i++) {
@@ -427,43 +403,18 @@ public class ApiSession {
     }
 
     public List<Timetable> getTimetablesByDate(LocalDate date) {
-        List<Timetable> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/timetables/date_"+date);
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
-                result.add(timetableFromJson(currentTimetable));
-            }
-        }
-        return result;
+        return getTimetableList(answer);
     }
 
     public List<Timetable> getTimetablesByCourseNameAndDate(String name, LocalDate date) {
-        List<Timetable> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name+"/date_"+date);
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
-                result.add(timetableFromJson(currentTimetable));
-            }
-        }
-        return result;
+        return getTimetableList(answer);
     }
 
     public List<Timetable> getTimetables() {
-        List<Timetable> result = new ArrayList<>();
         String answer = HttpClass.GetRequest(url + "/timetables");
-        if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
-            for (int i = 0; i < jsonAnswer.size(); i++) {
-                JsonObject currentTimetable = jsonAnswer.get(i).getAsJsonObject();
-                result.add(timetableFromJson(currentTimetable));
-            }
-        }
-        return result;
+        return getTimetableList(answer);
 
     }
 
@@ -484,9 +435,7 @@ public class ApiSession {
     }
 
     public boolean deleteTimetable(Timetable timetable) {
-        Long id = timetable.getId();
-        if (id == null)
-            return false;
+        long id = timetable.getId();
         return HttpClass.DeleteRequest(url + "/timetables/" + id);
     }
 
@@ -496,9 +445,8 @@ public class ApiSession {
 
     public Admin getAdminsById(Long id) {
         String answer = HttpClass.GetRequest(url + "/admins/"+id);
-        JsonObject currentAdmin = JsonParser.parseString(answer).getAsJsonObject();
-        if (currentAdmin != null){
-            return adminFromJson(currentAdmin);
+        if (answer != null) {
+            return adminFromJson(JsonParser.parseString(answer).getAsJsonObject());
         }
         return null;
     }
@@ -519,7 +467,6 @@ public class ApiSession {
         String answer = HttpClass.GetRequest(url + "/admins");
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-
             for (int i = 0; i < jsonAnswer.size(); i++) {
                 JsonObject currentAdmin = jsonAnswer.get(i).getAsJsonObject();
                 result.add(adminFromJson(currentAdmin));
@@ -530,13 +477,7 @@ public class ApiSession {
     }
 
     public Admin adminFromJson(JsonObject currentAdmin){
-        String firstName = currentAdmin.get("firstName").getAsString();
-        String lastName = currentAdmin.get("lastName").getAsString();
-        String password = currentAdmin.get("password").getAsString();
-        String email = currentAdmin.get("email").getAsString();
-        LocalDate birthday = DateUtil.parse(currentAdmin.get("birthday").getAsString());
-        Long id = currentAdmin.get("id").getAsLong();
-        return new Admin(id, firstName, lastName, password, email, birthday);
+        return (Admin) personFromJson(currentAdmin, "a");
     }
 
 
@@ -547,9 +488,7 @@ public class ApiSession {
     }
 
     public boolean deleteAdmin(Admin admin) {
-        Long id = admin.getId();
-        if (id == null)
-            return false;
+        long id = admin.getId();
         return HttpClass.DeleteRequest(url + "/admins/" + id);
     }
 }

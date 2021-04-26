@@ -1,9 +1,13 @@
 package sample.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.MenuItem;
 import sample.Main;
 
 public class RootController {
+
+    @FXML
+    private MenuItem companyItem;
 
     private Main main;
 
@@ -42,6 +46,19 @@ public class RootController {
     @FXML
     private void showPlaces(){
         main.showPlaceOverview();
+    }
+    @FXML
+    private void closeApp(){
+        main.getPrimaryStage().close();
+    }
+    @FXML
+    private void signOut() throws Exception {
+        main.getPrimaryStage().close();
+        main.start(main.getPrimaryStage());
+    }
+
+    public void setVisibleItems(int i){
+        companyItem.setVisible(i != 0);
     }
 
 

@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Course;
 import sample.utils.ApiSession;
@@ -21,7 +22,8 @@ public class CourseOverviewController extends OverviewController {
     private TableColumn<Course, LocalDate> finishDateColumn;
     @FXML
     private TableColumn<Course, String> facultyColumn;
-
+    @FXML
+    private HBox buttonsHBox;
 
     @FXML
     private ComboBox<String> nameBox;
@@ -133,6 +135,10 @@ public class CourseOverviewController extends OverviewController {
         main.showCourseEditDialog(tempCourse);
         setNameBoxItems();
         updateCoursesTable();
+    }
+
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
     }
 
 }

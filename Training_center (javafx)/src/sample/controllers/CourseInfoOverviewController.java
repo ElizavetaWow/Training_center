@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.CourseInfo;
 import sample.utils.ApiSession;
@@ -19,6 +20,8 @@ public class CourseInfoOverviewController extends OverviewController{
 
     @FXML
     private TextField nameField;
+    @FXML
+    private HBox buttonsHBox;
 
     private Main main;
     private ApiSession apiSession;
@@ -63,9 +66,10 @@ public class CourseInfoOverviewController extends OverviewController{
         int selectedIndex = courseInfoListView.getSelectionModel().getSelectedIndex();
         if (selectedIndex >= 0){
             CourseInfo currentCourseInfo = apiSession.getCourseInfosByName(courseInfoListView.getItems().get(selectedIndex));
-            apiSession.deleteCourseInfo(currentCourseInfo);
-            updateCourseInfoListView();
-            courseInfoListView.getSelectionModel().selectFirst();
+            if (apiSession.deleteCourseInfo(currentCourseInfo)){
+                updateCourseInfoListView();
+                courseInfoListView.getSelectionModel().selectFirst();
+            }
         }
         else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -133,6 +137,10 @@ public class CourseInfoOverviewController extends OverviewController{
             alert.showAndWait();
             return false;
         }
+    }
+
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
     }
 
 }

@@ -18,9 +18,9 @@ import java.io.IOException;
 
 public class Main extends Application {
     private Stage primaryStage;
+
     private Person user;
     private BorderPane rootLayout;
-    private BorderPane selectionLayout;
     private ApiSession apiSession;
 
     public Main(){
@@ -28,10 +28,10 @@ public class Main extends Application {
     }
 
     @Override
-    public void start(Stage primaryStage) throws Exception{
+    public void start(Stage primaryStage){
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Training Center");
-        user = showLoginForm();
+        setUser(showLoginForm());
         if (user != null){
             initRootLayout();
             showTimetableOverview();
@@ -45,6 +45,7 @@ public class Main extends Application {
             rootLayout = loader.load();
             RootController controller = loader.getController();
             controller.setMain(this);
+            controller.setVisibleItems(getUser().getRole());
             Scene scene= new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
@@ -87,6 +88,7 @@ public class Main extends Application {
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
             controller.setCompany(company);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -101,6 +103,7 @@ public class Main extends Application {
             CourseOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -115,6 +118,7 @@ public class Main extends Application {
             TimetableOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -129,6 +133,7 @@ public class Main extends Application {
             CourseInfoOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -143,6 +148,7 @@ public class Main extends Application {
             FacultyOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -157,6 +163,7 @@ public class Main extends Application {
             PlaceOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -164,13 +171,16 @@ public class Main extends Application {
 
     public void showCompanyOverview(){
         try{
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/company.fxml"));
-            AnchorPane companyOverview = loader.load();
-            rootLayout.setCenter(companyOverview);
-            CompanyOverviewController controller = loader.getController();
-            controller.setApiSession(apiSession);
-            controller.setMainApp(this);
+            if (user.getRole() > 0) {
+                FXMLLoader loader = new FXMLLoader();
+                loader.setLocation(Main.class.getResource("views/company.fxml"));
+                AnchorPane companyOverview = loader.load();
+                rootLayout.setCenter(companyOverview);
+                CompanyOverviewController controller = loader.getController();
+                controller.setApiSession(apiSession);
+                controller.setMainApp(this);
+                controller.setVisibleHBox(user.getRole());
+            }
         } catch (IOException e){
             e.printStackTrace();
         }
@@ -206,13 +216,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/companyEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             CompanyEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
@@ -226,17 +230,22 @@ public class Main extends Application {
         }
     }
 
+    private Stage createEditDialog(FXMLLoader loader) throws IOException {
+        AnchorPane page = loader.load();
+        Stage dialogStage = new Stage();
+        dialogStage.setTitle("Edit");
+        dialogStage.initOwner(primaryStage);
+        dialogStage.initModality(Modality.WINDOW_MODAL);
+        Scene scene = new Scene(page);
+        dialogStage.setScene(scene);
+        return dialogStage;
+    }
+
     public boolean showEmployeeEditDialog(Employee employee){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/employeeEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             EmployeeEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession, this);
@@ -250,51 +259,35 @@ public class Main extends Application {
         }
     }
 
-    public boolean showPlaceEditDialog(Place place){
+    public void showPlaceEditDialog(Place place){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/placeEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             PlaceEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
             controller.setPlace(place);
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
         }catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
-    public boolean showTimetableEditDialog(Timetable timetable){
+    public void showTimetableEditDialog(Timetable timetable){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/timetableEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             TimetableEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession, this);
             controller.setTimetable(timetable);
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
         }catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -303,13 +296,7 @@ public class Main extends Application {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/facultyEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             FacultyEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession);
@@ -323,27 +310,19 @@ public class Main extends Application {
         }
     }
 
-    public boolean showCourseEditDialog(Course course){
+    public void showCourseEditDialog(Course course){
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/courseEditDialog.fxml"));
-            AnchorPane page = loader.load();
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("Edit");
-            dialogStage.initOwner(primaryStage);
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
+            Stage dialogStage = createEditDialog(loader);
 
             CourseEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage, apiSession, this);
             controller.setCourse(course);
             dialogStage.showAndWait();
 
-            return controller.isOkClicked();
         }catch (IOException e) {
             e.printStackTrace();
-            return false;
         }
     }
 
@@ -359,9 +338,18 @@ public class Main extends Application {
             FacultyOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
-            loader = new FXMLLoader();
+            return (Faculty) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
+        }catch (IOException e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    private SelectionController createSelectionDialog(AnchorPane page, Stage dialogStage, OverviewController controller){
+        try {
+            FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
-            selectionLayout = loader.load();
+            BorderPane selectionLayout = loader.load();
             SelectionController selectionController = loader.getController();
             selectionController.setDialogStage(dialogStage);
             selectionController.setSceneController(controller);
@@ -369,8 +357,8 @@ public class Main extends Application {
             Scene scene= new Scene(selectionLayout);
             dialogStage.setScene(scene);
             dialogStage.showAndWait();
-            return (Faculty) selectionController.getSelectedItem();
-        }catch (IOException e) {
+            return selectionController;
+        } catch (IOException e){
             e.printStackTrace();
             return null;
         }
@@ -388,17 +376,7 @@ public class Main extends Application {
             CourseInfoOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
-            loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
-            selectionLayout = loader.load();
-            SelectionController selectionController = loader.getController();
-            selectionController.setDialogStage(dialogStage);
-            selectionController.setSceneController(controller);
-            selectionLayout.setCenter(page);
-            Scene scene= new Scene(selectionLayout);
-            dialogStage.setScene(scene);
-            dialogStage.showAndWait();
-            return (CourseInfo) selectionController.getSelectedItem();
+            return (CourseInfo) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
         }catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -418,17 +396,7 @@ public class Main extends Application {
             controller.setShowEmployeesButtonVisible(false);
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
-            loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
-            selectionLayout = loader.load();
-            SelectionController selectionController = loader.getController();
-            selectionController.setDialogStage(dialogStage);
-            selectionController.setSceneController(controller);
-            selectionLayout.setCenter(page);
-            Scene scene= new Scene(selectionLayout);
-            dialogStage.setScene(scene);
-            dialogStage.showAndWait();
-            return (Company) selectionController.getSelectedItem();
+            return (Company) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
         }catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -447,17 +415,7 @@ public class Main extends Application {
             PlaceOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
-            loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
-            selectionLayout = loader.load();
-            SelectionController selectionController = loader.getController();
-            selectionController.setDialogStage(dialogStage);
-            selectionController.setSceneController(controller);
-            selectionLayout.setCenter(page);
-            Scene scene= new Scene(selectionLayout);
-            dialogStage.setScene(scene);
-            dialogStage.showAndWait();
-            return (Place) selectionController.getSelectedItem();
+            return (Place) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
         }catch (IOException e) {
             e.printStackTrace();
             return null;
@@ -476,21 +434,18 @@ public class Main extends Application {
             CourseOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
-            loader = new FXMLLoader();
-            loader.setLocation(Main.class.getResource("views/selectionLayout.fxml"));
-            selectionLayout = loader.load();
-            SelectionController selectionController = loader.getController();
-            selectionController.setDialogStage(dialogStage);
-            selectionController.setSceneController(controller);
-            selectionLayout.setCenter(page);
-            Scene scene= new Scene(selectionLayout);
-            dialogStage.setScene(scene);
-            dialogStage.showAndWait();
-            return (Course) selectionController.getSelectedItem();
+            return (Course) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
         }catch (IOException e) {
             e.printStackTrace();
             return null;
         }
     }
 
+    public Person getUser() {
+        return user;
+    }
+
+    public void setUser(Person user) {
+        this.user = user;
+    }
 }

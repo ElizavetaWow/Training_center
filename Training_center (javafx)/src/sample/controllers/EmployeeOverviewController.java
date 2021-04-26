@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Company;
 import sample.models.Employee;
@@ -31,6 +32,8 @@ public class EmployeeOverviewController extends OverviewController {
     private Label emailLabel;
     @FXML
     private Label companyLabel;
+    @FXML
+    private HBox buttonsHBox;
 
     @FXML
     private ComboBox<String> companyBox;
@@ -172,6 +175,10 @@ public class EmployeeOverviewController extends OverviewController {
             showEmployeeDetails(tempEmployee);
             employeeTableView.getSelectionModel().selectLast();
         }
+    }
+
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
     }
 
 }

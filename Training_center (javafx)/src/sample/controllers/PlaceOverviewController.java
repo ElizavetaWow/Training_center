@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Place;
 import sample.utils.ApiSession;
@@ -22,7 +23,8 @@ public class PlaceOverviewController extends OverviewController {
     private TableColumn<Place, String> buildingColumn;
     @FXML
     private TableColumn<Place, Integer> roomColumn;
-
+    @FXML
+    private HBox buttonsHBox;
 
     @FXML
     private ComboBox<String> cityBox;
@@ -142,5 +144,8 @@ public class PlaceOverviewController extends OverviewController {
         updatePlacesTable();
     }
 
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
+    }
 }
 

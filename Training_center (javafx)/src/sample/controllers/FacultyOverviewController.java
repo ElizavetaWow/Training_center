@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Faculty;
 import sample.utils.ApiSession;
@@ -28,6 +29,8 @@ public class FacultyOverviewController extends OverviewController {
     private Label birthdayLabel;
     @FXML
     private Label emailLabel;
+    @FXML
+    private HBox buttonsHBox;
 
     private Main main;
     private ApiSession apiSession;
@@ -126,5 +129,8 @@ public class FacultyOverviewController extends OverviewController {
         }
     }
 
+    public void setVisibleHBox(int i){
+        buttonsHBox.setVisible(i >= 2);
+    }
 }
 
