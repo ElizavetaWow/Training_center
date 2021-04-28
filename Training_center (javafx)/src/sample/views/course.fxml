@@ -5,7 +5,7 @@
 <?import javafx.scene.text.*?>
 
 <AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseOverviewController">
-    <Label contentDisplay="CENTER" layoutX="26.0" layoutY="17.0" prefHeight="25.0" prefWidth="800.0" text="Concrete Courses" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
+    <Label contentDisplay="CENTER" layoutX="26.0" layoutY="17.0" prefHeight="25.0" prefWidth="800.0" text="Courses" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="10.0">
         <font>
         <Font size="20.0" />
         </font>

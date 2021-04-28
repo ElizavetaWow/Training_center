@@ -38,7 +38,9 @@ public class CourseInfoOverviewController extends OverviewController{
 
     public void showCourseInfoName(String name){
         nameField.setText(name);
-        setItem(apiSession.getCourseInfosByName(name));
+        if (name != null){
+            setItem(apiSession.getCourseInfosByName(name));
+        }
     }
 
     public void setApiSession(ApiSession apiSession) {
@@ -68,7 +70,6 @@ public class CourseInfoOverviewController extends OverviewController{
             CourseInfo currentCourseInfo = apiSession.getCourseInfosByName(courseInfoListView.getItems().get(selectedIndex));
             if (apiSession.deleteCourseInfo(currentCourseInfo)){
                 updateCourseInfoListView();
-                courseInfoListView.getSelectionModel().selectFirst();
             }
         }
         else {
@@ -91,7 +92,6 @@ public class CourseInfoOverviewController extends OverviewController{
                 apiSession.updateCourseInfo(currentCourseInfo);
             }
             updateCourseInfoListView();
-            courseInfoListView.getSelectionModel().select(currentCourseInfo.getName());
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
@@ -110,7 +110,7 @@ public class CourseInfoOverviewController extends OverviewController{
             apiSession.createCourseInfo(tempCourseInfo);
         }
         updateCourseInfoListView();
-        courseInfoListView.getSelectionModel().select(tempCourseInfo.getName());
+        nameField.setText("");
     }
 
     private boolean isInputValid(CourseInfo courseInfo){

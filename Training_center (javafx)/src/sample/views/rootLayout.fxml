@@ -8,17 +8,27 @@
       <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
            <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="718.0">
-             <Menu mnemonicParsing="false" text="Open">
+             <Menu mnemonicParsing="false" text="Clients">
                <MenuItem fx:id="companyItem" mnemonicParsing="false" onAction="#showCompanies" text="Companies" />
                   <MenuItem mnemonicParsing="false" onAction="#showStudents" text="Students" />
                   <MenuItem mnemonicParsing="false" onAction="#showFaculties" text="Faculties" />
-                  <MenuItem mnemonicParsing="false" onAction="#showConcreteCourses" text="Concrete courses" />
-                  <MenuItem mnemonicParsing="false" onAction="#showPlaces" text="Addresses" />
-                  <MenuItem mnemonicParsing="false" onAction="#showCourses" text="Courses" />
-                  <MenuItem mnemonicParsing="false" onAction="#showTimetable" text="Timetable" />
              </Menu>
-             <Menu mnemonicParsing="false" text="About">
-               <MenuItem mnemonicParsing="false" text="About" />
+               <Menu mnemonicParsing="false" text="Training Process">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#showCourses" text="Subjects" />
+                     <MenuItem mnemonicParsing="false" onAction="#showConcreteCourses" text="Courses" />
+                     <MenuItem mnemonicParsing="false" onAction="#showPlaces" text="Addresses" />
+                  </items>
+               </Menu>
+               <Menu mnemonicParsing="false" text="Timetable">
+                  <items>
+                     <MenuItem mnemonicParsing="false" onAction="#showTimetable" text="Timetable" />
+                  </items>
+               </Menu>
+             <Menu mnemonicParsing="false" onAction="#showAbout" text="About">
+                  <items>
+                     <MenuItem mnemonicParsing="false" text="About Author" />
+                  </items>
              </Menu>
            </MenuBar>
             <MenuBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" HBox.hgrow="ALWAYS">

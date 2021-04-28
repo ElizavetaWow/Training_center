@@ -23,7 +23,4 @@ public class Course {
     private Faculty faculty;
     @ManyToOne
     private CourseInfo courseInfo;
-    @ManyToMany(targetEntity=Employee.class, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set employees;
 }

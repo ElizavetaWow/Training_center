@@ -10,6 +10,7 @@ import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Set;
 
 public class ApiSession {
 
@@ -28,7 +29,7 @@ public class ApiSession {
         return null;
     }
     public List<Company> getCompaniesByName(String name) {
-        String answer = HttpClass.GetRequest(url + "/companies/n_"+name);
+        String answer = HttpClass.GetRequest(url + "/companies/n_"+name.replace(" ", "%20"));
         return getCompanyList(answer);
     }
 
@@ -100,7 +101,7 @@ public class ApiSession {
     }
 
     public List<Employee> getEmployeesByCompanyName(String companyName) {
-        String answer = HttpClass.GetRequest(url + "/employees/comp_"+companyName);
+        String answer = HttpClass.GetRequest(url + "/employees/comp_"+companyName.replace(" ", "%20"));
         return getEmployeeList(answer);
     }
     public Employee getEmployeesByEmail(String email) {
@@ -116,8 +117,15 @@ public class ApiSession {
 
     public Employee employeeFromJson(JsonObject currentEmployee){
         Company company = companyFromJson(currentEmployee.get("company").getAsJsonObject());
+        JsonArray coursesRaw =  currentEmployee.get("coursesList").getAsJsonArray();
+        List<Course> courses = new ArrayList<>();
+        for (int i = 0; i < coursesRaw.size(); i++) {
+            JsonObject currentCourse = coursesRaw.get(i).getAsJsonObject();
+            courses.add(courseFromJson(currentCourse));
+        }
         Employee employee = (Employee) personFromJson(currentEmployee, "s");
         employee.setCompany(company);
+        employee.setCourses(courses);
         return employee;
     }
 
@@ -143,7 +151,13 @@ public class ApiSession {
     public void updateEmployee(Employee employee) {
         long id = employee.getId();
         String jsonString = employee.toJSON();
+        System.out.println(jsonString);
         HttpClass.PutRequest(url + "/employees/" + id, jsonString);
+    }
+    public void updateEmployeeCourse(Employee employee) {
+        long id = employee.getId();
+        String jsonString = employee.getCourses().get(0).toJSON();
+        HttpClass.PostRequest(url + "/employees/" + id+ "/courses/" + employee.getCourses().get(0).getId(), jsonString);
     }
 
     public boolean deleteEmployee(Employee employee) {
@@ -164,7 +178,7 @@ public class ApiSession {
         return null;
     }
     public List<Place> getPlacesByCity(String city) {
-        String answer = HttpClass.GetRequest(url + "/places/city_"+city);
+        String answer = HttpClass.GetRequest(url + "/places/city_"+city.replace(" ", "%20"));
         return getPlaceList(answer);
     }
 
@@ -274,7 +288,7 @@ public class ApiSession {
         return null;
     }
     public CourseInfo getCourseInfosByName(String name) {
-        String answer = HttpClass.GetRequest(url + "/courseInfos/n_"+name.replace(" ", "-"));
+        String answer = HttpClass.GetRequest(url + "/courseInfos/n_"+name.replace(" ", "%20"));
         if (answer != null) {
             JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
             JsonObject currentCourseInfo = jsonAnswer.get(0).getAsJsonObject();
@@ -330,7 +344,7 @@ public class ApiSession {
 
 
     public List<Course> getCoursesByName(String courseInfo) {
-        String answer = HttpClass.GetRequest(url + "/courses/ci_"+courseInfo);
+        String answer = HttpClass.GetRequest(url + "/courses/ci_"+courseInfo.replace(" ", "%20"));
         return getCourseList(answer);
 
     }
@@ -386,7 +400,7 @@ public class ApiSession {
         return null;
     }
     public List<Timetable> getTimetablesByCourseName(String name) {
-        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name);
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name.replace(" ", "%20"));
         return getTimetableList(answer);
     }
 
@@ -408,7 +422,7 @@ public class ApiSession {
     }
 
     public List<Timetable> getTimetablesByCourseNameAndDate(String name, LocalDate date) {
-        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name+"/date_"+date);
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name.replace(" ", "%20")+"/date_"+date);
         return getTimetableList(answer);
     }
 

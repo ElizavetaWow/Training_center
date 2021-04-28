@@ -94,6 +94,17 @@ public class Main extends Application {
         }
     }
 
+    public void showAboutAuthor(){
+        try{
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Main.class.getResource("views/about.fxml"));
+            AnchorPane about = loader.load();
+            rootLayout.setCenter(about);
+        } catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
     public void showCourseOverview(){
         try{
             FXMLLoader loader = new FXMLLoader();
@@ -434,6 +445,7 @@ public class Main extends Application {
             CourseOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
             controller.setMainApp(this);
+            controller.setVisibleHBox(user.getRole());
             return (Course) createSelectionDialog(page, dialogStage, controller).getSelectedItem();
         }catch (IOException e) {
             e.printStackTrace();

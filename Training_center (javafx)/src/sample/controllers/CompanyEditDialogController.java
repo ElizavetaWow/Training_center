@@ -75,7 +75,9 @@ public class CompanyEditDialogController {
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No name input!\n";
         }
-        if (!apiSession.getCompaniesByName(nameField.getText()).isEmpty() && !Objects.equals(company.getName(), nameField.getText())){
+        if (!nameField.getText().matches("[A-z\\s]+[A-z]")){
+            errorMessage += "Name must be in latin!\n";
+        } else if (!apiSession.getCompaniesByName(nameField.getText()).isEmpty() && !Objects.equals(company.getName(), nameField.getText())){
             errorMessage += "Such company name is already exists!\n";
         }
 

@@ -19,7 +19,4 @@ public class Company {
     private String name;
     private String account;
 
-    @OneToMany(targetEntity=Employee.class, cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-    @JsonIgnore
-    private List employees;
 }

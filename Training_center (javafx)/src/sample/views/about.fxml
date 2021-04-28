@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="14.0" layoutY="22.0" prefHeight="32.0" prefWidth="102.0" text="Об Авторе" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="20.0">
+         <font>
+            <Font size="14.0" />
+         </font></Label>
+      <GridPane layoutX="23.0" layoutY="62.0" prefHeight="340.0" AnchorPane.leftAnchor="20.0" AnchorPane.rightAnchor="20.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="204.0" minWidth="10.0" prefWidth="143.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label prefHeight="17.0" text="Ссылка на GitHub:" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+            <Label text="https://github.com/ElizavetaWow/Training_center" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <GridPane.margin>
+                  <Insets />
+               </GridPane.margin>
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+             <Label prefHeight="32.0" prefWidth="205.0" text="Научный руководитель: " GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+            <Label text="Петросов Давид Арегович" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+            <Label text="Тема курсовой работы: ">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+             <Label prefHeight="32.0" prefWidth="474.0" text="Информационно-справочная система центра повышения квалификации" GridPane.columnIndex="1">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+             <Label prefHeight="32.0" prefWidth="131.0" text="Работу выполнила: " GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="10.0" />
+               </padding></Label>
+            <Label text="Крылова Елизавета Алексеевна" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <GridPane.margin>
+                  <Insets left="10.0" />
+               </GridPane.margin></Label>
+         </children>
+      </GridPane>
+   </children>
+</AnchorPane>

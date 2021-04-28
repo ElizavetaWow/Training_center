@@ -15,7 +15,7 @@
       </HBox.margin>
       </HBox>
    <ListView fx:id="courseInfoListView" layoutX="20.0" layoutY="102.0" prefHeight="385.0" prefWidth="757.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0" />
-   <Label alignment="TOP_LEFT" layoutX="227.0" layoutY="21.0" text="Courses" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
+   <Label alignment="TOP_LEFT" layoutX="227.0" layoutY="21.0" text="Subjects" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
       <font>
          <Font size="20.0" />
       </font>

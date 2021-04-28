@@ -8,6 +8,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,7 +31,16 @@ public class Employee {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
     @ManyToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
-    @JsonIgnore
-    private Set courses;
+    private List<Course> coursesList;
 
+    public List getCoursesList() {
+        return coursesList;
+    }
+
+    public void setCoursesList(List courses) {
+        this.coursesList = courses;
+    }
+    public void setCourseToList(Course course) {
+        this.coursesList.add(course);
+    }
 }

@@ -1,6 +1,8 @@
 package com.krylova.controller;
 
+import com.krylova.entity.Course;
 import com.krylova.entity.Employee;
+import com.krylova.service.CourseService;
 import com.krylova.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,6 +26,16 @@ public class EmployeeController {
     public ResponseEntity<?> create(@RequestBody Employee employee){
         employeeService.create(employee);
         return  new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @PostMapping("/employees/{emp_id}/courses/{course_id}")
+    public ResponseEntity<?> create(@PathVariable(name = "emp_id") Long eid, @PathVariable(name = "course_id") Long cid,
+                                    @RequestBody Course course){
+        return employeeService.findById(eid).map(employee -> {
+            employee.setCourseToList(course);
+            employeeService.update(employee);
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }).orElseThrow(() -> new IllegalArgumentException());
     }
 
     @GetMapping("/employees")
@@ -68,7 +80,7 @@ public class EmployeeController {
             employee.setPassword(employeeUpdate.getPassword());
             employee.setBirthday(employeeUpdate.getBirthday());
             employee.setCompany(employeeUpdate.getCompany());
-            employee.setCourses(employeeUpdate.getCourses());
+            employee.setCoursesList(employeeUpdate.getCoursesList());
             employeeService.update(employee);
             return new ResponseEntity<>(employee, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

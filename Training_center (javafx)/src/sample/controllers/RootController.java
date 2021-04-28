@@ -52,6 +52,10 @@ public class RootController {
         main.getPrimaryStage().close();
     }
     @FXML
+    private void showAbout(){
+        main.showAboutAuthor();
+    }
+    @FXML
     private void signOut() throws Exception {
         main.getPrimaryStage().close();
         main.start(main.getPrimaryStage());

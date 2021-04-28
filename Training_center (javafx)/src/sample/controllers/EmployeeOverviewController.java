@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Company;
+import sample.models.Course;
 import sample.models.Employee;
 import sample.utils.ApiSession;
 import sample.utils.DateUtil;
@@ -34,6 +35,8 @@ public class EmployeeOverviewController extends OverviewController {
     private Label companyLabel;
     @FXML
     private HBox buttonsHBox;
+    @FXML
+    private ListView<String> coursesList;
 
     @FXML
     private ComboBox<String> companyBox;
@@ -97,6 +100,17 @@ public class EmployeeOverviewController extends OverviewController {
         employeeTableView.setItems(employeeList);
     }
 
+    private void updateCoursesView(){
+        Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        if (currentEmployee != null){
+            ObservableList<String> courses = FXCollections.observableArrayList();
+            for (Course course: currentEmployee.getCourses()){
+                courses.add(course.getCourseInfo().getName()+" "+course.getFaculty().getNamesAndEmail());
+            }
+            coursesList.setItems(courses);
+        }
+    }
+
 
     public void updateEmployeeList(){
         employeeList.clear();
@@ -115,6 +129,7 @@ public class EmployeeOverviewController extends OverviewController {
             birthdayLabel.setText(DateUtil.format(employee.getBirthday()));
             emailLabel.setText(employee.getEmail());
             companyLabel.setText(employee.getCompany().getName());
+            updateCoursesView();
         }
         else {
             firstNameLabel.setText("");
@@ -174,6 +189,27 @@ public class EmployeeOverviewController extends OverviewController {
         if (okClicked) {
             showEmployeeDetails(tempEmployee);
             employeeTableView.getSelectionModel().selectLast();
+        }
+    }
+
+    @FXML
+    private void signToCourses(){
+        Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        if (currentEmployee != null) {
+            Course course = main.showChooseCourseDialog(main.getPrimaryStage());
+            if (course != null) {
+                currentEmployee.setCourse(course);
+                apiSession.updateEmployeeCourse(currentEmployee);
+                updateCoursesView();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Employee Selected");
+            alert.setContentText("Please select a employee in the table.");
+
+            alert.showAndWait();
         }
     }
 

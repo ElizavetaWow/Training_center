@@ -58,7 +58,6 @@ public class CourseController {
             course.setFinishDate(courseUpdate.getFinishDate());
             course.setFaculty(courseUpdate.getFaculty());
             course.setCourseInfo(courseUpdate.getCourseInfo());
-            course.setEmployees(courseUpdate.getEmployees());
             courseService.update(course);
             return new ResponseEntity<>(course, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());
