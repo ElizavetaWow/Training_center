@@ -433,7 +433,7 @@ public class Main extends Application {
         }
     }
 
-    public Course showChooseCourseDialog(Stage owner){
+    public Course showChooseCourseDialog(Stage owner, Employee employee){
         try {
 
             Stage dialogStage = new Stage();
@@ -444,6 +444,7 @@ public class Main extends Application {
             AnchorPane page = loader.load();
             CourseOverviewController controller = loader.getController();
             controller.setApiSession(apiSession);
+            controller.setEmployee(employee);
             controller.setMainApp(this);
             controller.setVisibleHBox(user.getRole());
             return (Course) createSelectionDialog(page, dialogStage, controller).getSelectedItem();

@@ -23,4 +23,5 @@ public class Course {
     private Faculty faculty;
     @ManyToOne
     private CourseInfo courseInfo;
+
 }

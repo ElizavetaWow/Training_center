@@ -14,6 +14,7 @@ import sample.utils.DateUtil;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 public class EmployeeOverviewController extends OverviewController {
     @FXML
@@ -45,6 +46,7 @@ public class EmployeeOverviewController extends OverviewController {
     private ApiSession apiSession;
     private ObservableList<Employee> employeeList = FXCollections.observableArrayList();
     private List<Company> companyList = new ArrayList<>();
+    private Set<Course> currentEmployeeCourses;
 
     public EmployeeOverviewController(){
     }
@@ -105,7 +107,7 @@ public class EmployeeOverviewController extends OverviewController {
         if (currentEmployee != null){
             ObservableList<String> courses = FXCollections.observableArrayList();
             for (Course course: currentEmployee.getCourses()){
-                courses.add(course.getCourseInfo().getName()+" "+course.getFaculty().getNamesAndEmail());
+                courses.add("["+course.getId()+ "] \""+course.getCourseInfo().getName()+"\" "+course.getFaculty().getNamesAndEmail());
             }
             coursesList.setItems(courses);
         }
@@ -196,11 +198,43 @@ public class EmployeeOverviewController extends OverviewController {
     private void signToCourses(){
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         if (currentEmployee != null) {
-            Course course = main.showChooseCourseDialog(main.getPrimaryStage());
+            Course course = main.showChooseCourseDialog(main.getPrimaryStage(), currentEmployee);
             if (course != null) {
                 currentEmployee.setCourse(course);
-                apiSession.updateEmployeeCourse(currentEmployee);
+                apiSession.updateEmployee(currentEmployee);
                 updateCoursesView();
+            }
+        } else {
+            Alert alert = new Alert(Alert.AlertType.WARNING);
+            alert.initOwner(main.getPrimaryStage());
+            alert.setTitle("No Selection");
+            alert.setHeaderText("No Employee Selected");
+            alert.setContentText("Please select a employee in the table.");
+
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void deleteCourse(){
+        Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        if (currentEmployee != null) {
+            String courseString = coursesList.getSelectionModel().getSelectedItem();
+            if (courseString != null) {
+                Course course = apiSession.getCoursesById(Long.valueOf(courseString.substring(1, courseString.indexOf("]"))));
+                if (course != null) {
+                    currentEmployee.removeCourse(course.getId());
+                    apiSession.updateEmployee(currentEmployee);
+                    updateCoursesView();
+                }
+            } else {
+                Alert alert = new Alert(Alert.AlertType.WARNING);
+                alert.initOwner(main.getPrimaryStage());
+                alert.setTitle("No Selection");
+                alert.setHeaderText("No Course Selected");
+                alert.setContentText("Please select a course in the list.");
+
+                alert.showAndWait();
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);

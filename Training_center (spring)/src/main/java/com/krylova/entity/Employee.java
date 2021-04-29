@@ -8,6 +8,8 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -31,16 +33,13 @@ public class Employee {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
     @ManyToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
-    private List<Course> coursesList;
+    private Set<Course> courses = new HashSet<>();
 
-    public List getCoursesList() {
-        return coursesList;
+    public Set<Course> getCourses() {
+        return courses;
     }
 
-    public void setCoursesList(List courses) {
-        this.coursesList = courses;
-    }
-    public void setCourseToList(Course course) {
-        this.coursesList.add(course);
+    public void setCourses(Set<Course> courses) {
+        this.courses = courses;
     }
 }

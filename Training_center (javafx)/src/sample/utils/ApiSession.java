@@ -7,10 +7,7 @@ import sample.models.*;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class ApiSession {
 
@@ -117,8 +114,8 @@ public class ApiSession {
 
     public Employee employeeFromJson(JsonObject currentEmployee){
         Company company = companyFromJson(currentEmployee.get("company").getAsJsonObject());
-        JsonArray coursesRaw =  currentEmployee.get("coursesList").getAsJsonArray();
-        List<Course> courses = new ArrayList<>();
+        JsonArray coursesRaw =  currentEmployee.get("courses").getAsJsonArray();
+        Set<Course> courses = new HashSet<>();
         for (int i = 0; i < coursesRaw.size(); i++) {
             JsonObject currentCourse = coursesRaw.get(i).getAsJsonObject();
             courses.add(courseFromJson(currentCourse));
@@ -151,14 +148,9 @@ public class ApiSession {
     public void updateEmployee(Employee employee) {
         long id = employee.getId();
         String jsonString = employee.toJSON();
-        System.out.println(jsonString);
         HttpClass.PutRequest(url + "/employees/" + id, jsonString);
     }
-    public void updateEmployeeCourse(Employee employee) {
-        long id = employee.getId();
-        String jsonString = employee.getCourses().get(0).toJSON();
-        HttpClass.PostRequest(url + "/employees/" + id+ "/courses/" + employee.getCourses().get(0).getId(), jsonString);
-    }
+
 
     public boolean deleteEmployee(Employee employee) {
         long id = employee.getId();

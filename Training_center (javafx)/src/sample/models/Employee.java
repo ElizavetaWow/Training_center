@@ -12,7 +12,7 @@ import java.util.*;
 public class Employee extends Person{
     private LongProperty id;
     private ObjectProperty<Company> company;
-    private ObjectProperty<List<Course>> courses;
+    private ObjectProperty<Set<Course>> courses;
 
     public Employee(Long id, String firstName, String lastName, String password, String email, LocalDate birthday, Company company){
         super(id, firstName, lastName, password, email, birthday);
@@ -59,19 +59,22 @@ public class Employee extends Person{
         this.company = new SimpleObjectProperty<>(company);
     }
 
-    public List<Course> getCourses() {
+    public Set<Course> getCourses() {
         return courses.get();
     }
 
-    public ObjectProperty<List<Course>> getCoursesProperty() {
+    public ObjectProperty<Set<Course>> getCoursesProperty() {
         return courses;
     }
 
-    public void setCourses(List<Course> courses) {
-        this.courses.setValue(courses);
+    public void setCourses(Set<Course> courses) {
+        this.courses.set(courses);
     }
     public void setCourse(Course course) {
         this.courses.get().add(course);
+    }
+    public void removeCourse(Long id) {
+        courses.get().removeIf(course -> course.getId() == id);
     }
 
     @Override
@@ -87,11 +90,12 @@ public class Employee extends Person{
         map.put("email", getEmail());
         map.put("birthday", DateUtil.format(getBirthday()));
         map.put("company", new Gson().fromJson(getCompany().toJSON(), JsonObject.class));
-        ArrayList coursesJA = new ArrayList();
-        for (Course c: getCourses()){
-            coursesJA.add(c.getId());
+        Set courseSet = new HashSet();
+        for (Course course: getCourses()){
+            courseSet.add(new Gson().fromJson(course.toJSON(), JsonObject.class)) ;
+
         }
-        map.put("coursesList", coursesJA);
+        map.put("courses", courseSet);
         return gson.toJson(map);
     }
 }

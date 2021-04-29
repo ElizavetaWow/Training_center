@@ -54,7 +54,7 @@ public class CourseInfoController {
     public ResponseEntity<?> updateCourseInfo(@PathVariable(name = "id") Long id, @RequestBody CourseInfo courseInfoUpdate) {
         return courseInfoService.findById(id).map(courseInfo -> {
             courseInfo.setName(courseInfoUpdate.getName());
-            courseInfo.setCourses(courseInfoUpdate.getCourses());
+            //courseInfo.setCourses(courseInfoUpdate.getCourses());
             courseInfoService.update(courseInfo);
             return new ResponseEntity<>(courseInfo, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

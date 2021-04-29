@@ -7,9 +7,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Course;
+import sample.models.Employee;
 import sample.utils.ApiSession;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
 public class CourseOverviewController extends OverviewController {
     @FXML
@@ -29,6 +31,7 @@ public class CourseOverviewController extends OverviewController {
     private ComboBox<String> nameBox;
 
     private Main main;
+    private Employee employee;
     private ApiSession apiSession;
     private final ObservableList<Course> courseList = FXCollections.observableArrayList();
     public CourseOverviewController(){
@@ -68,14 +71,26 @@ public class CourseOverviewController extends OverviewController {
         nameBox.getSelectionModel().select(0);
     }
 
+    public void setEmployee(Employee employee){
+        this.employee = employee;
+    }
+
     @FXML
     private void updateCoursesTable(){
+
         int selectionIndex = nameBox.getSelectionModel().getSelectedIndex();
         if (selectionIndex > 0) {
             updateCourseList(nameBox.getSelectionModel().getSelectedItem());
         }
         else if (selectionIndex == 0) {
             updateCourseList();
+        }
+        if (employee != null) {
+            HashSet<Long> courseids = new HashSet<>();
+            for (Course course: employee.getCourses()){
+                courseids.add(course.getId());
+            }
+            courseList.removeIf(course -> courseids.contains(course.getId()));
         }
         courseTableView.setItems(courseList);
     }

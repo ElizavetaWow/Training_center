@@ -58,7 +58,7 @@ public class FacultyController {
             faculty.setEmail(facultyUpdate.getEmail());
             faculty.setPassword(facultyUpdate.getPassword());
             faculty.setBirthday(facultyUpdate.getBirthday());
-            faculty.setCourses(facultyUpdate.getCourses());
+            //faculty.setCourses(facultyUpdate.getCourses());
             facultyService.update(faculty);
             return new ResponseEntity<>(faculty, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

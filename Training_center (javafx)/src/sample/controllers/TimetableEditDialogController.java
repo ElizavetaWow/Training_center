@@ -69,7 +69,7 @@ public class TimetableEditDialogController {
 
     @FXML
     private void handleSelectCourse(){
-        Course course = main.showChooseCourseDialog(dialogStage);
+        Course course = main.showChooseCourseDialog(dialogStage, null);
         if (course != null){
             selectedCourse = course;
             courseLabel.setText(selectedCourse.getCourseInfo().getName());

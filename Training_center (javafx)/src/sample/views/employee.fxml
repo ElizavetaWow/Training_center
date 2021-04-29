@@ -80,9 +80,14 @@
                 <Button mnemonicParsing="false" onAction="#handleEditEmployee" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                 <Button mnemonicParsing="false" onAction="#handleDeleteEmployee" prefHeight="25.0" prefWidth="70.0" text="Delete" />
             </HBox>
-         <ListView fx:id="coursesList" layoutX="15.0" layoutY="234.0" prefHeight="164.0" prefWidth="446.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="15.0" AnchorPane.topAnchor="235.0" />
-         <Button layoutX="14.0" layoutY="407.0" mnemonicParsing="false" onAction="#signToCourses" text="Sign up to courses" AnchorPane.bottomAnchor="5.0" AnchorPane.leftAnchor="15.0" />
+         <ListView fx:id="coursesList" layoutX="15.0" layoutY="234.0" prefHeight="164.0" prefWidth="446.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="235.0" />
          <Label layoutX="28.0" layoutY="211.0" text="Chosen courses" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="210.0" />
+         <HBox layoutX="245.0" layoutY="160.0" prefHeight="25.0" prefWidth="212.0" spacing="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
+            <children>
+               <Button mnemonicParsing="false" onAction="#signToCourses" text="Sign up to course" />
+               <Button mnemonicParsing="false" onAction="#deleteCourse" text="Delete course" />
+            </children>
+         </HBox>
         </AnchorPane>
     </SplitPane>
    <ComboBox fx:id="companyBox" layoutX="14.0" layoutY="10.0" onAction="#updateEmployeesTable" prefHeight="30.0" prefWidth="196.0" promptText="Company" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
@@ -91,4 +96,5 @@
          <Font size="20.0" />
       </font>
    </Label>
+   <HBox prefHeight="100.0" prefWidth="200.0" />
 </AnchorPane>

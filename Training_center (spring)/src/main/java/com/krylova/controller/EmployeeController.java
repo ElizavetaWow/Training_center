@@ -28,16 +28,6 @@ public class EmployeeController {
         return  new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @PostMapping("/employees/{emp_id}/courses/{course_id}")
-    public ResponseEntity<?> create(@PathVariable(name = "emp_id") Long eid, @PathVariable(name = "course_id") Long cid,
-                                    @RequestBody Course course){
-        return employeeService.findById(eid).map(employee -> {
-            employee.setCourseToList(course);
-            employeeService.update(employee);
-            return new ResponseEntity<>(employee, HttpStatus.OK);
-        }).orElseThrow(() -> new IllegalArgumentException());
-    }
-
     @GetMapping("/employees")
     public ResponseEntity<List<Employee>> findAll(){
         final List<Employee> employeeList = employeeService.findAll();
@@ -80,7 +70,7 @@ public class EmployeeController {
             employee.setPassword(employeeUpdate.getPassword());
             employee.setBirthday(employeeUpdate.getBirthday());
             employee.setCompany(employeeUpdate.getCompany());
-            employee.setCoursesList(employeeUpdate.getCoursesList());
+            employee.setCourses(employeeUpdate.getCourses());
             employeeService.update(employee);
             return new ResponseEntity<>(employee, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());
