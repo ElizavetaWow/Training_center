@@ -1,5 +1,8 @@
 package sample.controllers;
 
+import javafx.beans.Observable;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -9,6 +12,7 @@ import sample.Main;
 import sample.models.Course;
 import sample.models.Employee;
 import sample.utils.ApiSession;
+import sample.utils.DateUtil;
 
 import java.time.LocalDate;
 import java.util.HashSet;
@@ -19,9 +23,9 @@ public class CourseOverviewController extends OverviewController {
     @FXML
     private TableColumn<Course, String> courseInfoColumn;
     @FXML
-    private TableColumn<Course, LocalDate> startDateColumn;
+    private TableColumn<Course, String> startDateColumn;
     @FXML
-    private TableColumn<Course, LocalDate> finishDateColumn;
+    private TableColumn<Course, String> finishDateColumn;
     @FXML
     private TableColumn<Course, String> facultyColumn;
     @FXML
@@ -39,8 +43,10 @@ public class CourseOverviewController extends OverviewController {
 
     @FXML
     private void initialize(){
-        startDateColumn.setCellValueFactory(cellData -> cellData.getValue().getStartDateProperty());
-        finishDateColumn.setCellValueFactory(cellData -> cellData.getValue().getFinishDateProperty());
+        startDateColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getStartDate(), true)));
+        finishDateColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getFinishDate(), true)));
         courseInfoColumn.setCellValueFactory(cellData -> cellData.getValue().getCourseInfo().getNameProperty());
         facultyColumn.setCellValueFactory(cellData -> cellData.getValue().getFaculty().getNamesAndEmailProperty());
         courseTableView.getSelectionModel().selectedItemProperty().addListener(

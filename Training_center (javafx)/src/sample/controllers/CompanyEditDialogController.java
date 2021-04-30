@@ -74,8 +74,7 @@ public class CompanyEditDialogController {
 
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No name input!\n";
-        }
-        if (!nameField.getText().matches("[A-z\\s]+[A-z]")){
+        } else if (!nameField.getText().matches("[A-z\\s]+[A-z]")){
             errorMessage += "Name must be in latin!\n";
         } else if (!apiSession.getCompaniesByName(nameField.getText()).isEmpty() && !Objects.equals(company.getName(), nameField.getText())){
             errorMessage += "Such company name is already exists!\n";
@@ -83,6 +82,10 @@ public class CompanyEditDialogController {
 
         if (accountField.getText() == null || accountField.getText().length() == 0) {
             errorMessage += "No account input!\n";
+        } else if (accountField.getText().length() != 20) {
+            errorMessage += "Account length must be 20, you have "+accountField.getText().length()+" symbols!\n";
+        } else if (!accountField.getText().matches("[1-9][0-9]{19}")){
+            errorMessage += "Account must consists of 20 numbers!\n";
         }
 
         if (errorMessage.length() == 0) {

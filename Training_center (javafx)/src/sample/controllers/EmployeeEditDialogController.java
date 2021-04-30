@@ -10,6 +10,7 @@ import sample.Main;
 import sample.models.Company;
 import sample.models.Employee;
 import sample.utils.ApiSession;
+import sample.utils.DateUtil;
 
 public class EmployeeEditDialogController {
     @FXML
@@ -82,6 +83,9 @@ public class EmployeeEditDialogController {
 
     @FXML
     private void handleOk(){
+        try {
+            birthdayPicker.setValue(DateUtil.parse(birthdayPicker.getEditor().getText()));
+        } catch (Exception ignored){}
         if(isInputValid()){
             employee.setFirstName(firstNameField.getText());
             employee.setLastName(lastNameField.getText());
@@ -105,9 +109,13 @@ public class EmployeeEditDialogController {
 
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "No first name input!\n";
+        } else if (!firstNameField.getText().matches("[A-z\\s]+[A-z]")){
+            errorMessage += "First name must be in latin!\n";
         }
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
             errorMessage += "No last name input!\n";
+        }else if (!lastNameField.getText().matches("[A-z\\s]+[A-z]")){
+            errorMessage += "Last name must be in latin!\n";
         }
         if (passwordField.getText() == null || passwordField.getText().length() == 0) {
             errorMessage += "No password input!\n";
@@ -116,7 +124,9 @@ public class EmployeeEditDialogController {
             errorMessage += "No birthday selection!\n";
         }
         if (emailField.getText() == null || emailField.getText().length() == 0) {
-            errorMessage += "No password input!\n";
+            errorMessage += "No email input!\n";
+        } else if (!emailField.getText().matches("\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*\\.\\w{2,4}")){
+            errorMessage += "Wrong format of email input!\n";
         }
         if (companyLabel.getText() == null || companyLabel.getText().length() == 0) {
             errorMessage += "No company selection!\n";

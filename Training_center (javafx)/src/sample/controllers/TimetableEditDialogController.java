@@ -1,17 +1,17 @@
 package sample.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.DatePicker;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.models.Course;
 import sample.models.Place;
 import sample.models.Timetable;
 import sample.utils.ApiSession;
+import sample.utils.DateUtil;
 import sample.utils.TimeUtil;
+
+import java.time.LocalDate;
 
 public class TimetableEditDialogController {
     @FXML
@@ -22,6 +22,8 @@ public class TimetableEditDialogController {
     private Label placeLabel;
     @FXML
     private DatePicker datePicker;
+    @FXML
+    private Button placeButton;
 
     private Timetable timetable;
     private Place selectedPlace;
@@ -56,6 +58,18 @@ public class TimetableEditDialogController {
         this.timetable = timetable;
         datePicker.setValue(timetable.getDate());
         timeField.setText(TimeUtil.format(timetable.getTime()));
+        if (!update){
+            datePicker.setDisable(true);
+            timeField.setDisable(true);
+            placeButton.setDisable(true);
+        }
+        datePicker.setDayCellFactory(cell -> new DateCell() {
+            @Override
+            public void updateItem(LocalDate date, boolean empty) {
+                super.updateItem(date, empty);
+                setDisable(empty || date.isBefore(selectedCourse.getStartDate()) || date.isAfter(selectedCourse.getFinishDate()));
+            }
+        });
     }
 
     @FXML
@@ -70,9 +84,13 @@ public class TimetableEditDialogController {
     @FXML
     private void handleSelectCourse(){
         Course course = main.showChooseCourseDialog(dialogStage, null);
-        if (course != null){
+        if (course != null) {
             selectedCourse = course;
             courseLabel.setText(selectedCourse.getCourseInfo().getName());
+            datePicker.setValue(course.getStartDate());
+            datePicker.setDisable(false);
+            timeField.setDisable(false);
+            placeButton.setDisable(false);
         }
     }
 
@@ -87,6 +105,9 @@ public class TimetableEditDialogController {
 
     @FXML
     private void handleOk(){
+        try {
+            datePicker.setValue(DateUtil.parse(datePicker.getEditor().getText()));
+        } catch (Exception ignored){}
         if(isInputValid()){
             timetable.setDate(datePicker.getValue());
             timetable.setTime(TimeUtil.parse(timeField.getText()));

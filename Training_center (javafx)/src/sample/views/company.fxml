@@ -23,10 +23,12 @@
                 <Button mnemonicParsing="false" onAction="#handleEditCompany" prefHeight="25.0" prefWidth="70.0" text="Edit" />
                 <Button mnemonicParsing="false" onAction="#handleDeleteCompany" prefHeight="25.0" prefWidth="70.0" text="Delete" />
             </HBox>
-            <GridPane layoutX="18.0" layoutY="51.0" prefHeight="79.0" prefWidth="496.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="50.0">
+            <GridPane layoutX="18.0" layoutY="51.0" prefHeight="79.0" prefWidth="470.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="42.0" AnchorPane.topAnchor="50.0">
                 <columnConstraints>
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="53.33332570393881" />
-                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.66667429606116" minWidth="10.0" prefWidth="420.66667429606116" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="205.0" minWidth="10.0" prefWidth="115.66666666666666" />
+                    <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.66667429606116" minWidth="10.0" prefWidth="126.6666208902995" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.66667429606116" minWidth="10.0" prefWidth="150.66666666666669" />
+               <ColumnConstraints hgrow="SOMETIMES" maxWidth="420.66667429606116" minWidth="10.0" prefWidth="86.0" />
                 </columnConstraints>
                 <rowConstraints>
                     <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="30.333333333333336" vgrow="SOMETIMES" />
@@ -36,6 +38,8 @@
                 <Label fx:id="accountLabel" prefHeight="17.0" prefWidth="424.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                 <Label text="Name:" />
                 <Label fx:id="nameLabel" prefHeight="17.0" prefWidth="422.0" text="Label" GridPane.columnIndex="1" />
+            <Label text="Number of employees:" wrapText="true" GridPane.columnIndex="2" />
+            <Label fx:id="employeesNumberLabel" text="Label" GridPane.columnIndex="3" />
             </GridPane>
          <Label alignment="CENTER" contentDisplay="CENTER" layoutX="128.0" layoutY="14.0" text="Company's Details" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="15.0">
             <font>

@@ -101,6 +101,11 @@ public class ApiSession {
         String answer = HttpClass.GetRequest(url + "/employees/comp_"+companyName.replace(" ", "%20"));
         return getEmployeeList(answer);
     }
+    public Integer countEmployeesByCompanyId(Long id) {
+        String answer = HttpClass.GetRequest(url + "/employees/comp_id_"+id);
+        return JsonParser.parseString(answer).getAsInt();
+    }
+
     public Employee getEmployeesByEmail(String email) {
         String answer = HttpClass.GetRequest(url + "/employees/email_"+email);
         if (answer != null) {

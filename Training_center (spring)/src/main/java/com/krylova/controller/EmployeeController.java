@@ -36,6 +36,14 @@ public class EmployeeController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+    @GetMapping("/employees/comp_id_{id}")
+    public ResponseEntity<Integer> countByCompany(@PathVariable(name = "id") Long id){
+        final Integer employeesNumber = employeeService.countByCompany(id);
+        return employeesNumber != null
+                ? new ResponseEntity<>(employeesNumber, HttpStatus.OK)
+                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
     @GetMapping("/employees/{id}")
     public ResponseEntity<Optional<Employee>> findById(@PathVariable(name = "id") Long id){
         final Optional<Employee> employee = employeeService.findById(id);

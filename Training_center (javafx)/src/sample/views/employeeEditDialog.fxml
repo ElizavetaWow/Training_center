@@ -18,22 +18,20 @@
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
-        <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="firstNameField" promptText="Ivan" GridPane.columnIndex="1" />
+        <TextField fx:id="lastNameField" promptText="Ivanov" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="emailField" promptText="ivanov@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label text="First name:" />
         <Label text="Last name:" GridPane.rowIndex="1" />
         <Label text="Birthday:" GridPane.rowIndex="2" />
         <Label text="Email:" GridPane.rowIndex="3" />
         <Label text="Company:" GridPane.rowIndex="5" />
-      <DatePicker fx:id="birthdayPicker" prefHeight="25.0" prefWidth="290.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <DatePicker fx:id="birthdayPicker" prefHeight="25.0" prefWidth="290.0" promptText="01.01.2001" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Password:" GridPane.rowIndex="4" />
       <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1"
-              GridPane.rowIndex="5">
-            <Label fx:id="companyLabel" prefHeight="25.0" prefWidth="153.0"/>
-            <Button mnemonicParsing="false" onAction="#handleSelectCompany" prefHeight="25.0" prefWidth="110.0"
-                    text="Select Company"/>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="5">
+            <Label fx:id="companyLabel" prefHeight="25.0" prefWidth="153.0" />
+            <Button mnemonicParsing="false" onAction="#handleSelectCompany" prefHeight="25.0" prefWidth="110.0" text="Select Company" />
         </HBox>
     </GridPane>
     <HBox alignment="CENTER" layoutX="108.0" layoutY="355.0" prefHeight="35.0" prefWidth="219.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">

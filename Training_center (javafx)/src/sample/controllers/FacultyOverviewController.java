@@ -71,7 +71,7 @@ public class FacultyOverviewController extends OverviewController {
             setItem(faculty);
             firstNameLabel.setText(faculty.getFirstName());
             lastNameLabel.setText(faculty.getLastName());
-            birthdayLabel.setText(DateUtil.format(faculty.getBirthday()));
+            birthdayLabel.setText(DateUtil.format(faculty.getBirthday(), true));
             emailLabel.setText(faculty.getEmail());
         }
         else {

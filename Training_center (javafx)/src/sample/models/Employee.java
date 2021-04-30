@@ -67,6 +67,12 @@ public class Employee extends Person{
         return courses;
     }
 
+    public int getNumberOfCourses(){
+        if (getCourses() != null)
+            return getCourses().size();
+        return 0;
+    }
+
     public void setCourses(Set<Course> courses) {
         this.courses.set(courses);
     }
@@ -91,9 +97,11 @@ public class Employee extends Person{
         map.put("birthday", DateUtil.format(getBirthday()));
         map.put("company", new Gson().fromJson(getCompany().toJSON(), JsonObject.class));
         Set courseSet = new HashSet();
-        for (Course course: getCourses()){
-            courseSet.add(new Gson().fromJson(course.toJSON(), JsonObject.class)) ;
+        if (getCourses() != null && getCourses().size() > 0) {
+            for (Course course : getCourses()) {
+                courseSet.add(new Gson().fromJson(course.toJSON(), JsonObject.class));
 
+            }
         }
         map.put("courses", courseSet);
         return gson.toJson(map);

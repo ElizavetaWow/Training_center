@@ -35,6 +35,8 @@ public class EmployeeOverviewController extends OverviewController {
     @FXML
     private Label companyLabel;
     @FXML
+    private Label coursesNumberLabel;
+    @FXML
     private HBox buttonsHBox;
     @FXML
     private ListView<String> coursesList;
@@ -100,17 +102,18 @@ public class EmployeeOverviewController extends OverviewController {
             updateEmployeeList();
         }
         employeeTableView.setItems(employeeList);
+        updateCoursesView();
     }
 
     private void updateCoursesView(){
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
+        ObservableList<String> courses = FXCollections.observableArrayList();
         if (currentEmployee != null){
-            ObservableList<String> courses = FXCollections.observableArrayList();
             for (Course course: currentEmployee.getCourses()){
                 courses.add("["+course.getId()+ "] \""+course.getCourseInfo().getName()+"\" "+course.getFaculty().getNamesAndEmail());
             }
-            coursesList.setItems(courses);
         }
+        coursesList.setItems(courses);
     }
 
 
@@ -128,9 +131,10 @@ public class EmployeeOverviewController extends OverviewController {
         if (employee != null){
             firstNameLabel.setText(employee.getFirstName());
             lastNameLabel.setText(employee.getLastName());
-            birthdayLabel.setText(DateUtil.format(employee.getBirthday()));
+            birthdayLabel.setText(DateUtil.format(employee.getBirthday(), true));
             emailLabel.setText(employee.getEmail());
             companyLabel.setText(employee.getCompany().getName());
+            coursesNumberLabel.setText(String.valueOf(employee.getNumberOfCourses()));
             updateCoursesView();
         }
         else {
@@ -139,6 +143,7 @@ public class EmployeeOverviewController extends OverviewController {
             birthdayLabel.setText("");
             emailLabel.setText("");
             companyLabel.setText("");
+            coursesNumberLabel.setText("");
         }
     }
 
@@ -203,6 +208,7 @@ public class EmployeeOverviewController extends OverviewController {
                 currentEmployee.setCourse(course);
                 apiSession.updateEmployee(currentEmployee);
                 updateCoursesView();
+                coursesNumberLabel.setText(String.valueOf(currentEmployee.getNumberOfCourses()));
             }
         } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
@@ -226,6 +232,7 @@ public class EmployeeOverviewController extends OverviewController {
                     currentEmployee.removeCourse(course.getId());
                     apiSession.updateEmployee(currentEmployee);
                     updateCoursesView();
+                    coursesNumberLabel.setText(String.valueOf(currentEmployee.getNumberOfCourses()));
                 }
             } else {
                 Alert alert = new Alert(Alert.AlertType.WARNING);

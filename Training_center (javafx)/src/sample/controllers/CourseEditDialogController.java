@@ -10,6 +10,7 @@ import sample.models.Course;
 import sample.models.CourseInfo;
 import sample.models.Faculty;
 import sample.utils.ApiSession;
+import sample.utils.DateUtil;
 
 public class CourseEditDialogController {
     @FXML
@@ -87,6 +88,12 @@ public class CourseEditDialogController {
 
     @FXML
     private void handleOk(){
+        try {
+            startPicker.setValue(DateUtil.parse(startPicker.getEditor().getText()));
+        } catch (Exception ignored){}
+        try {
+            finishPicker.setValue(DateUtil.parse(finishPicker.getEditor().getText()));
+        } catch (Exception ignored){}
         if(isInputValid()){
             course.setStartDate(startPicker.getValue());
             course.setFinishDate(finishPicker.getValue());

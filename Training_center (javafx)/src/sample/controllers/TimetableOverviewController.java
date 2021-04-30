@@ -1,5 +1,6 @@
 package sample.controllers;
 
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -8,6 +9,7 @@ import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Timetable;
 import sample.utils.ApiSession;
+import sample.utils.DateUtil;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
@@ -16,7 +18,7 @@ public class TimetableOverviewController  extends OverviewController {
     @FXML
     private TableView<Timetable> timetableTableView;
     @FXML
-    private TableColumn<Timetable, LocalDate> dateColumn;
+    private TableColumn<Timetable, String> dateColumn;
     @FXML
     private TableColumn<Timetable, LocalTime> timeColumn;
     @FXML
@@ -42,7 +44,8 @@ public class TimetableOverviewController  extends OverviewController {
 
     @FXML
     private void initialize(){
-        dateColumn.setCellValueFactory(cellData -> cellData.getValue().getDateProperty());
+        dateColumn.setCellValueFactory(cellData ->
+                new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getDate(), true)));
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().getTimeProperty());
         courseColumn.setCellValueFactory(cellData -> cellData.getValue().getCourse().getCourseInfo().getNameProperty());
         facultyColumn.setCellValueFactory(cellData -> cellData.getValue().getCourse().getFaculty().getNamesAndEmailProperty());

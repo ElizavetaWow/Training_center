@@ -17,14 +17,14 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <TextField fx:id="firstNameField" GridPane.columnIndex="1" />
-        <TextField fx:id="lastNameField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-        <TextField fx:id="emailField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+        <TextField fx:id="firstNameField" promptText="Ivan" GridPane.columnIndex="1" />
+        <TextField fx:id="lastNameField" promptText="Ivanov" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <TextField fx:id="emailField" promptText="ivan@mail.com" GridPane.columnIndex="1" GridPane.rowIndex="3" />
         <Label text="First name:" />
         <Label text="Last name:" GridPane.rowIndex="1" />
         <Label text="Birthday:" GridPane.rowIndex="2" />
         <Label text="Email:" GridPane.rowIndex="3" />
-      <DatePicker fx:id="birthdayPicker" prefHeight="25.0" prefWidth="286.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+      <DatePicker fx:id="birthdayPicker" prefHeight="25.0" prefWidth="286.0" promptText="01.01.2001" GridPane.columnIndex="1" GridPane.rowIndex="2" />
       <Label text="Password:" GridPane.rowIndex="4" />
       <TextField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="4" />
     </GridPane>

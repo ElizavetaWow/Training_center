@@ -23,6 +23,8 @@ public class CompanyOverviewController extends OverviewController{
     @FXML
     private Label accountLabel;
     @FXML
+    private Label employeesNumberLabel;
+    @FXML
     private Button showEmployeesButton;
     @FXML
     private HBox buttonsHBox;
@@ -67,10 +69,12 @@ public class CompanyOverviewController extends OverviewController{
             setItem(company);
             nameLabel.setText(company.getName());
             accountLabel.setText(company.getAccount());
+            employeesNumberLabel.setText(String.valueOf(apiSession.countEmployeesByCompanyId(company.getId())));
         }
         else {
             nameLabel.setText("");
             accountLabel.setText("");
+            employeesNumberLabel.setText("");
         }
     }
 

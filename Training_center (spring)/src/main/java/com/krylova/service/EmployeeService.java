@@ -42,4 +42,8 @@ public class EmployeeService {
         return employeeRepository.findByEmail(email);
     }
 
+    public Integer countByCompany(Long id){
+        return employeeRepository.countEmployeeByCompanyId(id);
+    }
+
 }

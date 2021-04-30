@@ -17,28 +17,24 @@
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
             <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
-        <Label text="Date:" />
-        <Label text="Time:" GridPane.rowIndex="1" />
-        <Label text="Course:" GridPane.rowIndex="2" />
+        <Label text="Date:" GridPane.rowIndex="1" />
+        <Label text="Time:" GridPane.rowIndex="2" />
+        <Label text="Course:" />
         <Label text="Place:" GridPane.rowIndex="3" />
-        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1"
-              GridPane.rowIndex="3">
-            <Label fx:id="placeLabel" prefHeight="25.0" prefWidth="205.0"/>
-            <Button mnemonicParsing="false" onAction="#handleSelectPlace" prefHeight="25.0" prefWidth="90.0"
-                    text="Select Place"/>
+        <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
+            <Label fx:id="placeLabel" prefHeight="25.0" prefWidth="205.0" />
+            <Button fx:id="placeButton" mnemonicParsing="false" onAction="#handleSelectPlace" prefHeight="25.0" prefWidth="90.0" text="Select Place" />
         </HBox>
-      <DatePicker fx:id="datePicker" layoutX="138.0" layoutY="168.0" prefHeight="25.0" prefWidth="318.0" GridPane.columnIndex="1" />
-        <HBox alignment="CENTER" layoutX="138.0" layoutY="282.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0"
-              GridPane.columnIndex="1" GridPane.rowIndex="2">
-            <Label fx:id="courseLabel" prefHeight="25.0" prefWidth="205.0"/>
-            <Button mnemonicParsing="false" onAction="#handleSelectCourse" prefHeight="25.0" prefWidth="90.0"
-                    text="Select Course">
+      <DatePicker fx:id="datePicker" layoutX="138.0" layoutY="168.0" prefHeight="25.0" prefWidth="318.0" promptText="01.01.2001" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+        <HBox alignment="CENTER" layoutX="138.0" layoutY="282.0" prefHeight="100.0" prefWidth="200.0" spacing="10.0" GridPane.columnIndex="1">
+            <Label fx:id="courseLabel" prefHeight="25.0" prefWidth="205.0" />
+            <Button mnemonicParsing="false" onAction="#handleSelectCourse" prefHeight="25.0" prefWidth="90.0" text="Select Course">
                 <HBox.margin>
-                    <Insets/>
+                    <Insets />
                 </HBox.margin>
             </Button>
         </HBox>
-      <TextField fx:id="timeField" promptText="Example: 18:30" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <TextField fx:id="timeField" promptText="18:30" GridPane.columnIndex="1" GridPane.rowIndex="2" />
     </GridPane>
     <HBox alignment="CENTER" layoutX="108.0" layoutY="355.0" prefHeight="35.0" prefWidth="400.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
         <Button defaultButton="true" mnemonicParsing="false" onAction="#handleOk" prefHeight="35.0" prefWidth="100.0" text="Ok" />

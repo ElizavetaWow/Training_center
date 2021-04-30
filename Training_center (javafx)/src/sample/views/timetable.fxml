@@ -13,7 +13,7 @@
     </Label>
     <TableView fx:id="timetableTableView" layoutX="26.0" layoutY="90.0" prefHeight="244.0" prefWidth="538.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
       <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="111.66665935516357" text="Date" />
+          <TableColumn fx:id="dateColumn" prefWidth="111.66665935516357" sortable="false" text="Date" />
           <TableColumn fx:id="timeColumn" prefWidth="85.66667938232422" text="Time" />
           <TableColumn fx:id="courseColumn" prefWidth="203.33331298828125" text="Course" />
           <TableColumn fx:id="facultyColumn" prefWidth="172.33334350585938" text="Faculty" />
