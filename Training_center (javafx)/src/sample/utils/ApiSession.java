@@ -51,8 +51,9 @@ public class ApiSession {
     public Company companyFromJson(JsonObject currentCompany){
         String name = currentCompany.get("name").getAsString();
         String account = currentCompany.get("account").getAsString();
+        Integer money = currentCompany.get("money").getAsInt();
         Long id = currentCompany.get("id").getAsLong();
-        return new Company(id, name, account);
+        return new Company(id, name, account, money);
     }
 
 
@@ -369,8 +370,17 @@ public class ApiSession {
         LocalDate finishDate = DateUtil.parse(currentCourse.get("finishDate").getAsString());
         CourseInfo courseInfo = courseInfoFromJson(currentCourse.get("courseInfo").getAsJsonObject());
         Faculty faculty = facultyFromJson(currentCourse.get("faculty").getAsJsonObject());
+        Integer price = currentCourse.get("price").getAsInt();
         Long id = currentCourse.get("id").getAsLong();
-        return new Course(id, startDate, finishDate, courseInfo, faculty);
+        JsonArray employeesRaw =  currentCourse.get("employees").getAsJsonArray();
+        Set<Employee> employees = new HashSet<>();
+        for (int i = 0; i < employeesRaw.size(); i++) {
+            JsonObject currentEmployee = employeesRaw.get(i).getAsJsonObject();
+            employees.add(employeeFromJson(currentEmployee));
+        }
+        Course course =  new Course(id, startDate, finishDate, price, courseInfo, faculty);
+        course.setEmployees(employees);
+        return course;
     }
 
 

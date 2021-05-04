@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 import java.sql.Date;
 
@@ -18,10 +19,21 @@ public class Course {
 
     private Date startDate;
     private Date finishDate;
+    private Integer price;
 
     @ManyToOne
     private Faculty faculty;
     @ManyToOne
     private CourseInfo courseInfo;
 
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
+
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @ManyToMany(targetEntity=Employee.class, fetch = FetchType.LAZY)
+    private Set<Employee> employees = new HashSet<>();
 }

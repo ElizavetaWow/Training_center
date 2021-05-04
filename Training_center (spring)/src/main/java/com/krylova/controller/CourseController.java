@@ -56,8 +56,10 @@ public class CourseController {
         return courseService.findById(id).map(course -> {
             course.setStartDate(courseUpdate.getStartDate());
             course.setFinishDate(courseUpdate.getFinishDate());
+            course.setPrice(courseUpdate.getPrice());
             course.setFaculty(courseUpdate.getFaculty());
             course.setCourseInfo(courseUpdate.getCourseInfo());
+            course.setEmployees(courseUpdate.getEmployees());
             courseService.update(course);
             return new ResponseEntity<>(course, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

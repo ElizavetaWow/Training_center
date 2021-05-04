@@ -55,6 +55,7 @@ public class CompanyController {
         return companyService.findById(id).map(company -> {
             company.setName(companyUpdate.getName());
             company.setAccount(companyUpdate.getAccount());
+            company.setMoney(companyUpdate.getMoney());
             companyService.update(company);
             return new ResponseEntity<>(company, HttpStatus.OK);
         }).orElseThrow(() -> new IllegalArgumentException());

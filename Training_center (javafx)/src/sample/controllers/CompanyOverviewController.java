@@ -4,12 +4,20 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
 import javafx.scene.chart.BarChart;
+import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Company;
+import sample.models.Course;
+import sample.models.Employee;
 import sample.utils.ApiSession;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 
 public class CompanyOverviewController extends OverviewController{
@@ -25,11 +33,13 @@ public class CompanyOverviewController extends OverviewController{
     @FXML
     private Label employeesNumberLabel;
     @FXML
+    private Label moneyLabel;
+    @FXML
     private Button showEmployeesButton;
     @FXML
     private HBox buttonsHBox;
     @FXML
-    private BarChart chart;
+    private PieChart chart;
 
     private Main main;
     private ApiSession apiSession;
@@ -57,10 +67,24 @@ public class CompanyOverviewController extends OverviewController{
         showEmployeesButton.setVisible(status);
     }
 
-    private void showChart(Company company){
-        if (company != null){
-        }
-        else {
+    private void showChart(){
+        Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
+        if (currentCompany != null) {
+            List<Employee> employees = apiSession.getEmployeesByCompanyName(currentCompany.getName());
+            HashMap<Long, Long> dataMap = new HashMap<>();
+            for (Employee employee: employees) {
+                for (Course course : employee.getCourses()) {
+                    if (!dataMap.containsKey(course.getId())) {
+                        dataMap.put(course.getId(), (long) 0);
+                    }
+                    dataMap.put(course.getId(), dataMap.get(course.getId()) + 1);
+                }
+            }
+            List<PieChart.Data> pieList = new ArrayList<>();
+            for (HashMap.Entry<Long, Long> entry: dataMap.entrySet()){
+                pieList.add(new PieChart.Data(apiSession.getCoursesById(entry.getKey()).getNamesAndFaculty(), entry.getValue()));
+            }
+            chart.getData().setAll(pieList);
         }
     }
 
@@ -69,12 +93,15 @@ public class CompanyOverviewController extends OverviewController{
             setItem(company);
             nameLabel.setText(company.getName());
             accountLabel.setText(company.getAccount());
+            moneyLabel.setText(String.valueOf(company.getMoney()));
             employeesNumberLabel.setText(String.valueOf(apiSession.countEmployeesByCompanyId(company.getId())));
+            showChart();
         }
         else {
             nameLabel.setText("");
             accountLabel.setText("");
             employeesNumberLabel.setText("");
+            moneyLabel.setText("");
         }
     }
 

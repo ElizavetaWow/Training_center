@@ -39,6 +39,8 @@ public class EmployeeOverviewController extends OverviewController {
     @FXML
     private HBox buttonsHBox;
     @FXML
+    private HBox coursesHbox;
+    @FXML
     private ListView<String> coursesList;
 
     @FXML
@@ -136,6 +138,9 @@ public class EmployeeOverviewController extends OverviewController {
             companyLabel.setText(employee.getCompany().getName());
             coursesNumberLabel.setText(String.valueOf(employee.getNumberOfCourses()));
             updateCoursesView();
+            if (main.getUser().getRole() == 0) {
+                coursesHbox.setVisible(employee.getId() == main.getUser().getId());
+            }
         }
         else {
             firstNameLabel.setText("");
@@ -206,6 +211,8 @@ public class EmployeeOverviewController extends OverviewController {
             Course course = main.showChooseCourseDialog(main.getPrimaryStage(), currentEmployee);
             if (course != null) {
                 currentEmployee.setCourse(course);
+                currentEmployee.getCompany().changeMoney(course.getPrice());
+                apiSession.updateCompany(currentEmployee.getCompany());
                 apiSession.updateEmployee(currentEmployee);
                 updateCoursesView();
                 coursesNumberLabel.setText(String.valueOf(currentEmployee.getNumberOfCourses()));
@@ -230,6 +237,8 @@ public class EmployeeOverviewController extends OverviewController {
                 Course course = apiSession.getCoursesById(Long.valueOf(courseString.substring(1, courseString.indexOf("]"))));
                 if (course != null) {
                     currentEmployee.removeCourse(course.getId());
+                    currentEmployee.getCompany().changeMoney(-course.getPrice());
+                    apiSession.updateCompany(currentEmployee.getCompany());
                     apiSession.updateEmployee(currentEmployee);
                     updateCoursesView();
                     coursesNumberLabel.setText(String.valueOf(currentEmployee.getNumberOfCourses()));
@@ -256,6 +265,7 @@ public class EmployeeOverviewController extends OverviewController {
 
     public void setVisibleHBox(int i){
         buttonsHBox.setVisible(i >= 2);
+        coursesHbox.setVisible(i >= 2);
     }
 
 }

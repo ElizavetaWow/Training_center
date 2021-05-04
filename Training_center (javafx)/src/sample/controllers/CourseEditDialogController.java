@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.models.Course;
@@ -21,6 +22,8 @@ public class CourseEditDialogController {
     private Label facultyLabel;
     @FXML
     private Label nameLabel;
+    @FXML
+    private TextField priceField;
 
 
 
@@ -57,6 +60,7 @@ public class CourseEditDialogController {
         this.course = course;
         startPicker.setValue(course.getStartDate());
         finishPicker.setValue(course.getFinishDate());
+        priceField.setText(String.valueOf(course.getPrice()));
     }
 
     public boolean isOkClicked(){
@@ -99,6 +103,7 @@ public class CourseEditDialogController {
             course.setFinishDate(finishPicker.getValue());
             course.setCourseInfo(selectedCourseInfo);
             course.setFaculty(selectedFaculty);
+            course.setPrice(Integer.parseInt(priceField.getText()));
             if (update) {
                 apiSession.updateCourse(course);
             }
@@ -127,6 +132,12 @@ public class CourseEditDialogController {
         }
         if (startPicker.getValue().isAfter(finishPicker.getValue())){
             errorMessage += "Start date must be before finish date!\n";
+        }
+
+        if (priceField.getText() == null || priceField.getText().length() == 0) {
+            errorMessage += "No price input!\n";
+        } else if (!priceField.getText().matches("[1-9][0-9]*")){
+            errorMessage += "Price must consists of numbers and be more than 0!\n";
         }
 
         if (errorMessage.length() == 0) {

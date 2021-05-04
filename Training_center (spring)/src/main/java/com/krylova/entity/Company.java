@@ -18,5 +18,5 @@ public class Company {
     @Column(unique = true)
     private String name;
     private String account;
-
+    private Integer money;
 }

@@ -205,23 +205,6 @@ public class Main extends Application {
         launch(args);
     }
 
-    public static ObservableList<Employee> GeneratePersons(){
-        ObservableList<Employee> locData = FXCollections.observableArrayList();
-
-        for (int i=1; i <= 20;i++){
-            locData.add(new Employee((long) i, "Имя " + i ,"Фамилия " + i, "pass", "email", DateUtil.parse("28.10.2010"), new Company((long) i, "fdx", "zbdf")));
-        }
-        return locData;
-    }
-
-    public static ObservableList<Company> GenerateCompanies(){
-        ObservableList<Company> locData = FXCollections.observableArrayList();
-
-        for (int i=1; i <= 5;i++){
-            locData.add(new Company((long) i, "Имя " + i ,"Счет " + i));
-        }
-        return locData;
-    }
 
     public boolean showCompanyEditDialog(Company company){
         try {

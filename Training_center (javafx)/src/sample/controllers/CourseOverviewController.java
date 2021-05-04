@@ -1,6 +1,7 @@
 package sample.controllers;
 
 import javafx.beans.Observable;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -29,6 +30,10 @@ public class CourseOverviewController extends OverviewController {
     @FXML
     private TableColumn<Course, String> facultyColumn;
     @FXML
+    private TableColumn<Course, Integer> priceColumn;
+    @FXML
+    private TableColumn<Course, Long> idColumn;
+    @FXML
     private HBox buttonsHBox;
 
     @FXML
@@ -49,6 +54,8 @@ public class CourseOverviewController extends OverviewController {
                 new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getFinishDate(), true)));
         courseInfoColumn.setCellValueFactory(cellData -> cellData.getValue().getCourseInfo().getNameProperty());
         facultyColumn.setCellValueFactory(cellData -> cellData.getValue().getFaculty().getNamesAndEmailProperty());
+        priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
+        idColumn.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         courseTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observable, oldValue, newValue )-> setItem(newValue));
     }

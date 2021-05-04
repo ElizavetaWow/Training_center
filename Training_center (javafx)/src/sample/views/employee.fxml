@@ -84,7 +84,7 @@
             </HBox>
          <ListView fx:id="coursesList" layoutX="15.0" layoutY="234.0" prefHeight="164.0" prefWidth="446.0" AnchorPane.bottomAnchor="40.0" AnchorPane.leftAnchor="15.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="234.0" />
          <Label layoutX="28.0" layoutY="211.0" text="Chosen courses" AnchorPane.leftAnchor="15.0" AnchorPane.topAnchor="210.0" />
-         <HBox layoutX="245.0" layoutY="160.0" prefHeight="25.0" prefWidth="212.0" spacing="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
+         <HBox fx:id="coursesHbox" layoutX="245.0" layoutY="160.0" prefHeight="25.0" prefWidth="212.0" spacing="10.0" AnchorPane.rightAnchor="5.0" AnchorPane.topAnchor="200.0">
             <children>
                <Button mnemonicParsing="false" onAction="#signToCourses" text="Sign up to course" />
                <Button mnemonicParsing="false" onAction="#deleteCourse" text="Delete course" />

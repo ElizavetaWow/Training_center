@@ -31,7 +31,7 @@
                   </items>
              </Menu>
            </MenuBar>
-            <MenuBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="25.0" HBox.hgrow="ALWAYS">
+            <MenuBar prefHeight="25.0" HBox.hgrow="ALWAYS">
               <menus>
                 <Menu mnemonicParsing="false" text="Sign out">
                   <items>
