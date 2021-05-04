@@ -35,13 +35,13 @@ public class LoginController {
     @FXML
     private void handleSignIn(){
         if (isInputValid()){
-            Faculty faculty = apiSession.getFacultiesByEmail(emailField.getText());
-            Employee employee = apiSession.getEmployeesByEmail(emailField.getText());
+            Faculty faculty = apiSession.getFacultiesByEmail(emailField.getText(), passwordField.getText());
+            Employee employee = apiSession.getEmployeesByEmail(emailField.getText(), passwordField.getText());
             Admin admin = apiSession.getAdminsByEmail(emailField.getText());
             if (employee != null && employee.getPassword().equals(passwordField.getText())){
                 setUser(employee);
             }
-            if (faculty != null && faculty.getPassword().equals(passwordField.getText())){
+            if (faculty != null){
                 setUser(faculty);
             }
             if (admin != null && admin.getPassword().equals(passwordField.getText())){

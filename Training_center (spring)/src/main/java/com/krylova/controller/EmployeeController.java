@@ -60,22 +60,26 @@ public class EmployeeController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/employees/email_{email}")
-    public ResponseEntity<List<Employee>> findByEmail(@PathVariable(name = "email") String email){
-        final List<Employee> employeeList = employeeService.findByEmail(email);
-        return employeeList != null && !employeeList.isEmpty()
-                ? new ResponseEntity<>(employeeList, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/employees/email_{email}/pasword_{password}")
+    public ResponseEntity<Employee> findByEmail(@PathVariable(name = "email") String email,
+                                                @PathVariable(name = "password") String password){
+        final Employee employee = employeeService.findByEmail(email);
+        if (employee != null && !employee.getPassword().equals(password)){
+            return new ResponseEntity<>(employee, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
 
     @PutMapping("/employees/{id}")
     public ResponseEntity<?> updateEmployee(@PathVariable(name = "id") Long id, @RequestBody Employee employeeUpdate) {
         return employeeService.findById(id).map(employee -> {
+            if (!employee.getPassword().equals(employeeUpdate.getPassword())){
+                return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
+            }
             employee.setFirstName(employeeUpdate.getFirstName());
             employee.setLastName(employeeUpdate.getLastName());
             employee.setEmail(employeeUpdate.getEmail());
-            employee.setPassword(employeeUpdate.getPassword());
             employee.setBirthday(employeeUpdate.getBirthday());
             employee.setCompany(employeeUpdate.getCompany());
             employee.setCourses(employeeUpdate.getCourses());

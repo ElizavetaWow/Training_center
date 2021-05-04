@@ -34,7 +34,7 @@ public class FacultyService {
         return facultyRepository.findById(id);
     }
 
-    public List<Faculty> findByEmail(String email){
+    public Faculty findByEmail(String email){
         return facultyRepository.findByEmail(email);
     }
 

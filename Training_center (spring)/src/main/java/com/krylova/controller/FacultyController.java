@@ -42,12 +42,14 @@ public class FacultyController {
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @GetMapping("/faculties/email_{email}")
-    public ResponseEntity<List<Faculty>> findAll(@PathVariable(name = "email") String email){
-        final List<Faculty> facultyList = facultyService.findByEmail(email);
-        return facultyList != null && !facultyList.isEmpty()
-                ? new ResponseEntity<>(facultyList, HttpStatus.OK)
-                : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    @GetMapping("/faculties/email_{email}/pasword_{password}")
+    public ResponseEntity<Faculty> findByEmail(@PathVariable(name = "email") String email,
+            @PathVariable(name = "password") String password){
+        final Faculty faculty = facultyService.findByEmail(email);
+        if (faculty != null && !faculty.getPassword().equals(password)){
+            return new ResponseEntity<>(faculty, HttpStatus.OK);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
     @PutMapping("/faculties/{id}")

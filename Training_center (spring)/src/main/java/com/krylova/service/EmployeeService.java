@@ -3,6 +3,7 @@ package com.krylova.service;
 import com.krylova.entity.Employee;
 import com.krylova.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,8 +14,10 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    BCryptPasswordEncoder bCryptPasswordEncoder;
 
     public void create(Employee employee){
+        employee.setPassword(bCryptPasswordEncoder.encode(employee.getPassword()));
         employeeRepository.save(employee);
     }
 
@@ -38,7 +41,7 @@ public class EmployeeService {
         return employeeRepository.findByCompanyName(companyName);
     }
 
-    public List<Employee> findByEmail(String email){
+    public Employee findByEmail(String email){
         return employeeRepository.findByEmail(email);
     }
 

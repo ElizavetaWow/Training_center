@@ -107,16 +107,14 @@ public class ApiSession {
         return JsonParser.parseString(answer).getAsInt();
     }
 
-    public Employee getEmployeesByEmail(String email) {
-        String answer = HttpClass.GetRequest(url + "/employees/email_"+email);
+    public Employee getEmployeesByEmail(String email, String password) {
+        String answer = HttpClass.GetRequest(url + "/employees/email_"+email+"/password_"+password);
         if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            JsonObject currentEmployee = jsonAnswer.get(0).getAsJsonObject();
+            JsonObject currentEmployee = JsonParser.parseString(answer).getAsJsonObject();
             return employeeFromJson(currentEmployee);
         }
         return null;
     }
-
 
     public Employee employeeFromJson(JsonObject currentEmployee){
         Company company = companyFromJson(currentEmployee.get("company").getAsJsonObject());
@@ -232,11 +230,10 @@ public class ApiSession {
         return null;
     }
 
-    public Faculty getFacultiesByEmail(String email) {
-        String answer = HttpClass.GetRequest(url + "/faculties/email_"+email);
+    public Faculty getFacultiesByEmail(String email, String password) {
+        String answer = HttpClass.GetRequest(url + "/faculties/email_"+email+"/password_"+password);
         if (answer != null) {
-            JsonArray jsonAnswer = JsonParser.parseString(answer).getAsJsonArray();
-            JsonObject currentFaculty = jsonAnswer.get(0).getAsJsonObject();
+            JsonObject currentFaculty = JsonParser.parseString(answer).getAsJsonObject();
             return facultyFromJson(currentFaculty);
         }
         return null;
