@@ -1,6 +1,5 @@
 package com.krylova.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
@@ -30,7 +29,7 @@ public class Employee {
     @ManyToOne
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Company company;
-    @ManyToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Course.class, fetch = FetchType.LAZY)
     private Set<Course> courses = new HashSet<>();
 
     public Set<Course> getCourses() {

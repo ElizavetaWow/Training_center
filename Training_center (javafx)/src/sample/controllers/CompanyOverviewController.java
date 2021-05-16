@@ -4,8 +4,6 @@ package sample.controllers;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.geometry.Side;
-import javafx.scene.chart.BarChart;
 import javafx.scene.chart.PieChart;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
@@ -20,7 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 
 
-public class CompanyOverviewController extends OverviewController{
+public class CompanyOverviewController extends OverviewController {
     @FXML
     private TableView<Company> companyTableView;
     @FXML
@@ -46,33 +44,33 @@ public class CompanyOverviewController extends OverviewController{
     private ObservableList<Company> companyList = FXCollections.observableArrayList();
 
 
-    public CompanyOverviewController(){
+    public CompanyOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         companyColumn.setCellValueFactory(cellData -> cellData.getValue().getNameProperty());
         showCompanyDetails(null);
         companyTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> showCompanyDetails(newValue)
+                (observable, oldValue, newValue) -> showCompanyDetails(newValue)
         );
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         updateCompanyList();
     }
 
-    public void setShowEmployeesButtonVisible(boolean status){
+    public void setShowEmployeesButtonVisible(boolean status) {
         showEmployeesButton.setVisible(status);
     }
 
-    private void showChart(){
+    private void showChart() {
         Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
         if (currentCompany != null) {
             List<Employee> employees = apiSession.getEmployeesByCompanyName(currentCompany.getName());
             HashMap<Long, Long> dataMap = new HashMap<>();
-            for (Employee employee: employees) {
+            for (Employee employee : employees) {
                 for (Course course : employee.getCourses()) {
                     if (!dataMap.containsKey(course.getId())) {
                         dataMap.put(course.getId(), (long) 0);
@@ -81,7 +79,7 @@ public class CompanyOverviewController extends OverviewController{
                 }
             }
             List<PieChart.Data> pieList = new ArrayList<>();
-            for (HashMap.Entry<Long, Long> entry: dataMap.entrySet()){
+            for (HashMap.Entry<Long, Long> entry : dataMap.entrySet()) {
                 pieList.add(new PieChart.Data(apiSession.getCoursesById(entry.getKey()).getNamesAndFaculty(),
                         entry.getValue()));
             }
@@ -89,16 +87,15 @@ public class CompanyOverviewController extends OverviewController{
         }
     }
 
-    private void showCompanyDetails(Company company){
-        if (company != null){
+    private void showCompanyDetails(Company company) {
+        if (company != null) {
             setItem(company);
             nameLabel.setText(company.getName());
             accountLabel.setText(company.getAccount());
             moneyLabel.setText(String.valueOf(company.getMoney()));
             employeesNumberLabel.setText(String.valueOf(apiSession.countEmployeesByCompanyId(company.getId())));
             showChart();
-        }
-        else {
+        } else {
             nameLabel.setText("");
             accountLabel.setText("");
             employeesNumberLabel.setText("");
@@ -107,14 +104,13 @@ public class CompanyOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleDeleteCompany(){
+    private void handleDeleteCompany() {
         Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
         if (currentCompany != null) {
             if (apiSession.deleteCompany(currentCompany)) {
                 updateCompanyList();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -125,7 +121,7 @@ public class CompanyOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleEditCompany(){
+    private void handleEditCompany() {
         Company currentCompany = companyTableView.getSelectionModel().getSelectedItem();
         if (currentCompany != null) {
             boolean okClicked = main.showCompanyEditDialog(currentCompany);
@@ -146,7 +142,7 @@ public class CompanyOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleNewCompany(){
+    private void handleNewCompany() {
         Company tempCompany = new Company();
         boolean okClicked = main.showCompanyEditDialog(tempCompany);
         updateCompanyList();
@@ -156,7 +152,7 @@ public class CompanyOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleShowEmployees(){
+    private void handleShowEmployees() {
         Company selectionItem = companyTableView.getSelectionModel().getSelectedItem();
         if (selectionItem != null)
             main.showEmployeeOverview(selectionItem);
@@ -175,13 +171,13 @@ public class CompanyOverviewController extends OverviewController{
         this.apiSession = apiSession;
     }
 
-    public void updateCompanyList(){
+    public void updateCompanyList() {
         companyList.clear();
         companyList.addAll(apiSession.getCompanies());
         companyTableView.setItems(companyList);
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 

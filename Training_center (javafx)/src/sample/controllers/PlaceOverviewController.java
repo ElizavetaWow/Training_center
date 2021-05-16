@@ -33,36 +33,36 @@ public class PlaceOverviewController extends OverviewController {
     private ApiSession apiSession;
     private final ObservableList<Place> placeList = FXCollections.observableArrayList();
 
-    public PlaceOverviewController(){
+    public PlaceOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         cityColumn.setCellValueFactory(cellData -> cellData.getValue().getCityProperty());
         streetColumn.setCellValueFactory(cellData -> cellData.getValue().getStreetProperty());
         buildingColumn.setCellValueFactory(cellData -> cellData.getValue().getBuildingProperty());
         roomColumn.setCellValueFactory(cellData -> cellData.getValue().getRoomProperty().asObject());
         placeTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> setItem(newValue));
+                (observable, oldValue, newValue) -> setItem(newValue));
     }
 
     public void setApiSession(ApiSession apiSession) {
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         setCityBoxItems();
         updatePlacesTable();
     }
 
-    public void setCityBoxItems(){
+    public void setCityBoxItems() {
         updatePlaceList();
         ObservableList<String> cityList = FXCollections.observableArrayList();
         cityList.clear();
         cityList.add("All Cities");
-        for (Place place: placeList){
-            if (!cityList.contains(place.getCity())){
+        for (Place place : placeList) {
+            if (!cityList.contains(place.getCity())) {
                 cityList.add(place.getCity());
             }
         }
@@ -70,47 +70,45 @@ public class PlaceOverviewController extends OverviewController {
         cityBox.getSelectionModel().select(0);
     }
 
-    public void setCity(String city){
-        if (city != null){
+    public void setCity(String city) {
+        if (city != null) {
             cityBox.getSelectionModel().select(city);
             updatePlacesTable();
         }
     }
 
     @FXML
-    private void updatePlacesTable(){
+    private void updatePlacesTable() {
         int selectionIndex = cityBox.getSelectionModel().getSelectedIndex();
         if (selectionIndex > 0) {
             updatePlaceList(cityBox.getSelectionModel().getSelectedItem());
-        }
-        else if (selectionIndex == 0) {
+        } else if (selectionIndex == 0) {
             updatePlaceList();
         }
         placeTableView.setItems(placeList);
     }
 
 
-    public void updatePlaceList(){
+    public void updatePlaceList() {
         placeList.clear();
         placeList.addAll(apiSession.getPlaces());
     }
 
-    public void updatePlaceList(String city){
+    public void updatePlaceList(String city) {
         placeList.clear();
         placeList.addAll(apiSession.getPlacesByCity(city));
     }
 
 
     @FXML
-    private void handleDeletePlace(){
+    private void handleDeletePlace() {
         Place currentPlace = placeTableView.getSelectionModel().getSelectedItem();
         if (currentPlace != null) {
             if (apiSession.deletePlace(currentPlace)) {
                 setCityBoxItems();
                 updatePlacesTable();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -121,7 +119,7 @@ public class PlaceOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleEditPlace(){
+    private void handleEditPlace() {
         Place currentPlace = placeTableView.getSelectionModel().getSelectedItem();
         if (currentPlace != null) {
             main.showPlaceEditDialog(currentPlace);
@@ -139,14 +137,14 @@ public class PlaceOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleNewPlace(){
+    private void handleNewPlace() {
         Place tempPlace = new Place();
         main.showPlaceEditDialog(tempPlace);
         setCityBoxItems();
         updatePlacesTable();
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 }

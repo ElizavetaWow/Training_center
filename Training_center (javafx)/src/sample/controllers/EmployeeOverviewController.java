@@ -52,16 +52,16 @@ public class EmployeeOverviewController extends OverviewController {
     private List<Company> companyList = new ArrayList<>();
     private Set<Course> currentEmployeeCourses;
 
-    public EmployeeOverviewController(){
+    public EmployeeOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
         showEmployeeDetails(null);
         employeeTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> showEmployeeDetails(newValue)
+                (observable, oldValue, newValue) -> showEmployeeDetails(newValue)
         );
     }
 
@@ -69,68 +69,67 @@ public class EmployeeOverviewController extends OverviewController {
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         setCompanyBoxItems();
         updateEmployeesTable();
     }
 
-    public void setCompanyBoxItems(){
+    public void setCompanyBoxItems() {
         companyList = apiSession.getCompanies();
         ObservableList<String> companyNameList = FXCollections.observableArrayList();
         companyNameList.clear();
         companyNameList.add("All Companies");
-        for (Company company: companyList){
+        for (Company company : companyList) {
             companyNameList.add(company.getName());
         }
         companyBox.setItems(companyNameList);
         companyBox.getSelectionModel().select(0);
     }
 
-    public void setCompany(Company company){
-        if (company != null && company.getName() != null){
+    public void setCompany(Company company) {
+        if (company != null && company.getName() != null) {
             companyBox.getSelectionModel().select(company.getName());
             updateEmployeesTable();
         }
     }
 
     @FXML
-    private void updateEmployeesTable(){
+    private void updateEmployeesTable() {
         int selectionIndex = companyBox.getSelectionModel().getSelectedIndex();
         if (selectionIndex > 0) {
             updateEmployeeList(companyList.get(selectionIndex - 1).getName());
-        }
-        else if (selectionIndex == 0) {
+        } else if (selectionIndex == 0) {
             updateEmployeeList();
         }
         employeeTableView.setItems(employeeList);
         updateCoursesView();
     }
 
-    private void updateCoursesView(){
+    private void updateCoursesView() {
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         ObservableList<String> courses = FXCollections.observableArrayList();
-        if (currentEmployee != null){
-            for (Course course: currentEmployee.getCourses()){
-                courses.add("["+course.getId()+ "] \""+course.getCourseInfo().getName()+"\" "+course.getFaculty().getNamesAndEmail());
+        if (currentEmployee != null) {
+            for (Course course : currentEmployee.getCourses()) {
+                courses.add("[" + course.getId() + "] \"" + course.getCourseInfo().getName() + "\" " + course.getFaculty().getNamesAndEmail());
             }
         }
         coursesList.setItems(courses);
     }
 
 
-    public void updateEmployeeList(){
+    public void updateEmployeeList() {
         employeeList.clear();
         employeeList.addAll(apiSession.getEmployees());
     }
 
-    public void updateEmployeeList(String companyName){
+    public void updateEmployeeList(String companyName) {
         employeeList.clear();
         employeeList.addAll(apiSession.getEmployeesByCompanyName(companyName));
     }
 
-    private void showEmployeeDetails(Employee employee){
-        if (employee != null){
+    private void showEmployeeDetails(Employee employee) {
+        if (employee != null) {
             firstNameLabel.setText(employee.getFirstName());
             lastNameLabel.setText(employee.getLastName());
             birthdayLabel.setText(DateUtil.format(employee.getBirthday(), true));
@@ -141,8 +140,7 @@ public class EmployeeOverviewController extends OverviewController {
             if (main.getUser().getRole() == 0) {
                 coursesHbox.setVisible(employee.getId() == main.getUser().getId());
             }
-        }
-        else {
+        } else {
             firstNameLabel.setText("");
             lastNameLabel.setText("");
             birthdayLabel.setText("");
@@ -153,7 +151,7 @@ public class EmployeeOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleDeleteEmployee(){
+    private void handleDeleteEmployee() {
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         int i = employeeTableView.getSelectionModel().getSelectedIndex();
         if (currentEmployee != null) {
@@ -161,8 +159,7 @@ public class EmployeeOverviewController extends OverviewController {
                 updateEmployeesTable();
                 employeeTableView.getSelectionModel().select(i - 1);
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -173,7 +170,7 @@ public class EmployeeOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleEditEmployee(){
+    private void handleEditEmployee() {
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         if (currentEmployee != null) {
             boolean okClicked = main.showEmployeeEditDialog(currentEmployee);
@@ -194,7 +191,7 @@ public class EmployeeOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleNewEmployee(){
+    private void handleNewEmployee() {
         Employee tempEmployee = new Employee();
         boolean okClicked = main.showEmployeeEditDialog(tempEmployee);
         updateEmployeesTable();
@@ -205,7 +202,7 @@ public class EmployeeOverviewController extends OverviewController {
     }
 
     @FXML
-    private void signToCourses(){
+    private void signToCourses() {
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         if (currentEmployee != null) {
             Course course = main.showChooseCourseDialog(main.getPrimaryStage(), currentEmployee);
@@ -229,7 +226,7 @@ public class EmployeeOverviewController extends OverviewController {
     }
 
     @FXML
-    private void deleteCourse(){
+    private void deleteCourse() {
         Employee currentEmployee = employeeTableView.getSelectionModel().getSelectedItem();
         if (currentEmployee != null) {
             String courseString = coursesList.getSelectionModel().getSelectedItem();
@@ -263,7 +260,7 @@ public class EmployeeOverviewController extends OverviewController {
         }
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
         coursesHbox.setVisible(i >= 2);
     }

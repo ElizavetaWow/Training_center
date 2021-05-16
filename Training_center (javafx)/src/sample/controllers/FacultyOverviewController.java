@@ -35,16 +35,16 @@ public class FacultyOverviewController extends OverviewController {
     private Main main;
     private ApiSession apiSession;
 
-    public FacultyOverviewController(){
+    public FacultyOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         firstNameColumn.setCellValueFactory(cellData -> cellData.getValue().getFirstNameProperty());
         lastNameColumn.setCellValueFactory(cellData -> cellData.getValue().getLastNameProperty());
         showFacultyDetails(null);
         facultyTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> showFacultyDetails(newValue)
+                (observable, oldValue, newValue) -> showFacultyDetails(newValue)
         );
     }
 
@@ -52,13 +52,13 @@ public class FacultyOverviewController extends OverviewController {
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         updateFacultiesTable();
     }
 
     @FXML
-    private void updateFacultiesTable(){
+    private void updateFacultiesTable() {
         ObservableList<Faculty> facultyList = FXCollections.observableArrayList();
         facultyList.clear();
         facultyList.addAll(apiSession.getFaculties());
@@ -66,15 +66,14 @@ public class FacultyOverviewController extends OverviewController {
     }
 
 
-    private void showFacultyDetails(Faculty faculty){
-        if (faculty != null){
+    private void showFacultyDetails(Faculty faculty) {
+        if (faculty != null) {
             setItem(faculty);
             firstNameLabel.setText(faculty.getFirstName());
             lastNameLabel.setText(faculty.getLastName());
             birthdayLabel.setText(DateUtil.format(faculty.getBirthday(), true));
             emailLabel.setText(faculty.getEmail());
-        }
-        else {
+        } else {
             firstNameLabel.setText("");
             lastNameLabel.setText("");
             birthdayLabel.setText("");
@@ -83,14 +82,13 @@ public class FacultyOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleDeleteFaculty(){
+    private void handleDeleteFaculty() {
         Faculty currentFaculty = facultyTableView.getSelectionModel().getSelectedItem();
         if (currentFaculty != null) {
             if (apiSession.deleteFaculty(currentFaculty)) {
                 updateFacultiesTable();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -101,7 +99,7 @@ public class FacultyOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleEditFaculty(){
+    private void handleEditFaculty() {
         Faculty currentFaculty = facultyTableView.getSelectionModel().getSelectedItem();
         if (currentFaculty != null) {
             boolean okClicked = main.showFacultyEditDialog(currentFaculty);
@@ -120,7 +118,7 @@ public class FacultyOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleNewFaculty(){
+    private void handleNewFaculty() {
         Faculty tempFaculty = new Faculty();
         boolean okClicked = main.showFacultyEditDialog(tempFaculty);
         updateFacultiesTable();
@@ -129,7 +127,7 @@ public class FacultyOverviewController extends OverviewController {
         }
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 }

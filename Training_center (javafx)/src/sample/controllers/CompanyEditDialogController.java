@@ -24,10 +24,11 @@ public class CompanyEditDialogController {
 
     private ApiSession apiSession;
 
-    public CompanyEditDialogController(){}
+    public CompanyEditDialogController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
     public void setDialogStage(Stage dialogStage, ApiSession apiSession) {
@@ -35,8 +36,8 @@ public class CompanyEditDialogController {
         this.apiSession = apiSession;
     }
 
-    public void setCompany(Company company){
-        if (company.getName() != null){
+    public void setCompany(Company company) {
+        if (company.getName() != null) {
             this.update = true;
         }
         this.company = company;
@@ -44,24 +45,23 @@ public class CompanyEditDialogController {
         accountField.setText(company.getAccount());
     }
 
-    public boolean isOkClicked(){
+    public boolean isOkClicked() {
         return okClicked;
     }
 
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleOk(){
-        if(isInputValid()){
+    private void handleOk() {
+        if (isInputValid()) {
             company.setName(nameField.getText());
             company.setAccount(accountField.getText());
             if (update) {
                 apiSession.updateCompany(company);
-            }
-            else {
+            } else {
                 apiSession.createCompany(company);
             }
             okClicked = true;
@@ -69,23 +69,23 @@ public class CompanyEditDialogController {
         }
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
 
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No name input!\n";
-        } else if (!nameField.getText().matches("[A-z\\s]+[A-z]")){
+        } else if (!nameField.getText().matches("[A-z\\s]+[A-z]")) {
             errorMessage += "Name must be in latin!\n";
         } else if (!apiSession.getCompaniesByName(nameField.getText()).isEmpty()
-                && !Objects.equals(company.getName(), nameField.getText())){
+                && !Objects.equals(company.getName(), nameField.getText())) {
             errorMessage += "Such company name is already exists!\n";
         }
 
         if (accountField.getText() == null || accountField.getText().length() == 0) {
             errorMessage += "No account input!\n";
         } else if (accountField.getText().length() != 20) {
-            errorMessage += "Account length must be 20, you have "+accountField.getText().length()+" symbols!\n";
-        } else if (!accountField.getText().matches("[1-9][0-9]{19}")){
+            errorMessage += "Account length must be 20, you have " + accountField.getText().length() + " symbols!\n";
+        } else if (!accountField.getText().matches("[1-9][0-9]{19}")) {
             errorMessage += "Account must consists of 20 numbers!\n";
         }
 

@@ -1,24 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseInfoOverviewController">
-      <HBox fx:id="buttonsHBox" layoutX="559.0" layoutY="62.0" prefHeight="25.0" prefWidth="231.0" spacing="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
-          <Button mnemonicParsing="false" onAction="#handleNewCourseInfo" prefHeight="25.0" prefWidth="70.0" text="New" />
-          <Button mnemonicParsing="false" onAction="#handleEditCourseInfo" prefHeight="25.0" prefWidth="70.0" text="Edit" />
-          <Button mnemonicParsing="false" onAction="#handleDeleteCourseInfo" prefHeight="25.0" prefWidth="70.0" text="Delete" />
-      <HBox.margin>
-         <Insets left="10.0" />
-      </HBox.margin>
-      </HBox>
-   <ListView fx:id="courseInfoListView" layoutX="20.0" layoutY="102.0" prefHeight="385.0" prefWidth="757.0" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0" />
-   <Label alignment="TOP_LEFT" layoutX="227.0" layoutY="21.0" text="Subjects" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
-      <font>
-         <Font size="20.0" />
-      </font>
-   </Label>
-   <TextField fx:id="nameField" layoutY="50.0" prefHeight="25.0" prefWidth="538.0" promptText="Course Name" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="50.0" />
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.CourseInfoOverviewController">
+    <HBox fx:id="buttonsHBox" layoutX="559.0" layoutY="62.0" prefHeight="25.0" prefWidth="231.0" spacing="10.0"
+          AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="50.0">
+        <Button mnemonicParsing="false" onAction="#handleNewCourseInfo" prefHeight="25.0" prefWidth="70.0" text="New"/>
+        <Button mnemonicParsing="false" onAction="#handleEditCourseInfo" prefHeight="25.0" prefWidth="70.0"
+                text="Edit"/>
+        <Button mnemonicParsing="false" onAction="#handleDeleteCourseInfo" prefHeight="25.0" prefWidth="70.0"
+                text="Delete"/>
+        <HBox.margin>
+            <Insets left="10.0"/>
+        </HBox.margin>
+    </HBox>
+    <ListView fx:id="courseInfoListView" layoutX="20.0" layoutY="102.0" prefHeight="385.0" prefWidth="757.0"
+              AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+              AnchorPane.topAnchor="100.0"/>
+    <Label alignment="TOP_LEFT" layoutX="227.0" layoutY="21.0" text="Subjects" AnchorPane.leftAnchor="10.0"
+           AnchorPane.topAnchor="10.0">
+        <font>
+            <Font size="20.0"/>
+        </font>
+    </Label>
+    <TextField fx:id="nameField" layoutY="50.0" prefHeight="25.0" prefWidth="538.0" promptText="Course Name"
+               AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="255.0" AnchorPane.topAnchor="50.0"/>
 </AnchorPane>

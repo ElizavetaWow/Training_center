@@ -27,10 +27,11 @@ public class PlaceEditDialogController {
 
     private ApiSession apiSession;
 
-    public PlaceEditDialogController(){}
+    public PlaceEditDialogController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
     public void setDialogStage(Stage dialogStage, ApiSession apiSession) {
@@ -38,8 +39,8 @@ public class PlaceEditDialogController {
         this.apiSession = apiSession;
     }
 
-    public void setPlace(Place place){
-        if (place.getCity() != null){
+    public void setPlace(Place place) {
+        if (place.getCity() != null) {
             this.update = true;
             roomField.setText(String.valueOf(place.getRoom()));
         }
@@ -49,26 +50,25 @@ public class PlaceEditDialogController {
         buildingField.setText(place.getBuilding());
     }
 
-    public boolean isOkClicked(){
+    public boolean isOkClicked() {
         return okClicked;
     }
 
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleOk(){
-        if(isInputValid()){
+    private void handleOk() {
+        if (isInputValid()) {
             place.setCity(cityField.getText());
             place.setStreet(streetField.getText());
             place.setBuilding(buildingField.getText());
             place.setRoom(Integer.parseInt(roomField.getText()));
             if (update) {
                 apiSession.updatePlace(place);
-            }
-            else {
+            } else {
                 apiSession.createPlace(place);
             }
             okClicked = true;
@@ -76,7 +76,7 @@ public class PlaceEditDialogController {
         }
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
 
         if (cityField.getText() == null || cityField.getText().length() == 0) {

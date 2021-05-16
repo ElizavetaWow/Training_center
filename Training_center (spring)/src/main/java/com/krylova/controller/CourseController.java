@@ -16,18 +16,18 @@ public class CourseController {
     private final CourseService courseService;
 
     @Autowired
-    public CourseController(CourseService courseService){
+    public CourseController(CourseService courseService) {
         this.courseService = courseService;
     }
 
     @PostMapping("/courses")
-    public ResponseEntity<?> create(@RequestBody Course course){
+    public ResponseEntity<?> create(@RequestBody Course course) {
         courseService.create(course);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/courses")
-    public ResponseEntity<List<Course>> findAll(){
+    public ResponseEntity<List<Course>> findAll() {
         final List<Course> courseList = courseService.findAll();
         return courseList != null && !courseList.isEmpty()
                 ? new ResponseEntity<>(courseList, HttpStatus.OK)
@@ -35,7 +35,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/{id}")
-    public ResponseEntity<Optional<Course>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Course>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Course> course = courseService.findById(id);
         return course != null
                 ? new ResponseEntity<>(course, HttpStatus.OK)
@@ -43,7 +43,7 @@ public class CourseController {
     }
 
     @GetMapping("/courses/ci_{courseInfo}")
-    public ResponseEntity<List<Course>> findByCourseInfo(@PathVariable(name = "courseInfo") String courseInfo){
+    public ResponseEntity<List<Course>> findByCourseInfo(@PathVariable(name = "courseInfo") String courseInfo) {
         final List<Course> courseList = courseService.findByCourseInfo(courseInfo);
         return courseList != null && !courseList.isEmpty()
                 ? new ResponseEntity<>(courseList, HttpStatus.OK)

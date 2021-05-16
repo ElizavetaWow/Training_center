@@ -6,26 +6,27 @@ import javafx.beans.property.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Company implements ApiModel{
+public class Company implements ApiModel {
     private LongProperty id;
     private IntegerProperty money;
     private StringProperty name;
     private StringProperty account;
 
-    public Company(String name, String account){
+    public Company(String name, String account) {
         this.id = null;
         this.money = new SimpleIntegerProperty(0);
         this.name = new SimpleStringProperty(name);
         this.account = new SimpleStringProperty(account);
     }
-    public Company(Long id, String name, String account, Integer money){
+
+    public Company(Long id, String name, String account, Integer money) {
         this.id = new SimpleLongProperty(id);
         this.money = new SimpleIntegerProperty(money);
         this.name = new SimpleStringProperty(name);
         this.account = new SimpleStringProperty(account);
     }
 
-    public Company(){
+    public Company() {
         this(null, null);
     }
 
@@ -80,7 +81,7 @@ public class Company implements ApiModel{
     @Override
     public String toJSON() {
         Map<String, Object> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", String.valueOf(getId()));
         }
         map.put("name", getName());

@@ -2,32 +2,39 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
-<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.TimetableOverviewController">
-    <DatePicker fx:id="datePicker" layoutX="26.0" layoutY="49.0" onAction="#updateTimetablesTable" prefHeight="25.0" prefWidth="196.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0" />
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.TimetableOverviewController">
+    <DatePicker fx:id="datePicker" layoutX="26.0" layoutY="49.0" onAction="#updateTimetablesTable" prefHeight="25.0"
+                prefWidth="196.0" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="50.0"/>
     <Label layoutX="26.0" layoutY="25.0" text="Timetable" AnchorPane.leftAnchor="10.0" AnchorPane.topAnchor="10.0">
         <font>
-          <Font size="20.0" />
+            <Font size="20.0"/>
         </font>
     </Label>
-    <TableView fx:id="timetableTableView" layoutX="26.0" layoutY="90.0" prefHeight="244.0" prefWidth="538.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="100.0">
-      <columns>
-          <TableColumn fx:id="dateColumn" prefWidth="111.66665935516357" sortable="false" text="Date" />
-          <TableColumn fx:id="timeColumn" prefWidth="85.66667938232422" text="Time" />
-          <TableColumn fx:id="courseColumn" prefWidth="203.33331298828125" text="Course" />
-          <TableColumn fx:id="facultyColumn" prefWidth="172.33334350585938" text="Faculty" />
-          <TableColumn fx:id="placeColumn" prefWidth="204.66668701171875" text="Place" />
-      </columns>
+    <TableView fx:id="timetableTableView" layoutX="26.0" layoutY="90.0" prefHeight="244.0" prefWidth="538.0"
+               AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0"
+               AnchorPane.topAnchor="100.0">
+        <columns>
+            <TableColumn fx:id="dateColumn" prefWidth="111.66665935516357" sortable="false" text="Date"/>
+            <TableColumn fx:id="timeColumn" prefWidth="85.66667938232422" text="Time"/>
+            <TableColumn fx:id="courseColumn" prefWidth="203.33331298828125" text="Course"/>
+            <TableColumn fx:id="facultyColumn" prefWidth="172.33334350585938" text="Faculty"/>
+            <TableColumn fx:id="placeColumn" prefWidth="204.66668701171875" text="Place"/>
+        </columns>
         <columnResizePolicy>
-          <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY"/>
         </columnResizePolicy>
     </TableView>
-    <ComboBox fx:id="courseBox" layoutX="414.0" layoutY="49.0" onAction="#updateTimetablesTable" prefWidth="150.0" promptText="Course" AnchorPane.rightAnchor="10.0" />
-    <HBox fx:id="buttonsHBox" layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0" AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
-        <Button mnemonicParsing="false" onAction="#handleNewTimetable" prefHeight="25.0" prefWidth="70.0" text="New" />
-        <Button mnemonicParsing="false" onAction="#handleEditTimetable" prefHeight="25.0" prefWidth="70.0" text="Edit" />
-        <Button mnemonicParsing="false" onAction="#handleDeleteTimetable" prefHeight="25.0" prefWidth="70.0" text="Delete" />
+    <ComboBox fx:id="courseBox" layoutX="414.0" layoutY="49.0" onAction="#updateTimetablesTable" prefWidth="150.0"
+              promptText="Course" AnchorPane.rightAnchor="10.0"/>
+    <HBox fx:id="buttonsHBox" layoutX="343.0" layoutY="352.0" prefHeight="25.0" prefWidth="222.0" spacing="10.0"
+          AnchorPane.bottomAnchor="15.0" AnchorPane.rightAnchor="15.0">
+        <Button mnemonicParsing="false" onAction="#handleNewTimetable" prefHeight="25.0" prefWidth="70.0" text="New"/>
+        <Button mnemonicParsing="false" onAction="#handleEditTimetable" prefHeight="25.0" prefWidth="70.0" text="Edit"/>
+        <Button mnemonicParsing="false" onAction="#handleDeleteTimetable" prefHeight="25.0" prefWidth="70.0"
+                text="Delete"/>
     </HBox>
-    <Button layoutX="217.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleCleanDate" prefHeight="25.0" prefWidth="109.0" text="Clean date" AnchorPane.leftAnchor="217.0" AnchorPane.topAnchor="50.0" />
+    <Button layoutX="217.0" layoutY="49.0" mnemonicParsing="false" onAction="#handleCleanDate" prefHeight="25.0"
+            prefWidth="109.0" text="Clean date" AnchorPane.leftAnchor="217.0" AnchorPane.topAnchor="50.0"/>
 </AnchorPane>

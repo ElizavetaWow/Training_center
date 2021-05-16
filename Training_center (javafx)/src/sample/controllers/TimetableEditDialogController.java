@@ -35,10 +35,11 @@ public class TimetableEditDialogController {
 
     private ApiSession apiSession;
 
-    public TimetableEditDialogController(){}
+    public TimetableEditDialogController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
     public void setDialogStage(Stage dialogStage, ApiSession apiSession, Main main) {
@@ -47,8 +48,8 @@ public class TimetableEditDialogController {
         this.main = main;
     }
 
-    public void setTimetable(Timetable timetable){
-        if (timetable.getDate() != null){
+    public void setTimetable(Timetable timetable) {
+        if (timetable.getDate() != null) {
             this.update = true;
             selectedPlace = timetable.getPlace();
             placeLabel.setText(timetable.getPlace().getFullPlace());
@@ -58,7 +59,7 @@ public class TimetableEditDialogController {
         this.timetable = timetable;
         datePicker.setValue(timetable.getDate());
         timeField.setText(TimeUtil.format(timetable.getTime()));
-        if (!update){
+        if (!update) {
             datePicker.setDisable(true);
             timeField.setDisable(true);
             placeButton.setDisable(true);
@@ -73,16 +74,16 @@ public class TimetableEditDialogController {
     }
 
     @FXML
-    private void handleSelectPlace(){
+    private void handleSelectPlace() {
         Place place = main.showChoosePlaceDialog(dialogStage);
-        if (place != null){
+        if (place != null) {
             selectedPlace = place;
             placeLabel.setText(selectedPlace.getFullPlace());
         }
     }
 
     @FXML
-    private void handleSelectCourse(){
+    private void handleSelectCourse() {
         Course course = main.showChooseCourseDialog(dialogStage, null);
         if (course != null) {
             selectedCourse = course;
@@ -94,29 +95,29 @@ public class TimetableEditDialogController {
         }
     }
 
-    public boolean isOkClicked(){
+    public boolean isOkClicked() {
         return okClicked;
     }
 
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleOk(){
+    private void handleOk() {
         try {
             datePicker.setValue(DateUtil.parse(datePicker.getEditor().getText()));
-        } catch (Exception ignored){}
-        if(isInputValid()){
+        } catch (Exception ignored) {
+        }
+        if (isInputValid()) {
             timetable.setDate(datePicker.getValue());
             timetable.setTime(TimeUtil.parse(timeField.getText()));
             timetable.setCourse(selectedCourse);
             timetable.setPlace(selectedPlace);
             if (update) {
                 apiSession.updateTimetable(timetable);
-            }
-            else {
+            } else {
                 apiSession.createTimetable(timetable);
             }
             okClicked = true;
@@ -124,21 +125,21 @@ public class TimetableEditDialogController {
         }
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
 
         if (timeField.getText() == null || timeField.getText().length() == 0) {
             errorMessage += "No time input!\n";
-        } else{
-            if (!timeField.getText().matches("^([0-1][0-9]|2[0-3]):[0-5][0-9]$")){
+        } else {
+            if (!timeField.getText().matches("^([0-1][0-9]|2[0-3]):[0-5][0-9]$")) {
                 errorMessage += "Wrong format of time input!\n";
             }
         }
         if (datePicker.getValue() == null) {
             errorMessage += "No date selection!\n";
         } else if (datePicker.getValue().isAfter(selectedCourse.getFinishDate())
-                || datePicker.getValue().isBefore(selectedCourse.getStartDate())){
-            errorMessage += "Date must be between "+selectedCourse.getStartDate()+" and "+selectedCourse.getFinishDate()+"!\n";
+                || datePicker.getValue().isBefore(selectedCourse.getStartDate())) {
+            errorMessage += "Date must be between " + selectedCourse.getStartDate() + " and " + selectedCourse.getFinishDate() + "!\n";
         }
 
         if (courseLabel.getText() == null || courseLabel.getText().length() == 0) {

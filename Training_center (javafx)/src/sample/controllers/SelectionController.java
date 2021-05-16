@@ -10,23 +10,25 @@ public class SelectionController {
     private Stage dialogStage;
     private Object selectedItem;
 
-    public void setSceneController(OverviewController controller){
+    public void setSceneController(OverviewController controller) {
         this.controller = controller;
     }
+
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
+
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleSelect(){
-        if (controller.getItem() != null){
+    private void handleSelect() {
+        if (controller.getItem() != null) {
             dialogStage.close();
             selectedItem = controller.getItem();
-        } else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.initOwner(dialogStage);
             alert.setTitle("Error");

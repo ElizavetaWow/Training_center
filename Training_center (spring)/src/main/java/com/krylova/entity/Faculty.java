@@ -23,7 +23,7 @@ public class Faculty {
     private String password;
     private Date birthday;
 
-    @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Course.class, fetch = FetchType.LAZY)
     @JsonIgnore
     private List courses;
 }

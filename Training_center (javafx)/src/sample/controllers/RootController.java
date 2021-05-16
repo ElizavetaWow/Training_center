@@ -11,7 +11,7 @@ public class RootController {
 
     private Main main;
 
-    public RootController(){
+    public RootController() {
     }
 
     public void setMain(Main main) {
@@ -19,49 +19,57 @@ public class RootController {
     }
 
     @FXML
-    private void showFaculties(){
+    private void showFaculties() {
         main.showFacultyOverview();
     }
 
     @FXML
-    private void showStudents(){
+    private void showStudents() {
         main.showEmployeeOverview(null);
     }
+
     @FXML
-    private void showTimetable(){
+    private void showTimetable() {
         main.showTimetableOverview();
     }
+
     @FXML
-    private void showCourses(){
+    private void showCourses() {
         main.showCourseInfoOverview();
     }
+
     @FXML
-    private void showConcreteCourses(){
+    private void showConcreteCourses() {
         main.showCourseOverview();
     }
+
     @FXML
-    private void showCompanies(){
+    private void showCompanies() {
         main.showCompanyOverview();
     }
+
     @FXML
-    private void showPlaces(){
+    private void showPlaces() {
         main.showPlaceOverview();
     }
+
     @FXML
-    private void closeApp(){
+    private void closeApp() {
         main.getPrimaryStage().close();
     }
+
     @FXML
-    private void showAbout(){
+    private void showAbout() {
         main.showAboutAuthor();
     }
+
     @FXML
     private void signOut() throws Exception {
         main.getPrimaryStage().close();
         main.start(main.getPrimaryStage());
     }
 
-    public void setVisibleItems(int i){
+    public void setVisibleItems(int i) {
         companyItem.setVisible(i != 0);
     }
 }

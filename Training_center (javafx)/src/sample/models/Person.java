@@ -5,9 +5,12 @@ import javafx.beans.property.*;
 import sample.utils.DateUtil;
 
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
-public abstract class Person implements ApiModel{
+public abstract class Person implements ApiModel {
     private LongProperty id;
     private StringProperty firstName;
     private StringProperty lastName;
@@ -18,7 +21,7 @@ public abstract class Person implements ApiModel{
 
     public final ArrayList<String> roles = new ArrayList<>(Arrays.asList("student", "faculty", "admin"));
 
-    public Person(Long id, String firstName, String lastName, String password, String email, LocalDate birthday){
+    public Person(Long id, String firstName, String lastName, String password, String email, LocalDate birthday) {
         this.id = new SimpleLongProperty(id);
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
@@ -29,7 +32,7 @@ public abstract class Person implements ApiModel{
     }
 
 
-    public Person(String firstName, String lastName, String password, String email, LocalDate birthday){
+    public Person(String firstName, String lastName, String password, String email, LocalDate birthday) {
         this.id = null;
         this.firstName = new SimpleStringProperty(firstName);
         this.lastName = new SimpleStringProperty(lastName);
@@ -39,7 +42,7 @@ public abstract class Person implements ApiModel{
 
     }
 
-    public Person(){
+    public Person() {
         this(null, null, null, null, null);
     }
 
@@ -124,7 +127,7 @@ public abstract class Person implements ApiModel{
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", String.valueOf(getId()));
         }
         map.put("firstName", getFirstName());

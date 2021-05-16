@@ -1,13 +1,13 @@
 package sample.controllers;
 
-import javafx.beans.Observable;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.*;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.layout.HBox;
 import sample.Main;
 import sample.models.Course;
@@ -15,7 +15,6 @@ import sample.models.Employee;
 import sample.utils.ApiSession;
 import sample.utils.DateUtil;
 
-import java.time.LocalDate;
 import java.util.HashSet;
 
 public class CourseOverviewController extends OverviewController {
@@ -43,11 +42,12 @@ public class CourseOverviewController extends OverviewController {
     private Employee employee;
     private ApiSession apiSession;
     private final ObservableList<Course> courseList = FXCollections.observableArrayList();
-    public CourseOverviewController(){
+
+    public CourseOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         startDateColumn.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getStartDate(), true)));
         finishDateColumn.setCellValueFactory(cellData ->
@@ -57,26 +57,26 @@ public class CourseOverviewController extends OverviewController {
         priceColumn.setCellValueFactory(cellData -> cellData.getValue().getPriceProperty().asObject());
         idColumn.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
         courseTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> setItem(newValue));
+                (observable, oldValue, newValue) -> setItem(newValue));
     }
 
     public void setApiSession(ApiSession apiSession) {
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         setNameBoxItems();
         updateCoursesTable();
     }
 
-    public void setNameBoxItems(){
+    public void setNameBoxItems() {
         updateCourseList();
         ObservableList<String> nameList = FXCollections.observableArrayList();
         nameList.clear();
         nameList.add("All Courses");
-        for (Course course: courseList){
-            if (!nameList.contains(course.getCourseInfo().getName())){
+        for (Course course : courseList) {
+            if (!nameList.contains(course.getCourseInfo().getName())) {
                 nameList.add(course.getCourseInfo().getName());
             }
         }
@@ -84,23 +84,22 @@ public class CourseOverviewController extends OverviewController {
         nameBox.getSelectionModel().select(0);
     }
 
-    public void setEmployee(Employee employee){
+    public void setEmployee(Employee employee) {
         this.employee = employee;
     }
 
     @FXML
-    private void updateCoursesTable(){
+    private void updateCoursesTable() {
 
         int selectionIndex = nameBox.getSelectionModel().getSelectedIndex();
         if (selectionIndex > 0) {
             updateCourseList(nameBox.getSelectionModel().getSelectedItem());
-        }
-        else if (selectionIndex == 0) {
+        } else if (selectionIndex == 0) {
             updateCourseList();
         }
         if (employee != null) {
             HashSet<Long> courseids = new HashSet<>();
-            for (Course course: employee.getCourses()){
+            for (Course course : employee.getCourses()) {
                 courseids.add(course.getId());
             }
             courseList.removeIf(course -> courseids.contains(course.getId()));
@@ -109,27 +108,26 @@ public class CourseOverviewController extends OverviewController {
     }
 
 
-     public void updateCourseList(){
+    public void updateCourseList() {
         courseList.clear();
         courseList.addAll(apiSession.getCourses());
     }
 
-    public void updateCourseList(String name){
+    public void updateCourseList(String name) {
         courseList.clear();
         courseList.addAll(apiSession.getCoursesByName(name));
     }
 
 
     @FXML
-    private void handleDeleteCourse(){
+    private void handleDeleteCourse() {
         Course currentCourse = courseTableView.getSelectionModel().getSelectedItem();
         if (currentCourse != null) {
             if (apiSession.deleteCourse(currentCourse)) {
                 setNameBoxItems();
                 updateCoursesTable();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -140,7 +138,7 @@ public class CourseOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleEditCourse(){
+    private void handleEditCourse() {
         Course currentCourse = courseTableView.getSelectionModel().getSelectedItem();
         if (currentCourse != null) {
             main.showCourseEditDialog(currentCourse);
@@ -158,14 +156,14 @@ public class CourseOverviewController extends OverviewController {
     }
 
     @FXML
-    private void handleNewCourse(){
+    private void handleNewCourse() {
         Course tempCourse = new Course();
         main.showCourseEditDialog(tempCourse);
         setNameBoxItems();
         updateCoursesTable();
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 

@@ -17,18 +17,18 @@ public class TimetableController {
     private final TimetableService timetableService;
 
     @Autowired
-    public TimetableController(TimetableService timetableService){
+    public TimetableController(TimetableService timetableService) {
         this.timetableService = timetableService;
     }
 
     @PostMapping("/timetables")
-    public ResponseEntity<?> create(@RequestBody Timetable timetable){
+    public ResponseEntity<?> create(@RequestBody Timetable timetable) {
         timetableService.create(timetable);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/timetables")
-    public ResponseEntity<List<Timetable>> findAll(){
+    public ResponseEntity<List<Timetable>> findAll() {
         final List<Timetable> timetableList = timetableService.findAll();
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
@@ -36,7 +36,7 @@ public class TimetableController {
     }
 
     @GetMapping("/timetables/{id}")
-    public ResponseEntity<Optional<Timetable>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Timetable>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Timetable> timetable = timetableService.findById(id);
         return timetable != null
                 ? new ResponseEntity<>(timetable, HttpStatus.OK)
@@ -44,7 +44,7 @@ public class TimetableController {
     }
 
     @GetMapping("/timetables/cn_{name}")
-    public ResponseEntity<List<Timetable>> findByName(@PathVariable(name = "name") String name){
+    public ResponseEntity<List<Timetable>> findByName(@PathVariable(name = "name") String name) {
         final List<Timetable> timetableList = timetableService.findByName(name);
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
@@ -52,15 +52,16 @@ public class TimetableController {
     }
 
     @GetMapping("/timetables/date_{date}")
-    public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") String date){
+    public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") String date) {
         final List<Timetable> timetableList = timetableService.findByDate(DateUtil.parse(date));
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
+
     @GetMapping("/timetables/cn_{name}/date_{date}")
     public ResponseEntity<List<Timetable>> findByNameAndDate(@PathVariable(name = "name") String name,
-                                                      @PathVariable(name = "date") String date){
+                                                             @PathVariable(name = "date") String date) {
 
         final List<Timetable> timetableList = timetableService.findByNameAndDate(name, DateUtil.parse(date));
         return timetableList != null && !timetableList.isEmpty()

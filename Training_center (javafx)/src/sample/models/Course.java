@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
-public class Course implements ApiModel{
+public class Course implements ApiModel {
     private LongProperty id;
     private IntegerProperty price;
     private ObjectProperty<LocalDate> startDate;
@@ -20,7 +20,7 @@ public class Course implements ApiModel{
     private ObjectProperty<CourseInfo> courseInfo;
     private ObjectProperty<Set<Employee>> employees;
 
-    public Course(Long id, LocalDate startDate, LocalDate finishDate, Integer price, CourseInfo courseInfo, Faculty faculty){
+    public Course(Long id, LocalDate startDate, LocalDate finishDate, Integer price, CourseInfo courseInfo, Faculty faculty) {
         this.id = new SimpleLongProperty(id);
         this.price = new SimpleIntegerProperty(price);
         this.startDate = new SimpleObjectProperty<>(startDate);
@@ -30,7 +30,7 @@ public class Course implements ApiModel{
         this.employees = new SimpleObjectProperty<>();
     }
 
-    public Course(LocalDate startDate, LocalDate finishDate, Integer price, CourseInfo courseInfo, Faculty faculty){
+    public Course(LocalDate startDate, LocalDate finishDate, Integer price, CourseInfo courseInfo, Faculty faculty) {
         this.id = null;
         this.price = new SimpleIntegerProperty(price);
         this.startDate = new SimpleObjectProperty<>(startDate);
@@ -41,7 +41,7 @@ public class Course implements ApiModel{
     }
 
 
-    public Course(){
+    public Course() {
         this(null, null, null, null, null);
     }
 
@@ -125,7 +125,7 @@ public class Course implements ApiModel{
         this.price.set(price);
     }
 
-    public int getNumberOfEmployees(){
+    public int getNumberOfEmployees() {
         if (getEmployees() != null)
             return getEmployees().size();
         return 0;
@@ -134,19 +134,20 @@ public class Course implements ApiModel{
     public void setEmployee(Employee employee) {
         this.employees.get().add(employee);
     }
+
     public void removeEmployee(Long id) {
         employees.get().removeIf(employee -> employee.getId() == id);
     }
 
-    public String getNamesAndFaculty(){
-        return getCourseInfo().getName()+" "+getFaculty().getNamesAndEmail();
+    public String getNamesAndFaculty() {
+        return getCourseInfo().getName() + " " + getFaculty().getNamesAndEmail();
     }
 
     @Override
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", getId());
         }
         map.put("startDate", DateUtil.format(getStartDate()));

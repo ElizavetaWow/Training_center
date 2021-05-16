@@ -6,7 +6,7 @@ import javafx.beans.property.*;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Place implements ApiModel{
+public class Place implements ApiModel {
     private LongProperty id;
     private StringProperty city;
     private StringProperty street;
@@ -29,7 +29,7 @@ public class Place implements ApiModel{
         this.room = new SimpleIntegerProperty(0);
     }
 
-    public Place(){
+    public Place() {
         this(null, null, null);
     }
 
@@ -85,19 +85,19 @@ public class Place implements ApiModel{
         this.room.set(room);
     }
 
-    public StringProperty getFullPlaceProperty(){
-        return new SimpleStringProperty(getCity()+" "+getStreet()+" "+getBuilding()+" "+getRoom());
+    public StringProperty getFullPlaceProperty() {
+        return new SimpleStringProperty(getCity() + " " + getStreet() + " " + getBuilding() + " " + getRoom());
     }
 
-    public String getFullPlace(){
-        return getCity()+" "+getStreet()+" "+getBuilding()+" "+getRoom();
+    public String getFullPlace() {
+        return getCity() + " " + getStreet() + " " + getBuilding() + " " + getRoom();
     }
 
 
     @Override
     public String toJSON() {
         Map<String, String> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", String.valueOf(getId()));
         }
         map.put("city", getCity());

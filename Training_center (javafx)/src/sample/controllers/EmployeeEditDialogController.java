@@ -36,10 +36,11 @@ public class EmployeeEditDialogController {
 
     private ApiSession apiSession;
 
-    public EmployeeEditDialogController(){}
+    public EmployeeEditDialogController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
     public void setDialogStage(Stage dialogStage, ApiSession apiSession, Main main) {
@@ -48,8 +49,8 @@ public class EmployeeEditDialogController {
         this.main = main;
     }
 
-    public void setEmployee(Employee employee){
-        if (employee.getFirstName() != null){
+    public void setEmployee(Employee employee) {
+        if (employee.getFirstName() != null) {
             this.update = true;
             selectedCompany = employee.getCompany();
             companyLabel.setText(employee.getCompany().getName());
@@ -64,29 +65,30 @@ public class EmployeeEditDialogController {
     }
 
     @FXML
-    private void handleSelectCompany(){
+    private void handleSelectCompany() {
         Company company = main.showChooseCompanyDialog(dialogStage);
-        if (company != null){
+        if (company != null) {
             selectedCompany = company;
             companyLabel.setText(selectedCompany.getName());
         }
     }
 
-    public boolean isOkClicked(){
+    public boolean isOkClicked() {
         return okClicked;
     }
 
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleOk(){
+    private void handleOk() {
         try {
             birthdayPicker.setValue(DateUtil.parse(birthdayPicker.getEditor().getText()));
-        } catch (Exception ignored){}
-        if(isInputValid()){
+        } catch (Exception ignored) {
+        }
+        if (isInputValid()) {
             employee.setFirstName(firstNameField.getText());
             employee.setLastName(lastNameField.getText());
             employee.setEmail(emailField.getText());
@@ -95,8 +97,7 @@ public class EmployeeEditDialogController {
             employee.setCompany(selectedCompany);
             if (update) {
                 apiSession.updateEmployee(employee);
-            }
-            else {
+            } else {
                 apiSession.createEmployee(employee);
             }
             okClicked = true;
@@ -104,17 +105,17 @@ public class EmployeeEditDialogController {
         }
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
 
         if (firstNameField.getText() == null || firstNameField.getText().length() == 0) {
             errorMessage += "No first name input!\n";
-        } else if (!firstNameField.getText().matches("[A-z\\s]+[A-z]")){
+        } else if (!firstNameField.getText().matches("[A-z\\s]+[A-z]")) {
             errorMessage += "First name must be in latin!\n";
         }
         if (lastNameField.getText() == null || lastNameField.getText().length() == 0) {
             errorMessage += "No last name input!\n";
-        }else if (!lastNameField.getText().matches("[A-z\\s]+[A-z]")){
+        } else if (!lastNameField.getText().matches("[A-z\\s]+[A-z]")) {
             errorMessage += "Last name must be in latin!\n";
         }
         if (passwordField.getText() == null || passwordField.getText().length() == 0) {
@@ -125,7 +126,7 @@ public class EmployeeEditDialogController {
         }
         if (emailField.getText() == null || emailField.getText().length() == 0) {
             errorMessage += "No email input!\n";
-        } else if (!emailField.getText().matches("\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*\\.\\w{2,4}")){
+        } else if (!emailField.getText().matches("\\w+([.-]?\\w+)*@\\w+([.-]?\\w+)*\\.\\w{2,4}")) {
             errorMessage += "Wrong format of email input!\n";
         }
         if (companyLabel.getText() == null || companyLabel.getText().length() == 0) {

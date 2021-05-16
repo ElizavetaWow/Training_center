@@ -1,47 +1,49 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
-<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.RootController">
-   <top>
-      <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
-         <children>
-           <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="718.0">
-             <Menu mnemonicParsing="false" text="Clients">
-               <MenuItem fx:id="companyItem" mnemonicParsing="false" onAction="#showCompanies" text="Companies" />
-                  <MenuItem mnemonicParsing="false" onAction="#showStudents" text="Students" />
-                  <MenuItem mnemonicParsing="false" onAction="#showFaculties" text="Faculties" />
-             </Menu>
-               <Menu mnemonicParsing="false" text="Training Process">
-                  <items>
-                     <MenuItem mnemonicParsing="false" onAction="#showCourses" text="Subjects" />
-                     <MenuItem mnemonicParsing="false" onAction="#showConcreteCourses" text="Courses" />
-                     <MenuItem mnemonicParsing="false" onAction="#showPlaces" text="Addresses" />
-                  </items>
-               </Menu>
-               <Menu mnemonicParsing="false" text="Timetable">
-                  <items>
-                     <MenuItem mnemonicParsing="false" onAction="#showTimetable" text="Timetable" />
-                  </items>
-               </Menu>
-             <Menu mnemonicParsing="false" onAction="#showAbout" text="About">
-                  <items>
-                     <MenuItem mnemonicParsing="false" text="About Author" />
-                  </items>
-             </Menu>
-           </MenuBar>
-            <MenuBar prefHeight="25.0" HBox.hgrow="ALWAYS">
-              <menus>
-                <Menu mnemonicParsing="false" text="Sign out">
-                  <items>
-                    <MenuItem mnemonicParsing="false" onAction="#signOut" text="Sign out" />
-                        <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close App" />
-                  </items>
-                </Menu>
-              </menus>
-            </MenuBar>
-         </children>
-      </HBox>
-   </top>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<BorderPane prefHeight="500.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.RootController">
+    <top>
+        <HBox prefHeight="25.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <children>
+                <MenuBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="25.0" prefWidth="718.0">
+                    <Menu mnemonicParsing="false" text="Clients">
+                        <MenuItem fx:id="companyItem" mnemonicParsing="false" onAction="#showCompanies"
+                                  text="Companies"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showStudents" text="Students"/>
+                        <MenuItem mnemonicParsing="false" onAction="#showFaculties" text="Faculties"/>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Training Process">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#showCourses" text="Subjects"/>
+                            <MenuItem mnemonicParsing="false" onAction="#showConcreteCourses" text="Courses"/>
+                            <MenuItem mnemonicParsing="false" onAction="#showPlaces" text="Addresses"/>
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" text="Timetable">
+                        <items>
+                            <MenuItem mnemonicParsing="false" onAction="#showTimetable" text="Timetable"/>
+                        </items>
+                    </Menu>
+                    <Menu mnemonicParsing="false" onAction="#showAbout" text="About">
+                        <items>
+                            <MenuItem mnemonicParsing="false" text="About Author"/>
+                        </items>
+                    </Menu>
+                </MenuBar>
+                <MenuBar prefHeight="25.0" HBox.hgrow="ALWAYS">
+                    <menus>
+                        <Menu mnemonicParsing="false" text="Sign out">
+                            <items>
+                                <MenuItem mnemonicParsing="false" onAction="#signOut" text="Sign out"/>
+                                <MenuItem mnemonicParsing="false" onAction="#closeApp" text="Close App"/>
+                            </items>
+                        </Menu>
+                    </menus>
+                </MenuBar>
+            </children>
+        </HBox>
+    </top>
 </BorderPane>

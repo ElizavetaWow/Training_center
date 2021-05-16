@@ -1,8 +1,6 @@
 package com.krylova.controller;
 
-import com.krylova.entity.Course;
 import com.krylova.entity.Employee;
-import com.krylova.service.CourseService;
 import com.krylova.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,18 +16,18 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @Autowired
-    public EmployeeController(EmployeeService employeeService){
+    public EmployeeController(EmployeeService employeeService) {
         this.employeeService = employeeService;
     }
 
     @PostMapping("/employees")
-    public ResponseEntity<?> create(@RequestBody Employee employee){
+    public ResponseEntity<?> create(@RequestBody Employee employee) {
         employeeService.create(employee);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/employees")
-    public ResponseEntity<List<Employee>> findAll(){
+    public ResponseEntity<List<Employee>> findAll() {
         final List<Employee> employeeList = employeeService.findAll();
         return employeeList != null && !employeeList.isEmpty()
                 ? new ResponseEntity<>(employeeList, HttpStatus.OK)
@@ -37,7 +35,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/comp_id_{id}")
-    public ResponseEntity<Integer> countByCompany(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Integer> countByCompany(@PathVariable(name = "id") Long id) {
         final Integer employeesNumber = employeeService.countByCompany(id);
         return employeesNumber != null
                 ? new ResponseEntity<>(employeesNumber, HttpStatus.OK)
@@ -45,7 +43,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/{id}")
-    public ResponseEntity<Optional<Employee>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Employee>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Employee> employee = employeeService.findById(id);
         return employee != null
                 ? new ResponseEntity<>(employee, HttpStatus.OK)
@@ -53,7 +51,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/comp_{companyName}")
-    public ResponseEntity<List<Employee>> findByCompany(@PathVariable(name = "companyName") String companyName){
+    public ResponseEntity<List<Employee>> findByCompany(@PathVariable(name = "companyName") String companyName) {
         final List<Employee> employeeList = employeeService.findByCompanyName(companyName);
         return employeeList != null && !employeeList.isEmpty()
                 ? new ResponseEntity<>(employeeList, HttpStatus.OK)
@@ -61,7 +59,7 @@ public class EmployeeController {
     }
 
     @GetMapping("/employees/email_{email}")
-    public ResponseEntity<List<Employee>> findByEmail(@PathVariable(name = "email") String email){
+    public ResponseEntity<List<Employee>> findByEmail(@PathVariable(name = "email") String email) {
         final List<Employee> employeeList = employeeService.findByEmail(email);
         return employeeList != null && !employeeList.isEmpty()
                 ? new ResponseEntity<>(employeeList, HttpStatus.OK)

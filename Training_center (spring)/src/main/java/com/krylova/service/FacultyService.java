@@ -14,27 +14,27 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
-    public void create(Faculty faculty){
+    public void create(Faculty faculty) {
         facultyRepository.save(faculty);
     }
 
-    public void update(Faculty faculty){
+    public void update(Faculty faculty) {
         facultyRepository.save(faculty);
     }
 
-    public void delete(Faculty faculty){
+    public void delete(Faculty faculty) {
         facultyRepository.delete(faculty);
     }
 
-    public List<Faculty> findAll(){
+    public List<Faculty> findAll() {
         return facultyRepository.findAll();
     }
 
-    public Optional<Faculty> findById(Long id){
+    public Optional<Faculty> findById(Long id) {
         return facultyRepository.findById(id);
     }
 
-    public List<Faculty> findByEmail(String email){
+    public List<Faculty> findByEmail(String email) {
         return facultyRepository.findByEmail(email);
     }
 

@@ -14,27 +14,27 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository;
 
-    public void create(Administrator administrator){
+    public void create(Administrator administrator) {
         administratorRepository.save(administrator);
     }
 
-    public void update(Administrator administrator){
+    public void update(Administrator administrator) {
         administratorRepository.save(administrator);
     }
 
-    public void delete(Administrator administrator){
+    public void delete(Administrator administrator) {
         administratorRepository.delete(administrator);
     }
 
-    public List<Administrator> findAll(){
+    public List<Administrator> findAll() {
         return administratorRepository.findAll();
     }
 
-    public Optional<Administrator> findById(Long id){
+    public Optional<Administrator> findById(Long id) {
         return administratorRepository.findById(id);
     }
 
-    public List<Administrator> findByEmail(String email){
+    public List<Administrator> findByEmail(String email) {
         return administratorRepository.findByEmail(email);
     }
 

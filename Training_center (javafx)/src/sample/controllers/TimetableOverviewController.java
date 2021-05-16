@@ -14,7 +14,7 @@ import sample.utils.DateUtil;
 import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class TimetableOverviewController  extends OverviewController {
+public class TimetableOverviewController extends OverviewController {
     @FXML
     private TableView<Timetable> timetableTableView;
     @FXML
@@ -39,11 +39,12 @@ public class TimetableOverviewController  extends OverviewController {
     private Main main;
     private ApiSession apiSession;
     private final ObservableList<Timetable> timetableList = FXCollections.observableArrayList();
-    public TimetableOverviewController(){
+
+    public TimetableOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         dateColumn.setCellValueFactory(cellData ->
                 new SimpleObjectProperty<String>(DateUtil.format(cellData.getValue().getDate(), true)));
         timeColumn.setCellValueFactory(cellData -> cellData.getValue().getTimeProperty());
@@ -56,19 +57,19 @@ public class TimetableOverviewController  extends OverviewController {
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         setCourseBoxItems();
         updateTimetablesTable();
     }
 
-    public void setCourseBoxItems(){
+    public void setCourseBoxItems() {
         updateTimetableList();
         ObservableList<String> courseList = FXCollections.observableArrayList();
         courseList.clear();
         courseList.add("All Courses");
-        for (Timetable timetable: timetableList){
-            if (!courseList.contains(timetable.getCourse().getCourseInfo().getName())){
+        for (Timetable timetable : timetableList) {
+            if (!courseList.contains(timetable.getCourse().getCourseInfo().getName())) {
                 courseList.add(timetable.getCourse().getCourseInfo().getName());
             }
         }
@@ -78,61 +79,57 @@ public class TimetableOverviewController  extends OverviewController {
 
 
     @FXML
-    private void updateTimetablesTable(){
+    private void updateTimetablesTable() {
         LocalDate selectedDate = datePicker.getValue();
         int selectionIndex = courseBox.getSelectionModel().getSelectedIndex();
         if (selectionIndex > 0 && selectedDate == null) {
             updateTimetableList(courseBox.getSelectionModel().getSelectedItem());
-        }
-        else if (selectionIndex > 0) {
+        } else if (selectionIndex > 0) {
             updateTimetableList(courseBox.getSelectionModel().getSelectedItem(), selectedDate);
-        }
-        else if (selectionIndex == 0 && selectedDate != null) {
+        } else if (selectionIndex == 0 && selectedDate != null) {
             updateTimetableList(selectedDate);
-        }
-        else if (selectionIndex == 0) {
+        } else if (selectionIndex == 0) {
             updateTimetableList();
         }
         timetableTableView.setItems(timetableList);
     }
 
     @FXML
-    private void handleCleanDate(){
+    private void handleCleanDate() {
         datePicker.setValue(null);
     }
 
 
-    public void updateTimetableList(){
+    public void updateTimetableList() {
         timetableList.clear();
         timetableList.addAll(apiSession.getTimetables());
     }
 
-    public void updateTimetableList(String name){
+    public void updateTimetableList(String name) {
         timetableList.clear();
         timetableList.addAll(apiSession.getTimetablesByCourseName(name));
     }
 
-    public void updateTimetableList(LocalDate date){
+    public void updateTimetableList(LocalDate date) {
         timetableList.clear();
         timetableList.addAll(apiSession.getTimetablesByDate(date));
     }
 
-    public void updateTimetableList(String name, LocalDate date){
+    public void updateTimetableList(String name, LocalDate date) {
         timetableList.clear();
         timetableList.addAll(apiSession.getTimetablesByCourseNameAndDate(name, date));
     }
 
 
     @FXML
-    private void handleDeleteTimetable(){
+    private void handleDeleteTimetable() {
         Timetable currentTimetable = timetableTableView.getSelectionModel().getSelectedItem();
         if (currentTimetable != null) {
             if (apiSession.deleteTimetable(currentTimetable)) {
                 setCourseBoxItems();
                 updateTimetablesTable();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -143,7 +140,7 @@ public class TimetableOverviewController  extends OverviewController {
     }
 
     @FXML
-    private void handleEditTimetable(){
+    private void handleEditTimetable() {
         Timetable currentTimetable = timetableTableView.getSelectionModel().getSelectedItem();
         if (currentTimetable != null) {
             main.showTimetableEditDialog(currentTimetable);
@@ -161,14 +158,14 @@ public class TimetableOverviewController  extends OverviewController {
     }
 
     @FXML
-    private void handleNewTimetable(){
+    private void handleNewTimetable() {
         Timetable tempTimetable = new Timetable();
         main.showTimetableEditDialog(tempTimetable);
         setCourseBoxItems();
         updateTimetablesTable();
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 

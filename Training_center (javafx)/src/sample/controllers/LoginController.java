@@ -24,33 +24,33 @@ public class LoginController {
     private Stage stage;
     private Person user;
 
-    public LoginController(){
+    public LoginController() {
     }
+
     @FXML
-    private void initialize(){
+    private void initialize() {
         emailField.setText("");
         passwordField.setText("");
     }
 
     @FXML
-    private void handleSignIn(){
-        if (isInputValid()){
+    private void handleSignIn() {
+        if (isInputValid()) {
             Faculty faculty = apiSession.getFacultiesByEmail(emailField.getText());
             Employee employee = apiSession.getEmployeesByEmail(emailField.getText());
             Admin admin = apiSession.getAdminsByEmail(emailField.getText());
-            if (employee != null && employee.getPassword().equals(passwordField.getText())){
+            if (employee != null && employee.getPassword().equals(passwordField.getText())) {
                 setUser(employee);
             }
-            if (faculty != null && faculty.getPassword().equals(passwordField.getText())){
+            if (faculty != null && faculty.getPassword().equals(passwordField.getText())) {
                 setUser(faculty);
             }
-            if (admin != null && admin.getPassword().equals(passwordField.getText())){
+            if (admin != null && admin.getPassword().equals(passwordField.getText())) {
                 setUser(admin);
             }
-            if (getUser() != null){
+            if (getUser() != null) {
                 stage.close();
-            }
-            else{
+            } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.initOwner(stage);
                 alert.setTitle("Error");
@@ -61,7 +61,7 @@ public class LoginController {
 
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
 
         if (emailField.getText() == null || emailField.getText().length() == 0) {

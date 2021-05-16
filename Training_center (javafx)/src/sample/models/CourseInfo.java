@@ -9,21 +9,21 @@ import javafx.beans.property.StringProperty;
 import java.util.HashMap;
 import java.util.Map;
 
-public class CourseInfo implements ApiModel{
+public class CourseInfo implements ApiModel {
     private LongProperty id;
     private StringProperty name;
 
-    public CourseInfo(Long id, String name){
+    public CourseInfo(Long id, String name) {
         this.id = new SimpleLongProperty(id);
         this.name = new SimpleStringProperty(name);
     }
 
-    public CourseInfo(String name){
+    public CourseInfo(String name) {
         this.id = null;
         this.name = new SimpleStringProperty(name);
     }
 
-    public CourseInfo(){
+    public CourseInfo() {
         this(null);
     }
 
@@ -50,7 +50,7 @@ public class CourseInfo implements ApiModel{
     @Override
     public String toJSON() {
         Map<String, String> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", String.valueOf(getId()));
         }
         map.put("name", getName());

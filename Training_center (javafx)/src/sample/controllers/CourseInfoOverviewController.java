@@ -14,7 +14,7 @@ import sample.utils.ApiSession;
 import java.util.List;
 import java.util.Objects;
 
-public class CourseInfoOverviewController extends OverviewController{
+public class CourseInfoOverviewController extends OverviewController {
     @FXML
     private ListView<String> courseInfoListView;
 
@@ -27,18 +27,18 @@ public class CourseInfoOverviewController extends OverviewController{
     private ApiSession apiSession;
     private ObservableList<String> courseInfoList = FXCollections.observableArrayList();
 
-    public CourseInfoOverviewController(){
+    public CourseInfoOverviewController() {
     }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
         courseInfoListView.getSelectionModel().selectedItemProperty().addListener(
-                (observable, oldValue, newValue )-> showCourseInfoName(newValue));
+                (observable, oldValue, newValue) -> showCourseInfoName(newValue));
     }
 
-    public void showCourseInfoName(String name){
+    public void showCourseInfoName(String name) {
         nameField.setText(name);
-        if (name != null){
+        if (name != null) {
             setItem(apiSession.getCourseInfosByName(name));
         }
     }
@@ -47,16 +47,16 @@ public class CourseInfoOverviewController extends OverviewController{
         this.apiSession = apiSession;
     }
 
-    public void setMainApp(Main main){
+    public void setMainApp(Main main) {
         this.main = main;
         updateCourseInfoListView();
     }
 
     @FXML
-    private void updateCourseInfoListView(){
+    private void updateCourseInfoListView() {
         courseInfoList.clear();
         List<CourseInfo> courseInfos = apiSession.getCourseInfos();
-        for (CourseInfo courseInfo: courseInfos){
+        for (CourseInfo courseInfo : courseInfos) {
             courseInfoList.add(courseInfo.getName());
         }
         courseInfoListView.setItems(courseInfoList);
@@ -64,15 +64,14 @@ public class CourseInfoOverviewController extends OverviewController{
 
 
     @FXML
-    private void handleDeleteCourseInfo(){
+    private void handleDeleteCourseInfo() {
         int selectedIndex = courseInfoListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0){
+        if (selectedIndex >= 0) {
             CourseInfo currentCourseInfo = apiSession.getCourseInfosByName(courseInfoListView.getItems().get(selectedIndex));
-            if (apiSession.deleteCourseInfo(currentCourseInfo)){
+            if (apiSession.deleteCourseInfo(currentCourseInfo)) {
                 updateCourseInfoListView();
             }
-        }
-        else {
+        } else {
             Alert alert = new Alert(Alert.AlertType.WARNING);
             alert.initOwner(main.getPrimaryStage());
             alert.setTitle("No selection");
@@ -83,11 +82,11 @@ public class CourseInfoOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleEditCourseInfo(){
+    private void handleEditCourseInfo() {
         int selectedIndex = courseInfoListView.getSelectionModel().getSelectedIndex();
-        if (selectedIndex >= 0){
+        if (selectedIndex >= 0) {
             CourseInfo currentCourseInfo = apiSession.getCourseInfosByName(courseInfoListView.getItems().get(selectedIndex));
-            if(isInputValid(currentCourseInfo)){
+            if (isInputValid(currentCourseInfo)) {
                 currentCourseInfo.setName(nameField.getText());
                 apiSession.updateCourseInfo(currentCourseInfo);
             }
@@ -103,9 +102,9 @@ public class CourseInfoOverviewController extends OverviewController{
     }
 
     @FXML
-    private void handleNewCourseInfo(){
+    private void handleNewCourseInfo() {
         CourseInfo tempCourseInfo = new CourseInfo();
-        if(isInputValid(tempCourseInfo)){
+        if (isInputValid(tempCourseInfo)) {
             tempCourseInfo.setName(nameField.getText());
             apiSession.createCourseInfo(tempCourseInfo);
         }
@@ -113,17 +112,15 @@ public class CourseInfoOverviewController extends OverviewController{
         nameField.setText("");
     }
 
-    private boolean isInputValid(CourseInfo courseInfo){
+    private boolean isInputValid(CourseInfo courseInfo) {
         String errorMessage = "";
 
         if (nameField.getText() == null || nameField.getText().length() == 0) {
             errorMessage += "No name input!\n";
-        }
-        else {
-            if (!nameField.getText().matches("[\\w\\s]+\\w+")){
+        } else {
+            if (!nameField.getText().matches("[\\w\\s]+\\w+")) {
                 errorMessage += "Wrong format of name input!\n";
-            }
-            else if (apiSession.getCourseInfosByName(nameField.getText()) != null && !Objects.equals(courseInfo.getName(), nameField.getText())) {
+            } else if (apiSession.getCourseInfosByName(nameField.getText()) != null && !Objects.equals(courseInfo.getName(), nameField.getText())) {
                 errorMessage += "Such courseInfo is already exists!\n";
             }
         }
@@ -139,7 +136,7 @@ public class CourseInfoOverviewController extends OverviewController{
         }
     }
 
-    public void setVisibleHBox(int i){
+    public void setVisibleHBox(int i) {
         buttonsHBox.setVisible(i >= 2);
     }
 

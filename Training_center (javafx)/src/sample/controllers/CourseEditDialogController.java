@@ -26,7 +26,6 @@ public class CourseEditDialogController {
     private TextField priceField;
 
 
-
     private Course course;
     private Faculty selectedFaculty;
     private CourseInfo selectedCourseInfo;
@@ -37,10 +36,11 @@ public class CourseEditDialogController {
 
     private ApiSession apiSession;
 
-    public CourseEditDialogController(){}
+    public CourseEditDialogController() {
+    }
 
     @FXML
-    private void initialize(){
+    private void initialize() {
     }
 
     public void setDialogStage(Stage dialogStage, ApiSession apiSession, Main main) {
@@ -49,8 +49,8 @@ public class CourseEditDialogController {
         this.main = main;
     }
 
-    public void setCourse(Course course){
-        if (course.getCourseInfo() != null){
+    public void setCourse(Course course) {
+        if (course.getCourseInfo() != null) {
             this.update = true;
             selectedCourseInfo = course.getCourseInfo();
             nameLabel.setText(course.getCourseInfo().getName());
@@ -63,42 +63,44 @@ public class CourseEditDialogController {
         priceField.setText(String.valueOf(course.getPrice()));
     }
 
-    public boolean isOkClicked(){
+    public boolean isOkClicked() {
         return okClicked;
     }
 
     @FXML
-    private void handleCancel(){
+    private void handleCancel() {
         dialogStage.close();
     }
 
     @FXML
-    private void handleSelectFaculty(){
-       Faculty faculty = main.showChooseFacultyDialog(dialogStage);
-       if (faculty != null){
-           selectedFaculty = faculty;
-           facultyLabel.setText(selectedFaculty.getNamesAndEmail());
-       }
+    private void handleSelectFaculty() {
+        Faculty faculty = main.showChooseFacultyDialog(dialogStage);
+        if (faculty != null) {
+            selectedFaculty = faculty;
+            facultyLabel.setText(selectedFaculty.getNamesAndEmail());
+        }
     }
 
     @FXML
-    private void handleSelectName(){
+    private void handleSelectName() {
         CourseInfo courseInfo = main.showChooseCourseInfoDialog(dialogStage);
-        if (courseInfo != null){
+        if (courseInfo != null) {
             selectedCourseInfo = courseInfo;
             nameLabel.setText(selectedCourseInfo.getName());
         }
     }
 
     @FXML
-    private void handleOk(){
+    private void handleOk() {
         try {
             startPicker.setValue(DateUtil.parse(startPicker.getEditor().getText()));
-        } catch (Exception ignored){}
+        } catch (Exception ignored) {
+        }
         try {
             finishPicker.setValue(DateUtil.parse(finishPicker.getEditor().getText()));
-        } catch (Exception ignored){}
-        if(isInputValid()){
+        } catch (Exception ignored) {
+        }
+        if (isInputValid()) {
             course.setStartDate(startPicker.getValue());
             course.setFinishDate(finishPicker.getValue());
             course.setCourseInfo(selectedCourseInfo);
@@ -106,8 +108,7 @@ public class CourseEditDialogController {
             course.setPrice(Integer.parseInt(priceField.getText()));
             if (update) {
                 apiSession.updateCourse(course);
-            }
-            else {
+            } else {
                 apiSession.createCourse(course);
             }
             okClicked = true;
@@ -115,7 +116,7 @@ public class CourseEditDialogController {
         }
     }
 
-    private boolean isInputValid(){
+    private boolean isInputValid() {
         String errorMessage = "";
         if (nameLabel.getText() == null || nameLabel.getText().length() == 0) {
             errorMessage += "No name selection!\n";
@@ -130,13 +131,13 @@ public class CourseEditDialogController {
         if (facultyLabel.getText() == null || facultyLabel.getText().length() == 0) {
             errorMessage += "No faculty selection!\n";
         }
-        if (startPicker.getValue().isAfter(finishPicker.getValue())){
+        if (startPicker.getValue().isAfter(finishPicker.getValue())) {
             errorMessage += "Start date must be before finish date!\n";
         }
 
         if (priceField.getText() == null || priceField.getText().length() == 0) {
             errorMessage += "No price input!\n";
-        } else if (!priceField.getText().matches("[1-9][0-9]*")){
+        } else if (!priceField.getText().matches("[1-9][0-9]*")) {
             errorMessage += "Price must consists of numbers and be more than 0!\n";
         }
 

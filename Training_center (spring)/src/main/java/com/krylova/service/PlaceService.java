@@ -9,33 +9,33 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PlaceService{
+public class PlaceService {
 
     @Autowired
     private PlaceRepository placeRepository;
 
-    public void create(Place place){
+    public void create(Place place) {
         placeRepository.save(place);
     }
 
-    public void update(Place place){
+    public void update(Place place) {
         placeRepository.save(place);
     }
 
-    public void delete(Place place){
+    public void delete(Place place) {
         placeRepository.delete(place);
     }
 
-    public List<Place> findAll(){
+    public List<Place> findAll() {
         return placeRepository.findAll();
     }
 
-    public Optional<Place> findById(Long id){
+    public Optional<Place> findById(Long id) {
         return placeRepository.findById(id);
     }
 
-    public List<Place> findByCity(String city){
+    public List<Place> findByCity(String city) {
         return placeRepository.findByCity(city);
     }
-    
+
 }

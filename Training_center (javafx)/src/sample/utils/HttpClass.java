@@ -20,7 +20,7 @@ public class HttpClass {
                 sb.append(inputLine);
             }
             return sb.toString();
-        } catch (FileNotFoundException e){
+        } catch (FileNotFoundException e) {
             return null;
         } catch (IOException e) {
             e.printStackTrace();

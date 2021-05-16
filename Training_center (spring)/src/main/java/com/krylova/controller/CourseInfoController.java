@@ -16,18 +16,18 @@ public class CourseInfoController {
     private final CourseInfoService courseInfoService;
 
     @Autowired
-    public CourseInfoController(CourseInfoService courseInfoService){
+    public CourseInfoController(CourseInfoService courseInfoService) {
         this.courseInfoService = courseInfoService;
     }
 
     @PostMapping("/courseInfos")
-    public ResponseEntity<?> create(@RequestBody CourseInfo courseInfo){
+    public ResponseEntity<?> create(@RequestBody CourseInfo courseInfo) {
         courseInfoService.create(courseInfo);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/courseInfos")
-    public ResponseEntity<List<CourseInfo>> findAll(){
+    public ResponseEntity<List<CourseInfo>> findAll() {
         final List<CourseInfo> courseInfoList = courseInfoService.findAll();
         return courseInfoList != null && !courseInfoList.isEmpty()
                 ? new ResponseEntity<>(courseInfoList, HttpStatus.OK)
@@ -35,7 +35,7 @@ public class CourseInfoController {
     }
 
     @GetMapping("/courseInfos/{id}")
-    public ResponseEntity<Optional<CourseInfo>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<CourseInfo>> findById(@PathVariable(name = "id") Long id) {
         final Optional<CourseInfo> courseInfo = courseInfoService.findById(id);
         return courseInfo != null
                 ? new ResponseEntity<>(courseInfo, HttpStatus.OK)
@@ -43,7 +43,7 @@ public class CourseInfoController {
     }
 
     @GetMapping("/courseInfos/n_{name}")
-    public ResponseEntity<List<CourseInfo>> findByName(@PathVariable(name = "name") String name){
+    public ResponseEntity<List<CourseInfo>> findByName(@PathVariable(name = "name") String name) {
         final List<CourseInfo> courseInfoList = courseInfoService.findByName(name.replace("-", " "));
         return courseInfoList != null && !courseInfoList.isEmpty()
                 ? new ResponseEntity<>(courseInfoList, HttpStatus.OK)

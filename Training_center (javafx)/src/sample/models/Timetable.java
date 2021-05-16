@@ -2,7 +2,10 @@ package sample.models;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import javafx.beans.property.*;
+import javafx.beans.property.LongProperty;
+import javafx.beans.property.ObjectProperty;
+import javafx.beans.property.SimpleLongProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import sample.utils.DateUtil;
 import sample.utils.TimeUtil;
 
@@ -11,14 +14,14 @@ import java.time.LocalTime;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Timetable implements ApiModel{
+public class Timetable implements ApiModel {
     private LongProperty id;
     private ObjectProperty<Course> course;
     private ObjectProperty<Place> place;
     private ObjectProperty<LocalDate> date;
     private ObjectProperty<LocalTime> time;
 
-    public Timetable(Long id, Course course, Place place, LocalTime time, LocalDate date){
+    public Timetable(Long id, Course course, Place place, LocalTime time, LocalDate date) {
         this.id = new SimpleLongProperty(id);
         this.course = new SimpleObjectProperty<>(course);
         this.place = new SimpleObjectProperty<>(place);
@@ -26,7 +29,7 @@ public class Timetable implements ApiModel{
         this.date = new SimpleObjectProperty<>(date);
     }
 
-    public Timetable(Course course, Place place, LocalTime time, LocalDate date){
+    public Timetable(Course course, Place place, LocalTime time, LocalDate date) {
         this.id = null;
         this.course = new SimpleObjectProperty<>(course);
         this.place = new SimpleObjectProperty<>(place);
@@ -35,7 +38,7 @@ public class Timetable implements ApiModel{
     }
 
 
-    public Timetable(){
+    public Timetable() {
         this(null, null, null, null);
     }
 
@@ -99,7 +102,7 @@ public class Timetable implements ApiModel{
     public String toJSON() {
         Gson gson = new Gson();
         Map<String, Object> map = new HashMap<>();
-        if (id != null){
+        if (id != null) {
             map.put("id", String.valueOf(getId()));
         }
         map.put("course", new Gson().fromJson(getCourse().toJSON(), JsonObject.class));

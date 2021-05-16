@@ -2,8 +2,7 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
-
+<?import javafx.scene.text.Font?>
 <AnchorPane prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/11.0.1"
             xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controllers.LoginController">
     <Button alignment="CENTER" contentDisplay="CENTER" defaultButton="true" layoutX="164.0" layoutY="373.0"
@@ -36,7 +35,7 @@
     <Label alignment="CENTER" layoutX="114.0" layoutY="36.0" text="Sign in" AnchorPane.leftAnchor="0.0"
            AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="50.0">
         <font>
-          <Font size="20.0"/>
+            <Font size="20.0"/>
         </font>
     </Label>
 </AnchorPane>
