@@ -429,7 +429,8 @@ public class ApiSession {
     }
 
     public List<Timetable> getTimetablesByCourseNameAndDate(String name, LocalDate date) {
-        String answer = HttpClass.GetRequest(url + "/timetables/cn_"+name.replace(" ", "%20")+"/date_"+date);
+        String answer = HttpClass.GetRequest(url + "/timetables/cn_"
+                +name.replace(" ", "%20")+"/date_"+date);
         return getTimetableList(answer);
     }
 

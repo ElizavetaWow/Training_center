@@ -82,7 +82,8 @@ public class CompanyOverviewController extends OverviewController{
             }
             List<PieChart.Data> pieList = new ArrayList<>();
             for (HashMap.Entry<Long, Long> entry: dataMap.entrySet()){
-                pieList.add(new PieChart.Data(apiSession.getCoursesById(entry.getKey()).getNamesAndFaculty(), entry.getValue()));
+                pieList.add(new PieChart.Data(apiSession.getCoursesById(entry.getKey()).getNamesAndFaculty(),
+                        entry.getValue()));
             }
             chart.getData().setAll(pieList);
         }

@@ -62,7 +62,9 @@ public class PlaceOverviewController extends OverviewController {
         cityList.clear();
         cityList.add("All Cities");
         for (Place place: placeList){
-            cityList.add(place.getCity());
+            if (!cityList.contains(place.getCity())){
+                cityList.add(place.getCity());
+            }
         }
         cityBox.setItems(cityList);
         cityBox.getSelectionModel().select(0);

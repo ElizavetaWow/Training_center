@@ -64,6 +64,4 @@ public class RootController {
     public void setVisibleItems(int i){
         companyItem.setVisible(i != 0);
     }
-
-
 }
