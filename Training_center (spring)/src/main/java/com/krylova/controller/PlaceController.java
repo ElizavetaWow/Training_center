@@ -16,18 +16,18 @@ public class PlaceController {
     private final PlaceService placeService;
 
     @Autowired
-    public PlaceController(PlaceService placeService){
+    public PlaceController(PlaceService placeService) {
         this.placeService = placeService;
     }
 
     @PostMapping("/places")
-    public ResponseEntity<?> create(@RequestBody Place place){
+    public ResponseEntity<?> create(@RequestBody Place place) {
         placeService.create(place);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/places")
-    public ResponseEntity<List<Place>> findAll(){
+    public ResponseEntity<List<Place>> findAll() {
         final List<Place> placeList = placeService.findAll();
         return placeList != null && !placeList.isEmpty()
                 ? new ResponseEntity<>(placeList, HttpStatus.OK)
@@ -35,7 +35,7 @@ public class PlaceController {
     }
 
     @GetMapping("/places/{id}")
-    public ResponseEntity<Optional<Place>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Place>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Place> place = placeService.findById(id);
         return place.isPresent()
                 ? new ResponseEntity<>(place, HttpStatus.OK)
@@ -43,7 +43,7 @@ public class PlaceController {
     }
 
     @GetMapping("/places/city_{city}")
-    public ResponseEntity<List<Place>> findByCity(@PathVariable(name = "city") String city){
+    public ResponseEntity<List<Place>> findByCity(@PathVariable(name = "city") String city) {
         final List<Place> placeList = placeService.findByCity(city);
         return placeList != null && !placeList.isEmpty()
                 ? new ResponseEntity<>(placeList, HttpStatus.OK)

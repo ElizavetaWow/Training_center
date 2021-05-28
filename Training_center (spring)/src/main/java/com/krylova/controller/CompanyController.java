@@ -15,18 +15,18 @@ public class CompanyController {
     private final CompanyService companyService;
 
     @Autowired
-    public CompanyController(CompanyService companyService){
+    public CompanyController(CompanyService companyService) {
         this.companyService = companyService;
     }
 
     @PostMapping("/companies")
-    public ResponseEntity<?> create(@RequestBody Company company){
+    public ResponseEntity<?> create(@RequestBody Company company) {
         companyService.create(company);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/companies")
-    public ResponseEntity<List<Company>> findAll(){
+    public ResponseEntity<List<Company>> findAll() {
         final List<Company> companyList = companyService.findAll();
         return companyList != null && !companyList.isEmpty()
                 ? new ResponseEntity<>(companyList, HttpStatus.OK)
@@ -34,7 +34,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/{id}")
-    public ResponseEntity<Optional<Company>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Company>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Company> company = companyService.findById(id);
         return company != null
                 ? new ResponseEntity<>(company, HttpStatus.OK)
@@ -42,7 +42,7 @@ public class CompanyController {
     }
 
     @GetMapping("/companies/n_{name}")
-    public ResponseEntity<List<Company>> findByName(@PathVariable(name = "name") String name){
+    public ResponseEntity<List<Company>> findByName(@PathVariable(name = "name") String name) {
         final List<Company> companyList = companyService.findByName(name);
         return companyList != null && !companyList.isEmpty()
                 ? new ResponseEntity<>(companyList, HttpStatus.OK)

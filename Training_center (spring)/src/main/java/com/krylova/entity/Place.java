@@ -20,7 +20,7 @@ public class Place {
     private String building;
     private Integer room;
 
-    @OneToMany(targetEntity=Timetable.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Timetable.class, fetch = FetchType.LAZY)
     @JsonIgnore
     private List timetables;
 }

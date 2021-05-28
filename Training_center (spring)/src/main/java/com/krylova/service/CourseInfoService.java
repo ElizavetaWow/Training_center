@@ -14,27 +14,27 @@ public class CourseInfoService {
     @Autowired
     private CourseInfoRepository courseInfoRepository;
 
-    public void create(CourseInfo courseInfo){
+    public void create(CourseInfo courseInfo) {
         courseInfoRepository.save(courseInfo);
     }
 
-    public void update(CourseInfo courseInfo){
+    public void update(CourseInfo courseInfo) {
         courseInfoRepository.save(courseInfo);
     }
 
-    public void delete(CourseInfo courseInfo){
+    public void delete(CourseInfo courseInfo) {
         courseInfoRepository.delete(courseInfo);
     }
 
-    public List<CourseInfo> findAll(){
+    public List<CourseInfo> findAll() {
         return courseInfoRepository.findAll();
     }
 
-    public Optional<CourseInfo> findById(Long id){
+    public Optional<CourseInfo> findById(Long id) {
         return courseInfoRepository.findById(id);
     }
 
-    public List<CourseInfo> findByName(String name){
+    public List<CourseInfo> findByName(String name) {
         return courseInfoRepository.findByName(name);
     }
 }

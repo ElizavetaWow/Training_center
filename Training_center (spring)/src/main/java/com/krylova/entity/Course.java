@@ -1,13 +1,12 @@
 package com.krylova.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.sql.Date;
 import java.util.HashSet;
 import java.util.Set;
-import java.sql.Date;
 
 @Entity
 @Data
@@ -34,6 +33,6 @@ public class Course {
         this.employees = employees;
     }
 
-    @ManyToMany(targetEntity=Employee.class, fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = Employee.class, fetch = FetchType.LAZY)
     private Set<Employee> employees = new HashSet<>();
 }

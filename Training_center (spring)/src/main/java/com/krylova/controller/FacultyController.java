@@ -16,18 +16,18 @@ public class FacultyController {
     private final FacultyService facultyService;
 
     @Autowired
-    public FacultyController(FacultyService facultyService){
+    public FacultyController(FacultyService facultyService) {
         this.facultyService = facultyService;
     }
 
     @PostMapping("/faculties")
-    public ResponseEntity<?> create(@RequestBody Faculty faculty){
+    public ResponseEntity<?> create(@RequestBody Faculty faculty) {
         facultyService.create(faculty);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/faculties")
-    public ResponseEntity<List<Faculty>> findAll(){
+    public ResponseEntity<List<Faculty>> findAll() {
         final List<Faculty> facultyList = facultyService.findAll();
         return facultyList != null && !facultyList.isEmpty()
                 ? new ResponseEntity<>(facultyList, HttpStatus.OK)
@@ -35,7 +35,7 @@ public class FacultyController {
     }
 
     @GetMapping("/faculties/{id}")
-    public ResponseEntity<Optional<Faculty>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Faculty>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Faculty> faculty = facultyService.findById(id);
         return faculty != null
                 ? new ResponseEntity<>(faculty, HttpStatus.OK)
@@ -43,7 +43,7 @@ public class FacultyController {
     }
 
     @GetMapping("/faculties/email_{email}")
-    public ResponseEntity<List<Faculty>> findAll(@PathVariable(name = "email") String email){
+    public ResponseEntity<List<Faculty>> findAll(@PathVariable(name = "email") String email) {
         final List<Faculty> facultyList = facultyService.findByEmail(email);
         return facultyList != null && !facultyList.isEmpty()
                 ? new ResponseEntity<>(facultyList, HttpStatus.OK)

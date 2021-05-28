@@ -8,6 +8,8 @@ import java.util.List;
 
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     List<Employee> findByCompanyName(String companyName);
+
     List<Employee> findByEmail(String email);
+
     Integer countEmployeeByCompanyId(Long id);
 }

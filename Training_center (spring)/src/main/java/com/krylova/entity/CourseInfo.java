@@ -18,7 +18,7 @@ public class CourseInfo {
     @Column(unique = true)
     private String name;
 
-    @OneToMany(targetEntity=Course.class, fetch = FetchType.LAZY)
+    @OneToMany(targetEntity = Course.class, fetch = FetchType.LAZY)
     @JsonIgnore
     private List courses;
 }

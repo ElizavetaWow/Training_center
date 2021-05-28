@@ -16,18 +16,18 @@ public class AdministratorController {
     private final AdministratorService administratorService;
 
     @Autowired
-    public AdministratorController(AdministratorService administratorService){
+    public AdministratorController(AdministratorService administratorService) {
         this.administratorService = administratorService;
     }
 
     @PostMapping("/admins")
-    public ResponseEntity<?> create(@RequestBody Administrator administrator){
+    public ResponseEntity<?> create(@RequestBody Administrator administrator) {
         administratorService.create(administrator);
-        return  new ResponseEntity<>(HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/admins")
-    public ResponseEntity<List<Administrator>> findAll(){
+    public ResponseEntity<List<Administrator>> findAll() {
         final List<Administrator> administratorList = administratorService.findAll();
         return administratorList != null && !administratorList.isEmpty()
                 ? new ResponseEntity<>(administratorList, HttpStatus.OK)
@@ -35,7 +35,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/admins/{id}")
-    public ResponseEntity<Optional<Administrator>> findById(@PathVariable(name = "id") Long id){
+    public ResponseEntity<Optional<Administrator>> findById(@PathVariable(name = "id") Long id) {
         final Optional<Administrator> administrator = administratorService.findById(id);
         return administrator != null
                 ? new ResponseEntity<>(administrator, HttpStatus.OK)
@@ -43,7 +43,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/admins/email_{email}")
-    public ResponseEntity<List<Administrator>> findAll(@PathVariable(name = "email") String email){
+    public ResponseEntity<List<Administrator>> findAll(@PathVariable(name = "email") String email) {
         final List<Administrator> administratorList = administratorService.findByEmail(email);
         return administratorList != null && !administratorList.isEmpty()
                 ? new ResponseEntity<>(administratorList, HttpStatus.OK)
