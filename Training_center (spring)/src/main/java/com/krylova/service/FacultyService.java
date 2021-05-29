@@ -14,16 +14,17 @@ public class FacultyService {
     @Autowired
     private FacultyRepository facultyRepository;
 
-    public void create(Faculty faculty) {
-        facultyRepository.save(faculty);
+    public Faculty create(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
-    public void update(Faculty faculty) {
-        facultyRepository.save(faculty);
+    public Faculty update(Faculty faculty) {
+        return facultyRepository.save(faculty);
     }
 
-    public void delete(Faculty faculty) {
+    public boolean delete(Faculty faculty) {
         facultyRepository.delete(faculty);
+        return true;
     }
 
     public List<Faculty> findAll() {

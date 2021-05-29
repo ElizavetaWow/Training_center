@@ -14,16 +14,17 @@ public class AdministratorService {
     @Autowired
     private AdministratorRepository administratorRepository;
 
-    public void create(Administrator administrator) {
-        administratorRepository.save(administrator);
+    public Administrator create(Administrator administrator) {
+        return administratorRepository.save(administrator);
     }
 
-    public void update(Administrator administrator) {
-        administratorRepository.save(administrator);
+    public Administrator update(Administrator administrator) {
+        return administratorRepository.save(administrator);
     }
 
-    public void delete(Administrator administrator) {
+    public boolean delete(Administrator administrator) {
         administratorRepository.delete(administrator);
+        return true;
     }
 
     public List<Administrator> findAll() {

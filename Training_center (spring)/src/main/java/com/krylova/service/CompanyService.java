@@ -14,16 +14,17 @@ public class CompanyService {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public void create(Company company) {
-        companyRepository.save(company);
+    public Company create(Company company) {
+        return companyRepository.save(company);
     }
 
-    public void update(Company company) {
-        companyRepository.save(company);
+    public Company update(Company company) {
+        return companyRepository.save(company);
     }
 
-    public void delete(Company company) {
+    public boolean delete(Company company) {
         companyRepository.delete(company);
+        return true;
     }
 
     public List<Company> findAll() {

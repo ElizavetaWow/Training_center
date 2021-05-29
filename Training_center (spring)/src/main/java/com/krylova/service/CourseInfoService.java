@@ -14,16 +14,17 @@ public class CourseInfoService {
     @Autowired
     private CourseInfoRepository courseInfoRepository;
 
-    public void create(CourseInfo courseInfo) {
-        courseInfoRepository.save(courseInfo);
+    public CourseInfo create(CourseInfo courseInfo) {
+        return courseInfoRepository.save(courseInfo);
     }
 
-    public void update(CourseInfo courseInfo) {
-        courseInfoRepository.save(courseInfo);
+    public CourseInfo update(CourseInfo courseInfo) {
+        return courseInfoRepository.save(courseInfo);
     }
 
-    public void delete(CourseInfo courseInfo) {
+    public boolean delete(CourseInfo courseInfo) {
         courseInfoRepository.delete(courseInfo);
+        return true;
     }
 
     public List<CourseInfo> findAll() {

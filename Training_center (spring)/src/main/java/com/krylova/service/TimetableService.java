@@ -14,16 +14,17 @@ public class TimetableService {
     @Autowired
     private TimetableRepository timetableRepository;
 
-    public void create(Timetable timetable) {
-        timetableRepository.save(timetable);
+    public Timetable create(Timetable timetable) {
+        return timetableRepository.save(timetable);
     }
 
-    public void update(Timetable timetable) {
-        timetableRepository.save(timetable);
+    public Timetable update(Timetable timetable) {
+        return timetableRepository.save(timetable);
     }
 
-    public void delete(Timetable timetable) {
+    public boolean delete(Timetable timetable) {
         timetableRepository.delete(timetable);
+        return true;
     }
 
     public List<Timetable> findAll() {

@@ -14,16 +14,17 @@ public class EmployeeService {
     @Autowired
     private EmployeeRepository employeeRepository;
 
-    public void create(Employee employee) {
-        employeeRepository.save(employee);
+    public Employee create(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
-    public void update(Employee employee) {
-        employeeRepository.save(employee);
+    public Employee update(Employee employee) {
+        return employeeRepository.save(employee);
     }
 
-    public void delete(Employee employee) {
+    public boolean delete(Employee employee) {
         employeeRepository.delete(employee);
+        return true;
     }
 
     public List<Employee> findAll() {

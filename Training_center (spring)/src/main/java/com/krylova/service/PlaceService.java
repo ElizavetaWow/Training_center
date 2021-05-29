@@ -14,16 +14,17 @@ public class PlaceService {
     @Autowired
     private PlaceRepository placeRepository;
 
-    public void create(Place place) {
-        placeRepository.save(place);
+    public Place create(Place place) {
+        return placeRepository.save(place);
     }
 
-    public void update(Place place) {
-        placeRepository.save(place);
+    public Place update(Place place) {
+        return placeRepository.save(place);
     }
 
-    public void delete(Place place) {
+    public boolean delete(Place place) {
         placeRepository.delete(place);
+        return true;
     }
 
     public List<Place> findAll() {
