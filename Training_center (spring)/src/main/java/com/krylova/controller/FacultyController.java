@@ -43,7 +43,7 @@ public class FacultyController {
     }
 
     @GetMapping("/faculties/email_{email}")
-    public ResponseEntity<List<Faculty>> findAll(@PathVariable(name = "email") String email) {
+    public ResponseEntity<List<Faculty>> findByEmail(@PathVariable(name = "email") String email) {
         final List<Faculty> facultyList = facultyService.findByEmail(email);
         return facultyList != null && !facultyList.isEmpty()
                 ? new ResponseEntity<>(facultyList, HttpStatus.OK)

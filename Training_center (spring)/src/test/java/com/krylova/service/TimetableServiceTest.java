@@ -10,8 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.sql.Date;
+import java.sql.Time;
 import java.util.List;
 import java.util.Optional;
 
@@ -32,14 +32,14 @@ class TimetableServiceTest {
     @BeforeEach
     void setUp() {
         timetable.setId(1L);
-        timetable.setDate(LocalDate.of(2021, 1, 15));
-        timetable.setTime(LocalTime.of(15, 30));
+        timetable.setDate(Date.valueOf("2021-01-15"));
+        timetable.setTime(Time.valueOf("15:30:00"));
         timetable.setCourse(null);
         timetable.setPlace(null);
 
         timetable1.setId(2L);
-        timetable1.setDate(LocalDate.of(2021, 1, 15));
-        timetable1.setTime(LocalTime.of(21, 0));
+        timetable1.setDate(Date.valueOf("2021-01-15"));
+        timetable1.setTime(Time.valueOf("21:00:00"));
         timetable1.setCourse(null);
         timetable1.setPlace(null);
     }
@@ -55,7 +55,7 @@ class TimetableServiceTest {
     @Test
     @DisplayName("Update a timetable")
     void update() {
-        timetable.setTime(LocalTime.of(16, 0));
+        timetable.setTime(Time.valueOf("16:30:00"));
         when(timetableRepository.save(timetable)).thenReturn(timetable);
         Timetable actual = timetableService.update(timetable);
         Assert.assertEquals(timetable, actual);
@@ -102,22 +102,22 @@ class TimetableServiceTest {
     @Test
     @DisplayName("Find timetables by date")
     void findByDate() {
-        when(timetableRepository.findByDate(LocalDate.of(2021, 1, 15))).thenReturn(List.of(timetable, timetable1));
-        List<Timetable> actual = timetableService.findByDate(LocalDate.of(2021, 1, 15));
+        when(timetableRepository.findByDate(Date.valueOf("2021-01-15"))).thenReturn(List.of(timetable, timetable1));
+        List<Timetable> actual = timetableService.findByDate(Date.valueOf("2021-01-15"));
         Assert.assertEquals(List.of(timetable, timetable1), actual);
-        when(timetableRepository.findByDate(LocalDate.of(2020, 1, 15))).thenReturn(List.of());
-        List<Timetable> actual1 = timetableService.findByDate(LocalDate.of(2020, 1, 15));
+        when(timetableRepository.findByDate(Date.valueOf("2021-01-15"))).thenReturn(List.of());
+        List<Timetable> actual1 = timetableService.findByDate(Date.valueOf("2021-01-15"));
         Assert.assertEquals(List.of(), actual1);
     }
 
     @Test
     @DisplayName("Find timetables by date and name")
     void findByNameAndDate() {
-        when(timetableRepository.findByCourse_CourseInfo_NameAndDate("Maths", LocalDate.of(2021, 1, 15))).thenReturn(List.of(timetable));
-        List<Timetable> actual = timetableService.findByNameAndDate("Maths", LocalDate.of(2021, 1, 15));
+        when(timetableRepository.findByCourse_CourseInfo_NameAndDate("Maths", Date.valueOf("2021-01-15"))).thenReturn(List.of(timetable));
+        List<Timetable> actual = timetableService.findByNameAndDate("Maths", Date.valueOf("2021-01-15"));
         Assert.assertEquals(List.of(timetable), actual);
-        when(timetableRepository.findByCourse_CourseInfo_NameAndDate("Maths1", LocalDate.of(2021, 1, 15))).thenReturn(List.of());
-        List<Timetable> actual1 = timetableService.findByNameAndDate("Maths1", LocalDate.of(2021, 1, 15));
+        when(timetableRepository.findByCourse_CourseInfo_NameAndDate("Maths1", Date.valueOf("2021-01-15"))).thenReturn(List.of());
+        List<Timetable> actual1 = timetableService.findByNameAndDate("Maths1", Date.valueOf("2021-01-15"));
         Assert.assertEquals(List.of(), actual1);
     }
 }

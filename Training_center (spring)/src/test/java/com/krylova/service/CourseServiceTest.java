@@ -1,6 +1,5 @@
 package com.krylova.service;
 
-import com.krylova.entity.Company;
 import com.krylova.entity.Course;
 import com.krylova.repository.CourseRepository;
 import org.junit.Assert;
@@ -28,7 +27,6 @@ class CourseServiceTest {
 
     Course course = new Course();
     Course course1 = new Course();
-    Company company = new Company();
 
     @BeforeEach
     void setUp() {

@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -53,7 +54,7 @@ public class TimetableController {
 
     @GetMapping("/timetables/date_{date}")
     public ResponseEntity<List<Timetable>> findByDate(@PathVariable(name = "date") String date) {
-        final List<Timetable> timetableList = timetableService.findByDate(DateUtil.parse(date));
+        final List<Timetable> timetableList = timetableService.findByDate(Date.valueOf(date));
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -63,7 +64,7 @@ public class TimetableController {
     public ResponseEntity<List<Timetable>> findByNameAndDate(@PathVariable(name = "name") String name,
                                                              @PathVariable(name = "date") String date) {
 
-        final List<Timetable> timetableList = timetableService.findByNameAndDate(name, DateUtil.parse(date));
+        final List<Timetable> timetableList = timetableService.findByNameAndDate(name, Date.valueOf(date));
         return timetableList != null && !timetableList.isEmpty()
                 ? new ResponseEntity<>(timetableList, HttpStatus.OK)
                 : new ResponseEntity<>(HttpStatus.NOT_FOUND);

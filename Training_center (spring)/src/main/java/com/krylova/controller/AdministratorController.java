@@ -43,7 +43,7 @@ public class AdministratorController {
     }
 
     @GetMapping("/admins/email_{email}")
-    public ResponseEntity<List<Administrator>> findAll(@PathVariable(name = "email") String email) {
+    public ResponseEntity<List<Administrator>> findByEmail(@PathVariable(name = "email") String email) {
         final List<Administrator> administratorList = administratorService.findByEmail(email);
         return administratorList != null && !administratorList.isEmpty()
                 ? new ResponseEntity<>(administratorList, HttpStatus.OK)
